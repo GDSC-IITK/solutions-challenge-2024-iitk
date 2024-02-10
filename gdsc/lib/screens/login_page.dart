@@ -37,12 +37,13 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    SizedBox(height: 20.0),
                     Image.asset(
                       'assets/images/img.png',
                       height: 250,
                       width: 100,
                     ),
-                    SizedBox(height: 24.0),
+                    SizedBox(height: 80.0),
                     TextFormField(
                       style: TextStyle(color: Colors.white),
                       decoration: InputDecoration(
@@ -174,7 +175,7 @@ class _LoginPageState extends State<LoginPage> {
                           Image.asset(
                             'assets/images/logo.jpg',
                             height: 40.0,
-                            width: 24.0,
+                            width: 40.0,
                           ),
                           SizedBox(width: 10),
                           Text(

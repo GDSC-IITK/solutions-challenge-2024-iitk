@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gdsc/screens/home/home_page.dart';
 import 'package:gdsc/screens/login_page.dart';
 import 'package:gdsc/screens/signup_page.dart';
-import 'package:gdsc/screens/welcome_page.dart';
+import 'screens/welcome_page.dart';
 
 void main() {
   runApp(const MyApp());

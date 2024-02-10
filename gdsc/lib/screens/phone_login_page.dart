@@ -3,15 +3,72 @@ import 'package:flutter/services.dart';
 import 'package:gdsc/screens/signup_page.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class PhoneLoginPage extends StatefulWidget {
-  const PhoneLoginPage({super.key});
+  const PhoneLoginPage({Key? key}) : super(key: key);
 
   @override
   State<PhoneLoginPage> createState() => _PhoneLoginPageState();
 }
 
 class _PhoneLoginPageState extends State<PhoneLoginPage> {
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  TextEditingController _phoneNumberController = TextEditingController();
+  TextEditingController _otpController = TextEditingController();
+  late String _verificationId = '';
+
+  Future<void> _verifyPhoneNumber() async {
+    String phoneNumber = '+91' + _phoneNumberController.text.trim();
+    await _auth.verifyPhoneNumber(
+      phoneNumber: phoneNumber,
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        await _auth.signInWithCredential(credential);
+        // Navigate to next screen upon successful verification
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => NextScreen()),
+        );
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        print('Error: ${e.message}');
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        _verificationId = verificationId;
+        // Navigate to the OTP verification screen
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => OtpVerificationPage(
+              verificationId: _verificationId,
+            ),
+          ),
+        );
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        _verificationId = verificationId;
+      },
+    );
+  }
+
+  void _verifyOTP() async {
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+      verificationId: _verificationId,
+      smsCode: _otpController.text.trim(),
+    );
+    try {
+      await _auth.signInWithCredential(credential);
+      // Navigate to next screen upon successful verification
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => NextScreen()),
+      );
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -83,9 +140,7 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32.0),
                 child: ElevatedButton(
-                  onPressed: () {
-                    //to get OTP
-                  },
+                  onPressed: _verifyPhoneNumber,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 35, vertical: 10),
@@ -140,6 +195,58 @@ class PhoneNumberFormatter extends TextInputFormatter {
     return TextEditingValue(
       text: newText.toString(),
       selection: TextSelection.collapsed(offset: newText.length),
+    );
+  }
+}
+
+class OtpVerificationPage extends StatelessWidget {
+  final String verificationId;
+
+  const OtpVerificationPage({Key? key, required this.verificationId})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('OTP Verification'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  hintText: 'Enter OTP',
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Implement OTP verification logic here
+              },
+              child: Text('Verify OTP'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class NextScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Next Screen'),
+      ),
+      body: Center(
+        child: Text('You have successfully logged in!'),
+      ),
     );
   }
 }

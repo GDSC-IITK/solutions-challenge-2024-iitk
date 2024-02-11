@@ -21,7 +21,7 @@ class Page1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(78, 134, 199, 0.83),
+        backgroundColor: Color.fromRGBO(2, 78, 166, 1),
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -58,29 +58,37 @@ class Page1 extends StatelessWidget {
             padding: EdgeInsets.only(left: 20.0),
             child: Text("Remarks: $remarks"),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                  onPressed: () {
-                    nextScreen(
-                        context,
-                        Page2(
-                          itemname: itemname,
-                          quantity: '10 kg',
-                          location: 'location',
-                          remarks: 'remarks',
-                          organization: 'McD',
-                        ));
-                  },
-                  style: ElevatedButton.styleFrom(
-                    side: const BorderSide(width: 1, color: Colors.brown),
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
+          InkWell(
+            onTap: () {
+              nextScreen(
+                context,
+                Page2(
+                    itemname: itemname,
+                    quantity: quantity,
+                    location: location,
+                    remarks: remarks,
+                    organization: organization),
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color.fromRGBO(2, 78, 166, 1),
+                ),
+                width: double.infinity,
+                height: 50,
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    "Volunteer",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white, fontSize: 25),
                   ),
-                  child: const Text("Volunteer")),
-            ],
+                ),
+              ),
+            ),
           )
         ]),
       ),

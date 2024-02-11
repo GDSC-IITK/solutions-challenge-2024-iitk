@@ -39,13 +39,23 @@ class Vcard extends StatelessWidget {
             height: 80,
             width: 80,
           ),
-          title: Text(item),
+          title: Text(
+            item,
+            style: const TextStyle(fontSize: 20),
+          ),
           isThreeLine: true,
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(quantity),
-              Text(location),
+              Text(
+                "Quantity: $quantity",
+                style: TextStyle(color: Colors.grey),
+              ),
+              Text("Location: $location", style: TextStyle(color: Colors.grey)),
+              const Text(
+                "300 mts away",
+                style: TextStyle(color: Color.fromRGBO(2, 78, 166, 1)),
+              ),
             ],
           ),
         ),

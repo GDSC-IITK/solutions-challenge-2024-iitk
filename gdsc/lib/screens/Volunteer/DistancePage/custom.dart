@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:gdsc/screens/Volunteer/DistancePage/custom.dart';
 import 'package:gdsc/screens/Volunteer/DistancePage/twotofive.dart';
 import 'package:gdsc/screens/Volunteer/Vcard.dart';
+import 'package:gdsc/screens/Volunteer/volunteer.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 
-class volunteer extends StatefulWidget {
-  const volunteer({super.key});
+class custom extends StatefulWidget {
+  const custom({super.key});
 
   @override
-  State<volunteer> createState() => _volunteerState();
+  State<custom> createState() => _custom();
 }
 
-class _volunteerState extends State<volunteer> {
-  bool b1 = true;
+class _custom extends State<custom> {
+  bool b1 = false;
   bool b2 = false;
 
-  bool b3 = false;
+  bool b3 = true;
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +25,8 @@ class _volunteerState extends State<volunteer> {
         title: Text("Volunteer Page"),
         backgroundColor: Color.fromRGBO(78, 134, 199, 0.83),
       ),
-      body: Column(
-        children: [
+      body: SingleChildScrollView(
+        child: Column(children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -40,6 +40,7 @@ class _volunteerState extends State<volunteer> {
                         b1 = true;
                         b2 = false;
                         b3 = false;
+                        nextScreenReplace(context, volunteer());
                       });
                     },
                     child: Container(
@@ -108,7 +109,6 @@ class _volunteerState extends State<volunteer> {
                   padding: const EdgeInsets.all(6.0),
                   child: InkWell(
                     onTap: () {
-                      nextScreenReplace(context, custom());
                       setState(() {
                         b1 = false;
                         b2 = false;
@@ -145,7 +145,9 @@ class _volunteerState extends State<volunteer> {
             ),
           ),
           Vcard(item: "item", quantity: "quantity", location: "location"),
-        ],
+          Vcard(item: "item", quantity: "quantity", location: "location"),
+          Vcard(item: "item", quantity: "quantity", location: "location")
+        ]),
       ),
     );
   }

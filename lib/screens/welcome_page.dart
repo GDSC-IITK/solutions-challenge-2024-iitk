@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gdsc/screens/login_page.dart';
 import 'package:gdsc/screens/signup_page.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -81,19 +82,24 @@ class _WelcomePageState extends State<WelcomePage> {
                           ),
                         ),
                         onPressed: () {
-                          nextScreen(context, const SignUpPage());
+                          nextScreenReplace(context, const SignUpPage());
                         },
                       ),
                       const SizedBox(
                         height: 20,
                       ),
-                      Text("Already have an account ? Login",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
-                            color: Color.fromRGBO(255, 253, 251, 1),
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15.0,
-                          )),
+                      InkWell(
+                        onTap: () {
+                          nextScreenReplace(context, const LoginPage());
+                        },
+                        child: Text("Already have an account ? Login",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(
+                              color: Color.fromRGBO(255, 253, 251, 1),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15.0,
+                            )),
+                      ),
                     ]))),
               ),
             ])))));

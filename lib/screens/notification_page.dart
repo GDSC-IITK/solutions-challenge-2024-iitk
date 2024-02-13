@@ -31,7 +31,7 @@ class NotificationScreen extends StatelessWidget {
       heading: 'Your Donation is cancelled',
       content:
           'Lorem ipsum dolor sit amet. Et architecto sequi sed aperiam autem ea consequuntur vero ut omnis sint qui voluptate quidem in deserunt recusandae.',
-      icon: Icons.,
+      icon: Icons.event,
       time: 'At 05:57 Pm',
     ),
     NotificationItem(

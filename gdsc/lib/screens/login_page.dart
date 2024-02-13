@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gdsc/screens/OTP_page.dart';
 import 'package:gdsc/screens/phone_login_page.dart';
+import 'package:gdsc/screens/notification_page.dart';
 import 'package:gdsc/screens/signup_page.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:google_fonts/google_fonts.dart';

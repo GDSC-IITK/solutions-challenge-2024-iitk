@@ -31,7 +31,7 @@ class Page2 extends StatelessWidget {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Image.asset(
-            "assets/images/home.jpeg",
+            "assets/images/Volunteer.png",
             width: double.infinity,
           ),
           const Padding(
@@ -39,28 +39,46 @@ class Page2 extends StatelessWidget {
             child: Text(
               "Details",
               textAlign: TextAlign.start,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                  fontFamily: "Inter"),
             ),
           ),
           Padding(
             padding: EdgeInsets.only(left: 20.0),
-            child: Text("Item's name: $itemname"),
+            child: Text(
+              "Item's name: $itemname",
+              style: TextStyle(fontFamily: "Inter"),
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(left: 20.0),
-            child: Text("Quantity: $quantity"),
+            child: Text(
+              "Quantity: $quantity",
+              style: TextStyle(fontFamily: "Inter"),
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(left: 20.0),
-            child: Text("Organization: $organization"),
+            child: Text(
+              "Organization: $organization",
+              style: TextStyle(fontFamily: "Inter"),
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(left: 20.0),
-            child: Text("Location: $location"),
+            child: Text(
+              "Location: $location",
+              style: TextStyle(fontFamily: "Inter"),
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(left: 20.0),
-            child: Text("Remarks: $remarks"),
+            child: Text(
+              "Remarks: $remarks",
+              style: TextStyle(fontFamily: "Inter"),
+            ),
           ),
           InkWell(
             onTap: () {
@@ -88,7 +106,8 @@ class Page2 extends StatelessWidget {
                   child: Text(
                     "Confirm",
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white, fontSize: 25),
+                    style: TextStyle(
+                        color: Colors.white, fontSize: 25, fontFamily: "Inter"),
                   ),
                 ),
               ),

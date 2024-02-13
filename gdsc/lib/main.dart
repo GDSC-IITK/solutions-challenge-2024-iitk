@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gdsc/screens/Profile/profilemain.dart';
 import 'package:gdsc/screens/home/home_page.dart';
 import 'package:gdsc/screens/login_page.dart';
 import 'package:gdsc/screens/signup_page.dart';
@@ -24,7 +25,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: _isSignedIn ? const LoginPage() : const volunteer(),
+      home: _isSignedIn ? const LoginPage() : const Profilemain(),
     );
   }
 }

@@ -90,7 +90,7 @@ class _WelcomePageState extends State<WelcomePage> {
                       ),
                       InkWell(
                         onTap: () {
-                          nextScreenReplace(context, LoginPage());
+                          nextScreenReplace(context, const LoginPage());
                         },
                         child: Text("Already have an account ? Login",
                             textAlign: TextAlign.center,

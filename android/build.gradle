@@ -1,9 +1,6 @@
 buildscript {
-<<<<<<< HEAD
     ext.kotlin_version = '1.9.22'
-=======
-    ext.kotlin_version = '1.7.10'
->>>>>>> e9237b5db8e37cf01954fe1d65d128042205dadf
+
     repositories {
         google()
         maven() { url 'https://maven.google.com' }
@@ -13,11 +10,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0-alpha2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-<<<<<<< HEAD
         classpath 'com.google.gms:google-services:4.4.1'
-=======
-        classpath 'com.google.gms.google-services:4.4.1'
->>>>>>> e9237b5db8e37cf01954fe1d65d128042205dadf
     }
 }
 

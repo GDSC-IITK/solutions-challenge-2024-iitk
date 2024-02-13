@@ -91,10 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => OTPPage()),
-                        );
+                        nextScreenReplace(context, OTPPage());
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(

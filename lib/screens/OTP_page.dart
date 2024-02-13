@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gdsc/screens/home/home_page.dart';
+import 'package:gdsc/screens/welcome_page.dart';
+import 'package:gdsc/widgets/nextscreen.dart';
 
 class OTPPage extends StatefulWidget {
   const OTPPage({super.key});
@@ -48,6 +51,7 @@ class _OTPPageState extends State<OTPPage> {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
+                    nextScreenReplace(context, HomePage());
                     // OTP verification
                   },
                   child: Text('Verify'),

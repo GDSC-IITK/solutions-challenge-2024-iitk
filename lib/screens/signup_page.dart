@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gdsc/palette.dart';
+import 'package:gdsc/screens/login_page.dart';
+import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -370,7 +372,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                             ),
                                           ),
                                           onPressed: () {
-                                            ;
+                                            nextScreenReplace(
+                                                context, LoginPage());
                                           },
                                         )),
                                         const SizedBox(

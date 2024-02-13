@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gdsc/screens/Profile/updateProfile.dart';
+import 'package:gdsc/widgets/nextscreen.dart';
 
 class Profilemain extends StatefulWidget {
   const Profilemain({super.key});
@@ -12,8 +14,8 @@ class _ProfilemainState extends State<Profilemain> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFCAE3FF),
-        title: Text("Profile Page"),
+        backgroundColor: const Color(0xFFCAE3FF),
+        title: const Text("Profile Page"),
       ),
       body: Column(
         children: [
@@ -21,7 +23,7 @@ class _ProfilemainState extends State<Profilemain> {
             padding: const EdgeInsets.only(top: 8.0),
             child: Container(
               height: 128,
-              decoration: BoxDecoration(color: Color(0xFFCAE3FF)),
+              decoration: const BoxDecoration(color: Color(0xFFCAE3FF)),
               child: Row(
                 children: [
                   const Padding(
@@ -55,7 +57,9 @@ class _ProfilemainState extends State<Profilemain> {
                     width: 150,
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      nextScreen(context, updateProfile());
+                    },
                     icon: const Icon(
                       Icons.edit,
                       color: Color(0xFF024EA6),
@@ -65,16 +69,16 @@ class _ProfilemainState extends State<Profilemain> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Material(
               elevation: 4,
-              shadowColor: Color(0xFF000000),
+              shadowColor: const Color(0xFF000000),
               child: ListTile(
-                tileColor: Color(0xFFCAE3FF),
+                tileColor: const Color(0xFFCAE3FF),
                 leading: const ImageIcon(
                   AssetImage(
                     "assets/Icons/Donation.png",
@@ -88,17 +92,18 @@ class _ProfilemainState extends State<Profilemain> {
                   ),
                 ),
                 trailing: IconButton(
-                    onPressed: () {}, icon: Icon(Icons.arrow_forward_ios)),
+                    onPressed: () {},
+                    icon: const Icon(Icons.arrow_forward_ios)),
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Material(
               elevation: 4,
-              shadowColor: Color(0xFF000000),
+              shadowColor: const Color(0xFF000000),
               child: ListTile(
-                tileColor: Color(0xFFCAE3FF),
+                tileColor: const Color(0xFFCAE3FF),
                 leading: const ImageIcon(
                   AssetImage(
                     "assets/Icons/location.png",
@@ -112,17 +117,18 @@ class _ProfilemainState extends State<Profilemain> {
                   ),
                 ),
                 trailing: IconButton(
-                    onPressed: () {}, icon: Icon(Icons.arrow_forward_ios)),
+                    onPressed: () {},
+                    icon: const Icon(Icons.arrow_forward_ios)),
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Material(
               elevation: 4,
-              shadowColor: Color(0xFF000000),
+              shadowColor: const Color(0xFF000000),
               child: ListTile(
-                tileColor: Color(0xFFCAE3FF),
+                tileColor: const Color(0xFFCAE3FF),
                 leading: const ImageIcon(
                   AssetImage(
                     "assets/Icons/settings.png",
@@ -136,17 +142,18 @@ class _ProfilemainState extends State<Profilemain> {
                   ),
                 ),
                 trailing: IconButton(
-                    onPressed: () {}, icon: Icon(Icons.arrow_forward_ios)),
+                    onPressed: () {},
+                    icon: const Icon(Icons.arrow_forward_ios)),
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Material(
               elevation: 4,
-              shadowColor: Color(0xFF000000),
+              shadowColor: const Color(0xFF000000),
               child: ListTile(
-                tileColor: Color(0xFFCAE3FF),
+                tileColor: const Color(0xFFCAE3FF),
                 leading: const ImageIcon(
                   AssetImage(
                     "assets/Icons/about.png",
@@ -160,17 +167,18 @@ class _ProfilemainState extends State<Profilemain> {
                   ),
                 ),
                 trailing: IconButton(
-                    onPressed: () {}, icon: Icon(Icons.arrow_forward_ios)),
+                    onPressed: () {},
+                    icon: const Icon(Icons.arrow_forward_ios)),
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Material(
               elevation: 4,
-              shadowColor: Color(0xFF000000),
+              shadowColor: const Color(0xFF000000),
               child: ListTile(
-                tileColor: Color(0xFFCAE3FF),
+                tileColor: const Color(0xFFCAE3FF),
                 leading: const ImageIcon(
                   AssetImage(
                     "assets/Icons/logout.png",
@@ -191,57 +199,117 @@ class _ProfilemainState extends State<Profilemain> {
                             return AlertDialog(
                               title: const Center(
                                   child: Text(
-                                'Log out?',
+                                'Log out from?',
                                 style: TextStyle(fontFamily: "Inter"),
                               )),
                               content: SizedBox(
-                                height: 85,
-                                child: Column(children: [
-                                  const Text(
-                                    "Are you sure you want to log out?",
-                                    style: TextStyle(fontFamily: "Inter"),
-                                  ),
-                                  Row(
+                                height: 125,
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: OutlinedButton(
-                                            style: TextButton.styleFrom(),
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Text(
+                                      InkWell(
+                                        onTap: () {},
+                                        child: Container(
+                                          height: 40,
+                                          width: double.infinity,
+                                          decoration: const BoxDecoration(
+                                              border: Border.symmetric(
+                                                  horizontal: BorderSide(
+                                                      color: Colors.grey))),
+                                          child: const Center(
+                                            child: Text(
+                                              "Current Device",
+                                              style: TextStyle(
+                                                  fontFamily: "Inter"),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {},
+                                        child: Container(
+                                          height: 40,
+                                          width: double.infinity,
+                                          decoration: const BoxDecoration(
+                                              border: Border.symmetric(
+                                                  horizontal: BorderSide(
+                                                      color: Colors.grey))),
+                                          child: const Center(
+                                            child: Text(
+                                              "All Devices",
+                                              style: TextStyle(
+                                                  fontFamily: "Inter"),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Container(
+                                          height: 40,
+                                          width: double.infinity,
+                                          decoration: const BoxDecoration(
+                                              border: Border.symmetric(
+                                                  horizontal: BorderSide(
+                                                      color: Colors.grey))),
+                                          child: const Center(
+                                            child: Text(
                                               "Cancel",
                                               style: TextStyle(
-                                                  color: Colors.black,
                                                   fontFamily: "Inter",
-                                                  fontSize: 12),
-                                            )),
+                                                  color: Color(0xFF666666)),
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: OutlinedButton(
-                                            style: TextButton.styleFrom(
-                                                backgroundColor: Colors.red,
-                                                side: const BorderSide(
-                                                    color: Colors.red)),
-                                            onPressed: () {},
-                                            child: const Text(
-                                              "Yes, Log Out",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontFamily: "Inter",
-                                                  fontSize: 12),
-                                            )),
-                                      ),
-                                    ],
-                                  )
-                                ]),
+
+                                      // Text(
+                                      //   "Are you sure you want to log out?",
+                                      //   style: TextStyle(fontFamily: "Inter"),
+                                      // ),
+                                      // Row(
+                                      //   children: [
+                                      //     Padding(
+                                      //       padding: const EdgeInsets.all(8.0),
+                                      //       child: OutlinedButton(
+                                      //           style: TextButton.styleFrom(),
+                                      //           onPressed: () {
+                                      //             Navigator.pop(context);
+                                      //           },
+                                      //           child: const Text(
+                                      //             "Cancel",
+                                      //             style: TextStyle(
+                                      //                 color: Colors.black,
+                                      //                 fontFamily: "Inter",
+                                      //                 fontSize: 12),
+                                      //           )),
+                                      //     ),
+                                      //     Padding(
+                                      //       padding: const EdgeInsets.all(8.0),
+                                      //       child: OutlinedButton(
+                                      //           style: TextButton.styleFrom(
+                                      //               backgroundColor: Colors.red,
+                                      //               side: const BorderSide(
+                                      //                   color: Colors.red)),
+                                      //           onPressed: () {},
+                                      //           child: const Text(
+                                      //             "Yes, Log Out",
+                                      //             style: TextStyle(
+                                      //                 color: Colors.white,
+                                      //                 fontFamily: "Inter",
+                                      //                 fontSize: 12),
+                                      //           )),
+                                      //     ),
+                                      //   ],
+                                      // )
+                                    ]),
                               ),
                             );
                           });
                     },
-                    icon: Icon(Icons.arrow_forward_ios)),
+                    icon: const Icon(Icons.arrow_forward_ios)),
               ),
             ),
           ),

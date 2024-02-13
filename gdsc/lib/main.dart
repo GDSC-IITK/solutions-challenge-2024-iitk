@@ -4,7 +4,6 @@ import 'package:gdsc/screens/home/home_page.dart';
 import 'package:gdsc/screens/login_page.dart';
 import 'package:gdsc/screens/signup_page.dart';
 import 'package:gdsc/screens/Volunteer/volunteer.dart';
-import 'screens/welcome_page.dart';
 
 void main() {
   runApp(const MyApp());

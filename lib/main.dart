@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:gdsc/screens/Profile/profilemain.dart';
-import 'package:gdsc/screens/home/home_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:gdsc/firebase_options.dart';
 import 'package:gdsc/screens/login_page.dart';
-import 'package:gdsc/screens/signup_page.dart';
-import 'package:gdsc/screens/Volunteer/volunteer.dart';
 import 'package:gdsc/screens/welcome_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 

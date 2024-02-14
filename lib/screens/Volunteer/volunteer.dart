@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:gdsc/screens/Volunteer/DistancePage/custom.dart';
 import 'package:gdsc/screens/Volunteer/DistancePage/twotofive.dart';
 import 'package:gdsc/screens/Volunteer/Vcard.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
+import 'package:http/http.dart' as http;
 
 class volunteer extends StatefulWidget {
   const volunteer({super.key});
@@ -12,6 +15,26 @@ class volunteer extends StatefulWidget {
 }
 
 class _volunteerState extends State<volunteer> {
+  Map<String, dynamic> distance = {'distance': 'Loading...'};
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    var url =
+        "https://api.jsonbin.io/v3/qs/65cc9a5d1f5677401f2f1a3c"; // Replace with your JSON bin ID
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      setState(() {
+        distance = jsonDecode(response.body) as Map<String, dynamic>;
+      });
+    } else {
+      print("Unable to fetch data. Status code: ${response.statusCode}");
+    }
+  }
+
   bool b1 = true;
   bool b2 = false;
 
@@ -27,6 +50,7 @@ class _volunteerState extends State<volunteer> {
       ),
       body: Column(
         children: [
+          Text(distance['record']['distance'].toString()), //Print data
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -145,6 +169,7 @@ class _volunteerState extends State<volunteer> {
             ),
           ),
           Vcard(item: "item", quantity: "quantity", location: "location"),
+          // Text(distance['distance'])
         ],
       ),
     );

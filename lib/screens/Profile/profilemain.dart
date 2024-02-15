@@ -86,7 +86,7 @@ class _ProfilemainState extends State<Profilemain> {
                   color: Color(0xFF024EA6),
                 ),
                 title: const Text(
-                  "Name",
+                  "Your Donations",
                   style: TextStyle(
                     fontFamily: "Inter",
                   ),
@@ -106,12 +106,12 @@ class _ProfilemainState extends State<Profilemain> {
                 tileColor: const Color(0xFFCAE3FF),
                 leading: const ImageIcon(
                   AssetImage(
-                    "assets/Icons/location.png",
+                    "assets/Icons/Vactivity.png",
                   ),
                   color: Color(0xFF024EA6),
                 ),
                 title: const Text(
-                  "Location",
+                  "Volunteering Activity",
                   style: TextStyle(
                     fontFamily: "Inter",
                   ),

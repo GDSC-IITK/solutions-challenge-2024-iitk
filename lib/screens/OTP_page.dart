@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gdsc/screens/home/home_page.dart';
-import 'package:gdsc/screens/welcome_page.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 
 class OTPPage extends StatefulWidget {

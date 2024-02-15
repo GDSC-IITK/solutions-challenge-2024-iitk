@@ -101,6 +101,8 @@ class _updateProfileState extends State<updateProfile> {
             child: TextFormField(
               controller: c1,
               decoration: InputDecoration(
+                enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFFCAE3FF))),
                 labelText: "Name",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(2.0),
@@ -119,6 +121,8 @@ class _updateProfileState extends State<updateProfile> {
             child: TextFormField(
               controller: c2,
               decoration: InputDecoration(
+                enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFFCAE3FF))),
                 labelText: "Phone Number",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(2.0),
@@ -137,6 +141,8 @@ class _updateProfileState extends State<updateProfile> {
             child: TextFormField(
               controller: c3,
               decoration: InputDecoration(
+                enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFFCAE3FF))),
                 labelText: "Email ID",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(2.0),
@@ -155,6 +161,8 @@ class _updateProfileState extends State<updateProfile> {
             child: TextFormField(
               controller: c4,
               decoration: InputDecoration(
+                enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFFCAE3FF))),
                 labelText: "Address",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(2.0),

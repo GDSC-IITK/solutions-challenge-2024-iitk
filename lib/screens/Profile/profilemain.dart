@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gdsc/screens/Profile/donationactivity.dart';
+import 'package:gdsc/screens/Profile/settings.dart';
 import 'package:gdsc/screens/Profile/updateProfile.dart';
+import 'package:gdsc/screens/Profile/volunteeractivity.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 
 class Profilemain extends StatefulWidget {
@@ -24,15 +27,15 @@ class _ProfilemainState extends State<Profilemain> {
             child: Container(
               height: 128,
               decoration: const BoxDecoration(color: Color(0xFFCAE3FF)),
-              child: Row(
+              child: const Row(
                 children: [
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.all(8.0),
                     child: CircleAvatar(
                       radius: 44,
                     ),
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -53,17 +56,8 @@ class _ProfilemainState extends State<Profilemain> {
                       ],
                     ),
                   ),
-                  const SizedBox(
+                  SizedBox(
                     width: 150,
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      nextScreen(context, updateProfile());
-                    },
-                    icon: const Icon(
-                      Icons.edit,
-                      color: Color(0xFF024EA6),
-                    ),
                   ),
                 ],
               ),
@@ -92,7 +86,9 @@ class _ProfilemainState extends State<Profilemain> {
                   ),
                 ),
                 trailing: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      nextScreen(context, donationactivity());
+                    },
                     icon: const Icon(Icons.arrow_forward_ios)),
               ),
             ),
@@ -117,7 +113,9 @@ class _ProfilemainState extends State<Profilemain> {
                   ),
                 ),
                 trailing: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      nextScreen(context, volunteeractivity());
+                    },
                     icon: const Icon(Icons.arrow_forward_ios)),
               ),
             ),
@@ -142,7 +140,9 @@ class _ProfilemainState extends State<Profilemain> {
                   ),
                 ),
                 trailing: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      nextScreen(context, settings());
+                    },
                     icon: const Icon(Icons.arrow_forward_ios)),
               ),
             ),

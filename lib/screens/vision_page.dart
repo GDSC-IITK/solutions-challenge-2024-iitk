@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gdsc/screens/Volunteer/animation_page.dart';
 import 'package:gdsc/screens/login_page.dart';
 import 'package:gdsc/screens/signup_page.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 
 class VisionPage extends StatefulWidget {
   const VisionPage({super.key});
@@ -32,7 +34,8 @@ class _VisionPageState extends State<VisionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+        body: SingleChildScrollView(
+      child: Column(
         children: [
           const SizedBox(
             height: 200,
@@ -165,7 +168,7 @@ class _VisionPageState extends State<VisionPage> {
           ),
         ],
       ),
-    );
+    ));
   }
 }
 

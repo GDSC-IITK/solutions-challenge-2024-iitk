@@ -4,6 +4,7 @@ import 'package:gdsc/screens/Profile/settings.dart';
 import 'package:gdsc/screens/Profile/updateProfile.dart';
 import 'package:gdsc/screens/Profile/volunteeractivity.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class Profilemain extends StatefulWidget {
   const Profilemain({super.key});
@@ -17,6 +18,7 @@ class _ProfilemainState extends State<Profilemain> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: const Color(0xFFCAE3FF),
         title: const Text("Profile Page"),
       ),
@@ -167,7 +169,83 @@ class _ProfilemainState extends State<Profilemain> {
                   ),
                 ),
                 trailing: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Center(
+                                  child: Text(
+                                'About',
+                                style: TextStyle(
+                                    fontFamily: "Inter",
+                                    fontWeight: FontWeight.bold),
+                              )),
+                              content: SizedBox(
+                                height: 140,
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Container(
+                                        height: 40,
+                                        width: double.infinity,
+                                        decoration: const BoxDecoration(
+                                            border: Border.symmetric(
+                                                horizontal: BorderSide(
+                                                    color: Colors.grey))),
+                                        child: Center(
+                                          child: Text(
+                                            "App version:",
+                                            style:
+                                                TextStyle(fontFamily: "Inter"),
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {},
+                                        child: Container(
+                                          height: 40,
+                                          width: double.infinity,
+                                          decoration: const BoxDecoration(
+                                              border: Border.symmetric(
+                                                  horizontal: BorderSide(
+                                                      color: Colors.grey))),
+                                          child: const Center(
+                                            child: Text(
+                                              "Terms and Conditions",
+                                              style: TextStyle(
+                                                  fontFamily: "Inter"),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {},
+                                        child: Container(
+                                          height: 40,
+                                          width: double.infinity,
+                                          decoration: const BoxDecoration(
+                                              border: Border.symmetric(
+                                                  horizontal: BorderSide(
+                                                      color: Colors.grey))),
+                                          child: const Center(
+                                            child: Text(
+                                              "Privacy Policy",
+                                              style: TextStyle(
+                                                fontFamily: "Inter",
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ]),
+                              ),
+                            );
+                          });
+                    },
                     icon: const Icon(Icons.arrow_forward_ios)),
               ),
             ),
@@ -200,30 +278,18 @@ class _ProfilemainState extends State<Profilemain> {
                               title: const Center(
                                   child: Text(
                                 'Log out from?',
-                                style: TextStyle(fontFamily: "Inter"),
+                                style: TextStyle(
+                                    fontFamily: "Inter",
+                                    fontWeight: FontWeight.bold),
                               )),
                               content: SizedBox(
-                                height: 125,
+                                height: 120,
                                 child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      InkWell(
-                                        onTap: () {},
-                                        child: Container(
-                                          height: 40,
-                                          width: double.infinity,
-                                          decoration: const BoxDecoration(
-                                              border: Border.symmetric(
-                                                  horizontal: BorderSide(
-                                                      color: Colors.grey))),
-                                          child: const Center(
-                                            child: Text(
-                                              "Current Device",
-                                              style: TextStyle(
-                                                  fontFamily: "Inter"),
-                                            ),
-                                          ),
-                                        ),
+                                      Text("Are you sure you want to log out?"),
+                                      SizedBox(
+                                        height: 10,
                                       ),
                                       InkWell(
                                         onTap: () {},
@@ -236,7 +302,7 @@ class _ProfilemainState extends State<Profilemain> {
                                                       color: Colors.grey))),
                                           child: const Center(
                                             child: Text(
-                                              "All Devices",
+                                              "Log Out",
                                               style: TextStyle(
                                                   fontFamily: "Inter"),
                                             ),
@@ -264,46 +330,6 @@ class _ProfilemainState extends State<Profilemain> {
                                           ),
                                         ),
                                       ),
-
-                                      // Text(
-                                      //   "Are you sure you want to log out?",
-                                      //   style: TextStyle(fontFamily: "Inter"),
-                                      // ),
-                                      // Row(
-                                      //   children: [
-                                      //     Padding(
-                                      //       padding: const EdgeInsets.all(8.0),
-                                      //       child: OutlinedButton(
-                                      //           style: TextButton.styleFrom(),
-                                      //           onPressed: () {
-                                      //             Navigator.pop(context);
-                                      //           },
-                                      //           child: const Text(
-                                      //             "Cancel",
-                                      //             style: TextStyle(
-                                      //                 color: Colors.black,
-                                      //                 fontFamily: "Inter",
-                                      //                 fontSize: 12),
-                                      //           )),
-                                      //     ),
-                                      //     Padding(
-                                      //       padding: const EdgeInsets.all(8.0),
-                                      //       child: OutlinedButton(
-                                      //           style: TextButton.styleFrom(
-                                      //               backgroundColor: Colors.red,
-                                      //               side: const BorderSide(
-                                      //                   color: Colors.red)),
-                                      //           onPressed: () {},
-                                      //           child: const Text(
-                                      //             "Yes, Log Out",
-                                      //             style: TextStyle(
-                                      //                 color: Colors.white,
-                                      //                 fontFamily: "Inter",
-                                      //                 fontSize: 12),
-                                      //           )),
-                                      //     ),
-                                      //   ],
-                                      // )
                                     ]),
                               ),
                             );

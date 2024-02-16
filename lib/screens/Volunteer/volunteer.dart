@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gdsc/screens/Volunteer/DistancePage/custom.dart';
 import 'package:gdsc/screens/Volunteer/DistancePage/twotofive.dart';
@@ -14,13 +15,33 @@ class volunteer extends StatefulWidget {
   State<volunteer> createState() => _volunteerState();
 }
 
-class _volunteerState extends State<volunteer> {
-  Map<String, dynamic> distance = {'distance': 'Loading...'};
+class _volunteerState extends State<volunteer>
+    with SingleTickerProviderStateMixin {
+  TabController? _tabController;
+  int _newIndex = 0;
+
   @override
   void initState() {
     super.initState();
+
     fetchData();
+
+    _tabController = TabController(
+      length: 3,
+      vsync: this,
+    );
+    _tabController!.addListener(() {
+      setState(() {});
+    });
   }
+
+  @override
+  void dispose() {
+    _tabController!.dispose();
+    super.dispose();
+  }
+
+  Map<String, dynamic> distance = {'distance': 'Loading...'};
 
   Future<void> fetchData() async {
     var url =
@@ -35,141 +56,125 @@ class _volunteerState extends State<volunteer> {
     }
   }
 
-  bool b1 = true;
-  bool b2 = false;
+  Widget _tab(int index) {
+    double Width = MediaQuery.of(context).size.width; // Gives the width
 
-  bool b3 = false;
+    List<Widget> VCard = [
+      const Vcard(item: "item", quantity: "quantity", location: "location"),
+      const Vcard(item: "item", quantity: "quantity1", location: "location"),
+      const Vcard(item: "item", quantity: "quantity2", location: "location"),
+    ];
+
+    return SingleChildScrollView(
+      child: VCard[index],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    double Width = MediaQuery.of(context).size.width; // Gives the width
     return Scaffold(
       appBar: AppBar(
-        title: Text("Volunteer Page"),
-        backgroundColor: Color.fromRGBO(78, 134, 199, 0.83),
-      ),
-      body: Column(
-        children: [
-          Text(distance['record']['distance'].toString()), //Print data
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(6.0),
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        b1 = true;
-                        b2 = false;
-                        b3 = false;
-                      });
-                    },
-                    child: Container(
-                      height: 30,
-                      width: Width / 4,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: Color.fromRGBO(2, 78, 166, 1),
-                          ),
-                          color: b1 == true
-                              ? Color.fromRGBO(2, 78, 166, 1)
-                              : Colors.white),
-                      child: Center(
-                        child: Text(
-                          "0-2 km",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: b1 == true
-                                ? Colors.white
-                                : Color.fromRGBO(2, 78, 166, 1),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(6.0),
-                  child: InkWell(
-                    onTap: () {
-                      nextScreenReplace(context, twotofive());
-                      setState(() {
-                        b1 = false;
-                        b2 = true;
-                        b3 = false;
-                      });
-                    },
-                    child: Container(
-                      height: 30,
-                      width: Width / 4,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: Color.fromRGBO(2, 78, 166, 1),
-                        ),
-                        color: b2 == false
-                            ? Colors.white
-                            : Color.fromRGBO(2, 78, 166, 1),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "2-5 km",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: b2 == false
-                                ? Color.fromRGBO(2, 78, 166, 1)
-                                : Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(6.0),
-                  child: InkWell(
-                    onTap: () {
-                      nextScreenReplace(context, custom());
-                      setState(() {
-                        b1 = false;
-                        b2 = false;
-                        b3 = true;
-                      });
-                    },
-                    child: Container(
-                      height: 30,
-                      width: Width / 4,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: Color.fromRGBO(2, 78, 166, 1),
-                        ),
-                        color: b3 == false
-                            ? Colors.white
-                            : Color.fromRGBO(2, 78, 166, 1),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Custom",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: b3 == false
-                                ? Color.fromRGBO(2, 78, 166, 1)
-                                : Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+        automaticallyImplyLeading: false,
+        title: PreferredSize(
+          preferredSize: Size.fromHeight(50),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Color.fromRGBO(78, 134, 199, 0.83),
+            ),
+            height: 50,
+            child: const Center(
+              child: Text(
+                "Volunteer Page",
+                style: TextStyle(),
+              ),
             ),
           ),
-          Vcard(item: "item", quantity: "quantity", location: "location"),
-          // Text(distance['distance'])
+        ),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: [
+            Container(
+              height: 30,
+              width: MediaQuery.of(context).size.width / 4,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: Color.fromRGBO(2, 78, 166, 1),
+                ),
+                color: _tabController!.index == 0
+                    ? Color.fromRGBO(2, 78, 166, 1)
+                    : Colors.white,
+              ),
+              child: Center(
+                child: Text(
+                  "0-2 km",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: _tabController!.index == 0
+                        ? Colors.white
+                        : Color.fromRGBO(2, 78, 166, 1),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              height: 30,
+              width: MediaQuery.of(context).size.width / 4,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: Color.fromRGBO(2, 78, 166, 1),
+                ),
+                color: _tabController!.index == 1
+                    ? Color.fromRGBO(2, 78, 166, 1)
+                    : Colors.white,
+              ),
+              child: Center(
+                child: Text(
+                  "2-5 km",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: _tabController!.index == 1
+                        ? Colors.white
+                        : Color.fromRGBO(2, 78, 166, 1),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              height: 30,
+              width: MediaQuery.of(context).size.width / 4,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: Color.fromRGBO(2, 78, 166, 1),
+                ),
+                color: _tabController!.index == 2
+                    ? Color.fromRGBO(2, 78, 166, 1)
+                    : Colors.white,
+              ),
+              child: Center(
+                child: Text(
+                  "Custom",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: _tabController!.index == 2
+                        ? Colors.white
+                        : Color.fromRGBO(2, 78, 166, 1),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          _tab(0),
+          _tab(1),
+          _tab(2),
         ],
       ),
     );

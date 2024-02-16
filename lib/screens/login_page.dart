@@ -3,15 +3,18 @@ import 'package:gdsc/screens/OTP_page.dart';
 import 'package:gdsc/screens/phone_login_page.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,8 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: InputDecoration(
                         labelText: 'Phone Number, email address or username',
                         floatingLabelBehavior: FloatingLabelBehavior.never,
-                        labelStyle:
-                            TextStyle(color: Colors.white, fontSize: 13),
+                        labelStyle: TextStyle(color: Colors.white, fontSize: 13),
                         filled: true,
                         fillColor: Color.fromARGB(255, 110, 136, 189),
                         border: OutlineInputBorder(
@@ -70,8 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: InputDecoration(
                         labelText: 'Password',
                         floatingLabelBehavior: FloatingLabelBehavior.never,
-                        labelStyle:
-                            TextStyle(color: Colors.white, fontSize: 13),
+                        labelStyle: TextStyle(color: Colors.white, fontSize: 13),
                         filled: true,
                         fillColor: Color.fromARGB(255, 110, 136, 189),
                         border: OutlineInputBorder(
@@ -116,8 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => PhoneLoginPage()),
+                          MaterialPageRoute(builder: (context) => PhoneLoginPage()),
                         );
                       },
                       child: Text(
@@ -157,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 10),
                     RawMaterialButton(
                       onPressed: () {
-                        // TODO:
+                        _handleGoogleSignIn();
                       },
                       elevation: 2.0,
                       fillColor: Colors.white,
@@ -192,5 +192,20 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  Future<void> _handleGoogleSignIn() async {
+    try {
+      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+      if (googleSignInAccount != null) {
+        print('User signed in with Google: ${googleSignInAccount.displayName}');
+
+        //navigate to another screen here
+      } else {
+        print('Failed to sign in with Google');
+      }
+    } catch (error) {
+      print('Error signing in with Google: $error');
+    }
   }
 }

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gdsc/screens/signup_page.dart';
-import 'package:gdsc/widgets/nextscreen.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 
 class PhoneLoginPage extends StatefulWidget {
   const PhoneLoginPage({Key? key}) : super(key: key);
@@ -14,13 +10,13 @@ class PhoneLoginPage extends StatefulWidget {
 }
 
 class _PhoneLoginPageState extends State<PhoneLoginPage> {
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  TextEditingController _phoneNumberController = TextEditingController();
-  TextEditingController _otpController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _otpController = TextEditingController();
   late String _verificationId = '';
 
   Future<void> _verifyPhoneNumber() async {
-    String phoneNumber = '+91' + _phoneNumberController.text.trim();
+    String phoneNumber = '+91${_phoneNumberController.text.trim()}';
     await _auth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
       verificationCompleted: (PhoneAuthCredential credential) async {
@@ -32,7 +28,7 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
         );
       },
       verificationFailed: (FirebaseAuthException e) {
-        print('Error: ${e.message}');
+        debugPrint('Error: ${e.message}');
       },
       codeSent: (String verificationId, int? resendToken) {
         _verificationId = verificationId;
@@ -41,6 +37,7 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
           context,
           MaterialPageRoute(
             builder: (context) => OtpVerificationPage(
+              otpController: _otpController,
               verificationId: _verificationId,
             ),
           ),
@@ -65,7 +62,7 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
         MaterialPageRoute(builder: (context) => NextScreen()),
       );
     } catch (e) {
-      print('Error: $e');
+      debugPrint('Error: $e');
     }
   }
 
@@ -83,7 +80,7 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 'OTP Verification',
                 style: TextStyle(
                   fontSize: 24.0,
@@ -91,52 +88,52 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: 8.0),
-              Text(
+              const SizedBox(height: 8.0),
+              const Text(
                 'We will send you one time password',
                 style: TextStyle(
                   fontSize: 13.0,
                   color: Color.fromARGB(255, 112, 110, 110),
                 ),
               ),
-              SizedBox(height: 5.0),
-              Text(
+              const SizedBox(height: 5.0),
+              const Text(
                 'for your mobile number',
                 style: TextStyle(
                   fontSize: 13.0,
                   color: Color.fromARGB(255, 112, 110, 110),
                 ),
               ),
-              SizedBox(height: 60.0),
-              Text(
+              const SizedBox(height: 60.0),
+              const Text(
                 'Enter mobile number',
                 style: TextStyle(fontSize: 13.0, color: Colors.grey),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 100.0),
                 child: TextField(
+                  controller: _phoneNumberController,
                   decoration: InputDecoration(
                     // hintText: 'Enter phone number',
                     hintStyle: TextStyle(color: Colors.grey),
-                    enabledBorder: UnderlineInputBorder(
+                    enabledBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
                     ),
-                    focusedBorder: UnderlineInputBorder(
+                    focusedBorder: const UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
                     ),
                   ),
                   keyboardType: TextInputType.phone,
                   textAlign: TextAlign.center,
                   maxLines: 1,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
                     LengthLimitingTextInputFormatter(14),
-                    PhoneNumberFormatter()
                   ],
                 ),
               ),
-              SizedBox(height: 60.0),
+              const SizedBox(height: 60.0),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32.0),
                 child: ElevatedButton(
@@ -144,7 +141,7 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 35, vertical: 10),
-                    child: Text(
+                    child: const Text(
                       'Get OTP',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -155,7 +152,7 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
                   ),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        Color.fromARGB(255, 6, 97, 171)),
+                        const Color.fromARGB(255, 6, 97, 171)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(13.0),
@@ -172,44 +169,51 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
   }
 }
 
-class PhoneNumberFormatter extends TextInputFormatter {
-  @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    final List<String> digits =
-        newValue.text.replaceAll(RegExp(r'\D'), '').split('');
 
-    final StringBuffer newText = StringBuffer();
-
-    // Append country code
-    if (digits.length > 0) {
-      newText.write('+${digits[0]}');
-      if (digits.length > 3) newText.write(' ');
-    }
-
-    for (int i = 1; i < digits.length; i++) {
-      if (i == 4) newText.write(' ');
-      newText.write(digits[i]);
-    }
-
-    return TextEditingValue(
-      text: newText.toString(),
-      selection: TextSelection.collapsed(offset: newText.length),
-    );
-  }
-}
 
 class OtpVerificationPage extends StatelessWidget {
   final String verificationId;
+  final TextEditingController otpController;
 
-  const OtpVerificationPage({Key? key, required this.verificationId})
-      : super(key: key);
+  const OtpVerificationPage({
+    Key? key,
+    required this.verificationId,
+    required this.otpController,
+  }) : super(key: key);
+
+  Future<void> _verifyOTP(BuildContext context) async {
+    String enteredOTP = otpController.text.trim();
+
+    try {
+      // Create a PhoneAuthCredential with the verificationId and the entered OTP
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationId,
+        smsCode: enteredOTP,
+      );
+
+      // Sign in the user with the credential
+      await FirebaseAuth.instance.signInWithCredential(credential);
+
+      // Navigate to the next screen upon successful verification
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => NextScreen()),
+      );
+    } catch (e) {
+      // If there's an error during verification, display an error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error verifying OTP: $e'),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('OTP Verification'),
+        title: const Text('OTP Verification'),
       ),
       body: Center(
         child: Column(
@@ -218,17 +222,16 @@ class OtpVerificationPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
+                controller: otpController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Enter OTP',
                 ),
               ),
             ),
             ElevatedButton(
-              onPressed: () {
-                // Implement OTP verification logic here
-              },
-              child: Text('Verify OTP'),
+              onPressed: () => _verifyOTP(context),
+              child: const Text('Verify OTP'),
             ),
           ],
         ),
@@ -238,14 +241,16 @@ class OtpVerificationPage extends StatelessWidget {
 }
 
 class NextScreen extends StatelessWidget {
+  const NextScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Next Screen'),
+        title: const Text('Next Screen'),
       ),
       body: Center(
-        child: Text('You have successfully logged in!'),
+        child: const Text('You have successfully logged in!'),
       ),
     );
   }

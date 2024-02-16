@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: () {
-                        nextScreenReplace(context, OTPPage());
+                        nextScreen(context, OTPPage());
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(

@@ -45,415 +45,436 @@ class _SignUpPageState extends State<SignUpPage> {
                           topRight: Radius.circular(60.0),
                         )),
                     child: Center(
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                          Align(
-                              alignment: Alignment.topLeft,
-                              child: Container(
-                                  padding: EdgeInsets.only(
-                                      left: 45, top: 40, right: 40),
-                                  child: Form(
-                                      key: formKey,
-                                      child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text("Create an account",
-                                                style: GoogleFonts.poppins(
-                                                  color: Color.fromRGBO(
-                                                      255, 253, 251, 1),
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 25.0,
-                                                )),
-                                            Text("Sign up to continue",
-                                                style: GoogleFonts.poppins(
-                                                  color: Color.fromRGBO(
-                                                      255, 255, 255, 0.59),
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 12.0,
-                                                )),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            ConstrainedBox(
-                                                constraints:
-                                                    const BoxConstraints(),
-                                                child: TextFormField(
-                                                  decoration: textInputDecoration
-                                                      .copyWith(
-                                                          focusedBorder:
-                                                              OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0),
-                                                            borderSide:
-                                                                const BorderSide(
+                        child: SingleChildScrollView(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                                alignment: Alignment.topLeft,
+                                child: Container(
+                                    padding: EdgeInsets.only(
+                                        left: 45, top: 40, right: 40),
+                                    child: Form(
+                                        key: formKey,
+                                        child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text("Create an account",
+                                                  style: GoogleFonts.poppins(
+                                                    color: Color.fromRGBO(
+                                                        255, 253, 251, 1),
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 25.0,
+                                                  )),
+                                              Text("Sign up to continue",
+                                                  style: GoogleFonts.poppins(
+                                                    color: Color.fromRGBO(
+                                                        255, 255, 255, 0.59),
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 12.0,
+                                                  )),
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                              ConstrainedBox(
+                                                  constraints:
+                                                      const BoxConstraints(),
+                                                  child: TextFormField(
+                                                    decoration: textInputDecoration
+                                                        .copyWith(
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                color: Colors
+                                                                    .white,
+                                                                width: 2.0,
+                                                              ),
+                                                            ),
+                                                            enabledBorder:
+                                                                const OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Colors
+                                                                    .white,
+                                                                width: 2.0,
+                                                              ),
+                                                            ),
+                                                            errorBorder:
+                                                                const OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Colors
+                                                                    .white,
+                                                                width: 2.0,
+                                                              ),
+                                                            ),
+                                                            focusedErrorBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                color: Colors
+                                                                    .white,
+                                                                width: 2.0,
+                                                              ),
+                                                            ),
+                                                            labelText:
+                                                                "Full Name",
+                                                            labelStyle:
+                                                                GoogleFonts
+                                                                    .poppins(
                                                               color:
                                                                   Colors.white,
-                                                              width: 2.0,
+                                                              fontSize: 15.0,
                                                             ),
-                                                          ),
-                                                          enabledBorder:
-                                                              const OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
+                                                            errorStyle:
+                                                                GoogleFonts
+                                                                    .firaMono(
                                                               color:
                                                                   Colors.white,
-                                                              width: 2.0,
+                                                              fontSize: 10.0,
                                                             ),
-                                                          ),
-                                                          errorBorder:
-                                                              const OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
+                                                            prefixIcon:
+                                                                const Icon(
+                                                              Icons.person,
                                                               color:
                                                                   Colors.white,
-                                                              width: 2.0,
+                                                            )),
+                                                    onChanged: (val) {
+                                                      setState(() {
+                                                        fullName = val;
+                                                      });
+                                                    },
+                                                    validator: (val) {
+                                                      if (val!.isNotEmpty) {
+                                                        return null;
+                                                      } else {
+                                                        return "Name cannot be empty";
+                                                      }
+                                                    },
+                                                  )),
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              ConstrainedBox(
+                                                  constraints:
+                                                      const BoxConstraints(),
+                                                  child: TextFormField(
+                                                    decoration: textInputDecoration
+                                                        .copyWith(
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                color: Colors
+                                                                    .white,
+                                                                width: 2.0,
+                                                              ),
                                                             ),
-                                                          ),
-                                                          focusedErrorBorder:
-                                                              OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0),
-                                                            borderSide:
-                                                                const BorderSide(
+                                                            enabledBorder:
+                                                                const OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Colors
+                                                                    .white,
+                                                                width: 2.0,
+                                                              ),
+                                                            ),
+                                                            errorBorder:
+                                                                const OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Colors
+                                                                    .white,
+                                                                width: 2.0,
+                                                              ),
+                                                            ),
+                                                            focusedErrorBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                color: Colors
+                                                                    .white,
+                                                                width: 2.0,
+                                                              ),
+                                                            ),
+                                                            labelText:
+                                                                "Username",
+                                                            labelStyle:
+                                                                GoogleFonts
+                                                                    .poppins(
                                                               color:
                                                                   Colors.white,
-                                                              width: 2.0,
+                                                              fontSize: 15.0,
                                                             ),
-                                                          ),
-                                                          labelText:
-                                                              "Full Name",
-                                                          labelStyle:
-                                                              GoogleFonts
-                                                                  .poppins(
-                                                            color: Colors.white,
-                                                            fontSize: 15.0,
-                                                          ),
-                                                          errorStyle:
-                                                              GoogleFonts
-                                                                  .firaMono(
-                                                            color: Colors.white,
-                                                            fontSize: 10.0,
-                                                          ),
-                                                          prefixIcon:
-                                                              const Icon(
-                                                            Icons.person,
-                                                            color: Colors.white,
-                                                          )),
-                                                  onChanged: (val) {
-                                                    setState(() {
-                                                      fullName = val;
-                                                    });
-                                                  },
-                                                  validator: (val) {
-                                                    if (val!.isNotEmpty) {
-                                                      return null;
-                                                    } else {
-                                                      return "Name cannot be empty";
-                                                    }
-                                                  },
-                                                )),
-                                            SizedBox(
-                                              height: 20,
-                                            ),
-                                            ConstrainedBox(
-                                                constraints:
-                                                    const BoxConstraints(),
-                                                child: TextFormField(
-                                                  decoration: textInputDecoration
-                                                      .copyWith(
-                                                          focusedBorder:
-                                                              OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0),
-                                                            borderSide:
-                                                                const BorderSide(
+                                                            errorStyle:
+                                                                GoogleFonts
+                                                                    .firaMono(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
                                                               color:
                                                                   Colors.white,
-                                                              width: 2.0,
+                                                              fontSize: 13.0,
                                                             ),
-                                                          ),
-                                                          enabledBorder:
-                                                              const OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
+                                                            prefixIcon:
+                                                                const Icon(
+                                                              Icons.person,
                                                               color:
                                                                   Colors.white,
-                                                              width: 2.0,
+                                                            )),
+                                                    onChanged: (val) {
+                                                      setState(() {
+                                                        userName = val;
+                                                      });
+                                                    },
+                                                    validator: (val) {
+                                                      if (val!.isNotEmpty) {
+                                                        return null;
+                                                      } else {
+                                                        return "Name cannot be empty";
+                                                      }
+                                                    },
+                                                  )),
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              ConstrainedBox(
+                                                  constraints:
+                                                      const BoxConstraints(),
+                                                  child: TextFormField(
+                                                    decoration: textInputDecoration
+                                                        .copyWith(
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                color: Colors
+                                                                    .white,
+                                                                width: 2.0,
+                                                              ),
                                                             ),
-                                                          ),
-                                                          errorBorder:
-                                                              const OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
+                                                            enabledBorder:
+                                                                const OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Colors
+                                                                    .white,
+                                                                width: 2.0,
+                                                              ),
+                                                            ),
+                                                            errorBorder:
+                                                                const OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Colors
+                                                                    .white,
+                                                                width: 2.0,
+                                                              ),
+                                                            ),
+                                                            focusedErrorBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                color: Colors
+                                                                    .white,
+                                                                width: 2.0,
+                                                              ),
+                                                            ),
+                                                            labelText: "Email",
+                                                            labelStyle:
+                                                                GoogleFonts
+                                                                    .poppins(
                                                               color:
                                                                   Colors.white,
-                                                              width: 2.0,
+                                                              fontSize: 15.0,
                                                             ),
-                                                          ),
-                                                          focusedErrorBorder:
-                                                              OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0),
-                                                            borderSide:
-                                                                const BorderSide(
+                                                            errorStyle:
+                                                                GoogleFonts
+                                                                    .firaMono(
                                                               color:
                                                                   Colors.white,
-                                                              width: 2.0,
+                                                              fontSize: 10.0,
                                                             ),
-                                                          ),
-                                                          labelText: "Username",
-                                                          labelStyle:
-                                                              GoogleFonts
-                                                                  .poppins(
-                                                            color: Colors.white,
-                                                            fontSize: 15.0,
-                                                          ),
-                                                          errorStyle:
-                                                              GoogleFonts
-                                                                  .firaMono(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color: Colors.white,
-                                                            fontSize: 13.0,
-                                                          ),
-                                                          prefixIcon:
-                                                              const Icon(
-                                                            Icons.person,
-                                                            color: Colors.white,
-                                                          )),
-                                                  onChanged: (val) {
-                                                    setState(() {
-                                                      userName = val;
-                                                    });
-                                                  },
-                                                  validator: (val) {
-                                                    if (val!.isNotEmpty) {
-                                                      return null;
-                                                    } else {
-                                                      return "Name cannot be empty";
-                                                    }
-                                                  },
-                                                )),
-                                            SizedBox(
-                                              height: 20,
-                                            ),
-                                            ConstrainedBox(
-                                                constraints:
-                                                    const BoxConstraints(),
-                                                child: TextFormField(
-                                                  decoration: textInputDecoration
-                                                      .copyWith(
-                                                          focusedBorder:
-                                                              OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0),
-                                                            borderSide:
-                                                                const BorderSide(
+                                                            prefixIcon:
+                                                                const Icon(
+                                                              Icons.email,
                                                               color:
                                                                   Colors.white,
-                                                              width: 2.0,
-                                                            ),
-                                                          ),
-                                                          enabledBorder:
-                                                              const OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                              color:
-                                                                  Colors.white,
-                                                              width: 2.0,
-                                                            ),
-                                                          ),
-                                                          errorBorder:
-                                                              const OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                              color:
-                                                                  Colors.white,
-                                                              width: 2.0,
-                                                            ),
-                                                          ),
-                                                          focusedErrorBorder:
-                                                              OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0),
-                                                            borderSide:
-                                                                const BorderSide(
-                                                              color:
-                                                                  Colors.white,
-                                                              width: 2.0,
-                                                            ),
-                                                          ),
-                                                          labelText: "Email",
-                                                          labelStyle:
-                                                              GoogleFonts
-                                                                  .poppins(
-                                                            color: Colors.white,
-                                                            fontSize: 15.0,
-                                                          ),
-                                                          errorStyle:
-                                                              GoogleFonts
-                                                                  .firaMono(
-                                                            color: Colors.white,
-                                                            fontSize: 10.0,
-                                                          ),
-                                                          prefixIcon:
-                                                              const Icon(
-                                                            Icons.email,
-                                                            color: Colors.white,
-                                                          )),
-                                                  onChanged: (val) {
-                                                    setState(() {
-                                                      email = val;
-                                                    });
-                                                  },
+                                                            )),
+                                                    onChanged: (val) {
+                                                      setState(() {
+                                                        email = val;
+                                                      });
+                                                    },
 
-                                                  // check tha validation
-                                                  validator: (val) {
-                                                    return RegExp(
-                                                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                                            .hasMatch(val!)
-                                                        ? null
-                                                        : "Please enter a valid email";
-                                                  },
-                                                )),
-                                            SizedBox(
-                                              height: 20,
-                                            ),
-                                            ConstrainedBox(
-                                                constraints:
-                                                    const BoxConstraints(),
-                                                child: TextFormField(
-                                                  obscureText: true,
-                                                  decoration: textInputDecoration
-                                                      .copyWith(
-                                                          focusedBorder:
-                                                              OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0),
-                                                            borderSide:
-                                                                const BorderSide(
-                                                              color:
-                                                                  Colors.white,
-                                                              width: 2.0,
-                                                            ),
-                                                          ),
-                                                          enabledBorder:
-                                                              const OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                              color:
-                                                                  Colors.white,
-                                                              width: 2.0,
-                                                            ),
-                                                          ),
-                                                          errorBorder:
-                                                              const OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                              color:
-                                                                  Colors.white,
-                                                              width: 2.0,
-                                                            ),
-                                                          ),
-                                                          focusedErrorBorder:
-                                                              OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0),
-                                                            borderSide:
-                                                                const BorderSide(
-                                                              color:
-                                                                  Colors.white,
-                                                              width: 2.0,
-                                                            ),
-                                                          ),
-                                                          labelText: "Password",
-                                                          labelStyle:
-                                                              GoogleFonts
-                                                                  .poppins(
-                                                            color: Colors.white,
-                                                            fontSize: 15.0,
-                                                          ),
-                                                          errorStyle:
-                                                              GoogleFonts
-                                                                  .firaMono(
-                                                            color: Colors.white,
-                                                            fontSize: 10.0,
-                                                          ),
-                                                          prefixIcon:
-                                                              const Icon(
-                                                            Icons.lock,
-                                                            color: Colors.white,
-                                                          )),
-                                                  validator: (val) {
-                                                    if (val!.length < 6) {
-                                                      return "Password must be at least 6 characters";
-                                                    } else {
-                                                      return null;
-                                                    }
-                                                  },
-                                                  onChanged: (val) {
-                                                    setState(() {
-                                                      password = val;
-                                                    });
-                                                  },
-                                                )),
-                                            const SizedBox(
-                                              height: 50,
-                                            ),
-                                            Center(
-                                                child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor: Colors.white,
-                                                shadowColor: Colors.transparent,
-                                                fixedSize: const Size(190, 55),
+                                                    // check tha validation
+                                                    validator: (val) {
+                                                      return RegExp(
+                                                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                                              .hasMatch(val!)
+                                                          ? null
+                                                          : "Please enter a valid email";
+                                                    },
+                                                  )),
+                                              SizedBox(
+                                                height: 20,
                                               ),
-                                              child: Text(
-                                                "Get Started",
-                                                style: GoogleFonts.poppins(
-                                                  color: Color.fromRGBO(
-                                                      2, 78, 166, 1),
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 23.0,
+                                              ConstrainedBox(
+                                                  constraints:
+                                                      const BoxConstraints(),
+                                                  child: TextFormField(
+                                                    obscureText: true,
+                                                    decoration: textInputDecoration
+                                                        .copyWith(
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                color: Colors
+                                                                    .white,
+                                                                width: 2.0,
+                                                              ),
+                                                            ),
+                                                            enabledBorder:
+                                                                const OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Colors
+                                                                    .white,
+                                                                width: 2.0,
+                                                              ),
+                                                            ),
+                                                            errorBorder:
+                                                                const OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Colors
+                                                                    .white,
+                                                                width: 2.0,
+                                                              ),
+                                                            ),
+                                                            focusedErrorBorder:
+                                                                OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                color: Colors
+                                                                    .white,
+                                                                width: 2.0,
+                                                              ),
+                                                            ),
+                                                            labelText:
+                                                                "Password",
+                                                            labelStyle:
+                                                                GoogleFonts
+                                                                    .poppins(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 15.0,
+                                                            ),
+                                                            errorStyle:
+                                                                GoogleFonts
+                                                                    .firaMono(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 10.0,
+                                                            ),
+                                                            prefixIcon:
+                                                                const Icon(
+                                                              Icons.lock,
+                                                              color:
+                                                                  Colors.white,
+                                                            )),
+                                                    validator: (val) {
+                                                      if (val!.length < 6) {
+                                                        return "Password must be at least 6 characters";
+                                                      } else {
+                                                        return null;
+                                                      }
+                                                    },
+                                                    onChanged: (val) {
+                                                      setState(() {
+                                                        password = val;
+                                                      });
+                                                    },
+                                                  )),
+                                              const SizedBox(
+                                                height: 50,
+                                              ),
+                                              Center(
+                                                  child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors.white,
+                                                  shadowColor:
+                                                      Colors.transparent,
+                                                  fixedSize:
+                                                      const Size(190, 55),
                                                 ),
-                                              ),
-                                              onPressed: () {
-                                                register();
-                                              },
-                                            )),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            Center(
                                                 child: Text(
-                                                    "Already have an account ? Login",
-                                                    textAlign: TextAlign.center,
-                                                    style: GoogleFonts.poppins(
-                                                      color: Color.fromRGBO(
-                                                          255, 253, 251, 1),
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 15.0,
-                                                    ))),
-                                          ])))),
-                        ]))),
+                                                  "Get Started",
+                                                  style: GoogleFonts.poppins(
+                                                    color: Color.fromRGBO(
+                                                        2, 78, 166, 1),
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 23.0,
+                                                  ),
+                                                ),
+                                                onPressed: () {
+                                                  register();
+                                                },
+                                              )),
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                              Center(
+                                                  child: Text(
+                                                      "Already have an account ? Login",
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                        color: Color.fromRGBO(
+                                                            255, 253, 251, 1),
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 15.0,
+                                                      ))),
+                                            ])))),
+                          ]),
+                    ))),
               )),
             ]))));
   }

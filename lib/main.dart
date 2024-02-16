@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: _isSignedIn ? const LoginPage() : const Profilemain(),
+      home: _isSignedIn ? const LoginPage() : const WelcomePage(),
     );
   }
 }

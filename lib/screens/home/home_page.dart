@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gdsc/palette.dart';
+import 'package:gdsc/screens/Maps/maps.dart';
 import 'package:gdsc/screens/Profile/profilemain.dart';
 import 'package:gdsc/screens/Volunteer/volunteer.dart';
 import 'package:gdsc/screens/home/post_scroll_page.dart';
 import 'package:gdsc/screens/home/title_page.dart';
 import 'package:gdsc/screens/home/yo.dart';
+import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
@@ -51,7 +53,9 @@ class _HomePageState extends State<HomePage> {
         ]),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              nextScreen(context, Maps());
+            },
             icon: Icon(Icons.mail),
             color: Colors.white,
           ),

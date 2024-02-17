@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gdsc/function/getuser.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:gdsc/provider.dart';
 
 class HomePage extends StatefulWidget {
+  HomePage({Key? key}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -15,19 +20,47 @@ class _HomePageState extends State<HomePage> {
     'assets/images/home_image.jpeg',
   ];
 
+  String _userMail = "";
+  String _UserName = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserName();
+  }
+
+  // Function to load user's name from Firebase
+  void _loadUserName() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        _userMail = user.email ?? "";
+      });
+      Map<String, String> userData = await fetchData(_userMail);
+      setState(() {
+        _UserName = userData['userName'] ?? '';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    UserProvider userProvider = Provider.of<UserProvider>(context);
+    String userName = userProvider.user?.displayName ?? 'Guest';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 2, 78, 166),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Welcome, @username!', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-            Text('Your step to eradicate hunger', style: TextStyle(
-              color: Colors.white,
-              fontSize: 12.0,
-            )),
+            Text('Welcome, @$_UserName!',
+                style: TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold)),
+            Text('Your step to eradicate hunger',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12.0,
+                )),
           ],
         ),
         actions: [
@@ -79,7 +112,8 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.black.withOpacity(1),
                     ),
                     child: Padding(
-                      padding: const EdgeInsetsDirectional.only(start: 8.0, end: 16.0),
+                      padding: const EdgeInsetsDirectional.only(
+                          start: 8.0, end: 16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -96,7 +130,8 @@ class _HomePageState extends State<HomePage> {
                                 '4 km away',
                                 style: TextStyle(
                                   color: Colors.grey,
-                                  fontSize: 12.0,),
+                                  fontSize: 12.0,
+                                ),
                               ),
                             ],
                           ),

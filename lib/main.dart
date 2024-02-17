@@ -1,39 +1,52 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gdsc/firebase_options.dart';
-import 'package:gdsc/screens/Profile/profilemain.dart';
-import 'package:gdsc/screens/Volunteer/location.dart';
-
-import 'package:gdsc/screens/Volunteer/map_animation_page.dart';
-
-import 'package:gdsc/screens/home/home_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart'; // Import Provider
 import 'package:gdsc/screens/login_page.dart';
-import 'package:gdsc/screens/vision_page.dart';
-import 'package:gdsc/screens/welcome_page.dart';
+import 'package:gdsc/screens/home/home_page.dart';
+import 'package:gdsc/provider.dart'; // Import your Provider class
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  bool _isSignedIn = false;
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      home: _isSignedIn ? const LoginPage() : const LoginPage(),
+    return MultiProvider( // Use MultiProvider if you have multiple providers
+      providers: [
+        ChangeNotifierProvider<UserProvider>.value(
+          value: UserProvider(), // Provide your UserProvider instance
+        ),
+        // Add other providers if needed
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        home: AuthenticationWrapper(),
+      ),
+    );
+  }
+}
+
+class AuthenticationWrapper extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+        if (snapshot.hasData) {
+          return HomePage();
+        } else {
+          return LoginPage();
+        }
+      },
     );
   }
 }

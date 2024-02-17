@@ -5,15 +5,42 @@ import 'package:gdsc/screens/Profile/updateProfile.dart';
 import 'package:gdsc/screens/Profile/volunteeractivity.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gdsc/function/getuser.dart';
 
 class Profilemain extends StatefulWidget {
-  const Profilemain({super.key});
+  const Profilemain({Key? key}) : super(key: key);
 
   @override
   State<Profilemain> createState() => _ProfilemainState();
 }
 
 class _ProfilemainState extends State<Profilemain> {
+  String _userMail = "";
+  String _UserName = "";
+  String _fullName = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserName();
+  }
+
+  // Function to load user's name from Firebase
+  void _loadUserName() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        _userMail = user.email ?? "";
+      });
+      Map<String, String> userData = await fetchData(_userMail);
+      setState(() {
+        _UserName = userData['userName'] ?? '';
+        _fullName = userData['fullName'] ?? '';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +56,7 @@ class _ProfilemainState extends State<Profilemain> {
             child: Container(
               height: 128,
               decoration: const BoxDecoration(color: Color(0xFFCAE3FF)),
-              child: const Row(
+              child: Row(
                 children: [
                   Padding(
                     padding: EdgeInsets.all(8.0),
@@ -43,14 +70,14 @@ class _ProfilemainState extends State<Profilemain> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Name",
+                          "$_fullName",
                           style: TextStyle(
                               fontSize: 20,
                               fontFamily: "Inter",
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          "@name",
+                          "@$_UserName",
                           style: TextStyle(
                             fontFamily: "Inter",
                           ),

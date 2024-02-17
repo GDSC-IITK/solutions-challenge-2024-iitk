@@ -75,7 +75,7 @@ class Page1 extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              nextScreen(
+              nextScreenReplace(
                 context,
                 Page2(
                     itemname: itemname,

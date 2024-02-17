@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gdsc/screens/Volunteer/volunteer.dart';
+import 'package:gdsc/screens/home/home_page.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 
 class Page2 extends StatelessWidget {
@@ -82,15 +84,7 @@ class Page2 extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              nextScreen(
-                context,
-                Page2(
-                    itemname: itemname,
-                    quantity: quantity,
-                    location: location,
-                    remarks: remarks,
-                    organization: organization),
-              );
+              nextScreenReplace(context, HomePage());
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),

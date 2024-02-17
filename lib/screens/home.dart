@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
+class HomePagenew extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePagenew> {
   List<String> imageUrls = [
     'assets/images/home_image.jpeg',
     'assets/images/home_image.jpeg',
@@ -18,38 +18,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 2, 78, 166),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Welcome, @username!', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-            Text('Your step to eradicate hunger', style: TextStyle(
-              color: Colors.white,
-              fontSize: 12.0,
-            )),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add, color: Colors.white),
-            onPressed: () {
-              // to do
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.notifications, color: Colors.white),
-            onPressed: () {
-              // to do
-            },
-          ),
-        ],
-      ),
       body: GridView.count(
         crossAxisCount: 2,
         children: List.generate(imageUrls.length, (index) {
           return Container(
-            margin: EdgeInsets.all(8.0),
+            margin: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               color: Colors.grey[200],
               borderRadius: BorderRadius.circular(16.0),
@@ -58,7 +31,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16.0),
-                  child: Image.network(
+                  child: Image.asset(
                     imageUrls[index],
                     fit: BoxFit.cover,
                     width: double.infinity,
@@ -79,7 +52,8 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.black.withOpacity(1),
                     ),
                     child: Padding(
-                      padding: const EdgeInsetsDirectional.only(start: 8.0, end: 16.0),
+                      padding: const EdgeInsetsDirectional.only(
+                          start: 8.0, end: 16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -96,7 +70,8 @@ class _HomePageState extends State<HomePage> {
                                 '4 km away',
                                 style: TextStyle(
                                   color: Colors.grey,
-                                  fontSize: 12.0,),
+                                  fontSize: 12.0,
+                                ),
                               ),
                             ],
                           ),

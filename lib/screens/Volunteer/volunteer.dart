@@ -155,7 +155,7 @@ class _volunteerState extends State<volunteer>
               ),
               child: Center(
                 child: Text(
-                  "Custom",
+                  "5+ km",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: _tabController!.index == 2

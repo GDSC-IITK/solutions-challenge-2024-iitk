@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gdsc/screens/Volunteer/animation_page.dart';
 import 'package:gdsc/screens/login_page.dart';
 import 'package:gdsc/screens/signup_page.dart';
 import 'package:gdsc/widgets/nextscreen.dart';

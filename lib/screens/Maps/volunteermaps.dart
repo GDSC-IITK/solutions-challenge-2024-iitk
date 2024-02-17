@@ -5,14 +5,14 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Maps extends StatefulWidget {
-  const Maps({super.key});
+class volunteerMaps extends StatefulWidget {
+  const volunteerMaps({super.key});
 
   @override
-  State<Maps> createState() => _MapsState();
+  State<volunteerMaps> createState() => _MapsState();
 }
 
-class _MapsState extends State<Maps> {
+class _MapsState extends State<volunteerMaps> {
   Completer<GoogleMapController> _controller = Completer();
 
   static CameraPosition loc =
@@ -73,8 +73,11 @@ class _MapsState extends State<Maps> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Map"),
-        backgroundColor: Color(0xFFCAE3FF),
+        title: Text(
+          "Location",
+          style: TextStyle(fontWeight: FontWeight.w800, fontFamily: "Inter"),
+        ),
+        centerTitle: true,
       ),
       body: Column(
         children: [

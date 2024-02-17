@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gdsc/screens/Maps/volunteermaps.dart';
 import 'package:gdsc/screens/Volunteer/volunteer.dart';
 import 'package:gdsc/screens/home/home_page.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
@@ -79,7 +80,7 @@ class Page2 extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              nextScreenReplace(context, HomePage());
+              nextScreenReplace(context, volunteerMaps());
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),

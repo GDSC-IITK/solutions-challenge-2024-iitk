@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gdsc/palette.dart';
 import 'package:gdsc/screens/Maps/maps.dart';
+import 'package:gdsc/screens/Maps/spotsomeone.dart';
 import 'package:gdsc/screens/Profile/profilemain.dart';
+import 'package:gdsc/screens/Volunteer/donate_page.dart';
 import 'package:gdsc/screens/Volunteer/volunteer.dart';
 import 'package:gdsc/screens/home.dart';
 import 'package:gdsc/screens/home/post_scroll_page.dart';
@@ -13,7 +15,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:gdsc/function/getuser.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -23,7 +24,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int current_index = 0;
-  final List<Widget> pages = [HomePagenew(), yo(), volunteer(), Profilemain()];
+  final List<Widget> pages = [
+    HomePagenew(),
+    DonatePage(),
+    volunteer(),
+    Profilemain()
+  ];
 
   void OnTapped(int index) {
     setState(() {
@@ -76,7 +82,67 @@ class _HomePageState extends State<HomePage> {
         ]),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                        title: Column(
+                          children: [
+                            Text(
+                              "Spot Someone in Need",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: "Inter"),
+                            ),
+                            SizedBox(height: 30),
+                            Text(
+                              "Help us reach those in need! If you come across someone who could benefit from our support, you can pin their location on the map.",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: "Inter"),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            OutlinedButton(
+                              onPressed: () {
+                                nextScreen(context, spotSomeone());
+                              },
+                              child: Text(
+                                "Go Ahead",
+                                style: TextStyle(
+                                    color: Color(0xFFFFFFFF),
+                                    fontFamily: "Inter",
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 22),
+                              ),
+                              style: ButtonStyle(
+                                  fixedSize:
+                                      MaterialStateProperty.all(Size(160, 59)),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10))),
+                                  backgroundColor: MaterialStatePropertyAll(
+                                      Color(0xFF024EA6))),
+                            )
+                          ],
+                        ),
+                        icon: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.close),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        ),
+                      ));
+            },
             icon: Icon(Icons.add),
             color: Colors.white,
           ),

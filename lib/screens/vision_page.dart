@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gdsc/screens/login_page.dart';
 import 'package:gdsc/screens/signup_page.dart';
+import 'package:gdsc/screens/welcome_page.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -62,7 +63,7 @@ class _VisionPageState extends State<VisionPage> {
                         children: [
                           ConstrainedBox(
                             constraints: BoxConstraints(maxHeight: 300),
-                            child: Image.network(
+                            child: Image.asset(
                               imageWithText.imageUrl,
                               fit: BoxFit.contain,
                               height: 117,
@@ -145,7 +146,7 @@ class _VisionPageState extends State<VisionPage> {
                       ),
                     ),
                     onPressed: () {
-                      nextScreenReplace(context, const SignUpPage());
+                      nextScreenReplace(context, const WelcomePage());
                     },
                   ),
                   const SizedBox(

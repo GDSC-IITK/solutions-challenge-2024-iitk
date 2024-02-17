@@ -461,18 +461,23 @@ class _SignUpPageState extends State<SignUpPage> {
                                                 height: 20,
                                               ),
                                               Center(
-                                                  child: Text(
-                                                      "Already have an account ? Login",
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                        color: Color.fromRGBO(
-                                                            255, 253, 251, 1),
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: 15.0,
-                                                      ))),
+                                                  child: GestureDetector(
+                                                    onTap: (){
+                                                      nextScreen(context, const LoginPage());
+                                                    },
+                                                    child: Text(
+                                                        "Already have an account ? Login",
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          color: Color.fromRGBO(
+                                                              255, 253, 251, 1),
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 15.0,
+                                                        )),
+                                                  )),
                                             ])))),
                           ]),
                     ))),

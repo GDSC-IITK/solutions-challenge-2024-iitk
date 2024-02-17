@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gdsc/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gdsc/screens/vision_page.dart';
 import 'package:gdsc/screens/welcome_page.dart';
 import 'package:provider/provider.dart'; // Import Provider
 import 'package:gdsc/screens/login_page.dart';
@@ -44,9 +45,9 @@ class AuthenticationWrapper extends StatelessWidget {
           return CircularProgressIndicator();
         }
         if (snapshot.hasData) {
-          return WelcomePage();
+          return VisionPage();
         } else {
-          return WelcomePage();
+          return VisionPage();
         }
       },
     );

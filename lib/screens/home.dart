@@ -4,8 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:gdsc/provider.dart';
 
-class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+
+class HomePagenew extends StatefulWidget {
+  HomePagenew({Key? key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }

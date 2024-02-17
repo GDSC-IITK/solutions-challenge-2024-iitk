@@ -4,13 +4,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:gdsc/provider.dart';
 
+
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePagenew> {
   List<String> imageUrls = [
     'assets/images/home_image.jpeg',
     'assets/images/home_image.jpeg',
@@ -48,6 +50,7 @@ class _HomePageState extends State<HomePage> {
     UserProvider userProvider = Provider.of<UserProvider>(context);
     String userName = userProvider.user?.displayName ?? 'Guest';
     return Scaffold(
+
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 2, 78, 166),
         title: Column(
@@ -78,11 +81,12 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+
       body: GridView.count(
         crossAxisCount: 2,
         children: List.generate(imageUrls.length, (index) {
           return Container(
-            margin: EdgeInsets.all(8.0),
+            margin: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               color: Colors.grey[200],
               borderRadius: BorderRadius.circular(16.0),
@@ -91,7 +95,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16.0),
-                  child: Image.network(
+                  child: Image.asset(
                     imageUrls[index],
                     fit: BoxFit.cover,
                     width: double.infinity,

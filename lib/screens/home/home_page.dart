@@ -3,6 +3,7 @@ import 'package:gdsc/palette.dart';
 import 'package:gdsc/screens/Maps/maps.dart';
 import 'package:gdsc/screens/Profile/profilemain.dart';
 import 'package:gdsc/screens/Volunteer/volunteer.dart';
+import 'package:gdsc/screens/home.dart';
 import 'package:gdsc/screens/home/post_scroll_page.dart';
 import 'package:gdsc/screens/home/title_page.dart';
 import 'package:gdsc/screens/home/yo.dart';
@@ -21,12 +22,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int current_index = 0;
-  final List<Widget> pages = [
-    PostScrollPage(),
-    yo(),
-    volunteer(),
-    Profilemain()
-  ];
+  final List<Widget> pages = [HomePagenew(), yo(), volunteer(), Profilemain()];
 
   void OnTapped(int index) {
     setState(() {
@@ -70,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                 fontWeight: FontWeight.w600,
                 fontSize: 20.0,
               )),
-          Text('Location >',
+          Text('Your step to eradicate hunger',
               style: GoogleFonts.inter(
                 color: Color.fromRGBO(255, 253, 251, 1),
                 fontWeight: FontWeight.w500,
@@ -79,10 +75,8 @@ class _HomePageState extends State<HomePage> {
         ]),
         actions: [
           IconButton(
-            onPressed: () {
-              nextScreen(context, Maps());
-            },
-            icon: Icon(Icons.mail),
+            onPressed: () {},
+            icon: Icon(Icons.add),
             color: Colors.white,
           ),
           IconButton(

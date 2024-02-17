@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:gdsc/services/helper/firebase_api.dart';
-import 'package:gdsc/services/helper/firebase_file.dart';
+//import 'package:gdsc/services/helper/firebase_file.dart';
 
 class UploadService {
   final String? uid;

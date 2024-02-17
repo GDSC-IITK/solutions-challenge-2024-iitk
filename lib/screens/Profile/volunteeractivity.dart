@@ -66,25 +66,25 @@ class _volunteeractivityState extends State<volunteeractivity> {
               style: TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Material(
-              elevation: 4,
-              shadowColor: const Color(0xFF000000),
-              child: ListTile(
-                tileColor: const Color(0xFFCAE3FF),
-                title: const Text(
-                  "Hours Contributed",
-                  style: TextStyle(
-                    fontFamily: "Inter",
-                  ),
-                ),
-                trailing: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.arrow_forward_ios)),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: Material(
+          //     elevation: 4,
+          //     shadowColor: const Color(0xFF000000),
+          //     child: ListTile(
+          //       tileColor: const Color(0xFFCAE3FF),
+          //       title: const Text(
+          //         "Hours Contributed",
+          //         style: TextStyle(
+          //           fontFamily: "Inter",
+          //         ),
+          //       ),
+          //       trailing: IconButton(
+          //           onPressed: () {},
+          //           icon: const Icon(Icons.arrow_forward_ios)),
+          //     ),
+          //   ),
+          // ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Material(
@@ -103,38 +103,6 @@ class _volunteeractivityState extends State<volunteeractivity> {
                       nextScreen(context, volunteerhistory());
                     },
                     icon: const Icon(Icons.arrow_forward_ios)),
-              ),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Material(
-              elevation: 4,
-              shadowColor: Color(0xFF000000),
-              child: ListTile(
-                tileColor: Color(0xFFCAE3FF),
-                title: Text(
-                  "Volunteering Goals",
-                  style: TextStyle(
-                    fontFamily: "Inter",
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Material(
-              elevation: 4,
-              shadowColor: Color(0xFF000000),
-              child: ListTile(
-                tileColor: Color(0xFFCAE3FF),
-                title: Text(
-                  "Badges Earned",
-                  style: TextStyle(
-                    fontFamily: "Inter",
-                  ),
-                ),
               ),
             ),
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gdsc/screens/home.dart';
 
 class PhoneLoginPage extends StatefulWidget {
   const PhoneLoginPage({Key? key}) : super(key: key);
@@ -21,10 +22,9 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
       phoneNumber: phoneNumber,
       verificationCompleted: (PhoneAuthCredential credential) async {
         await _auth.signInWithCredential(credential);
-        // Navigate to next screen upon successful verification
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => NextScreen()),
+          MaterialPageRoute(builder: (context) => HomePage()),
         );
       },
       verificationFailed: (FirebaseAuthException e) {
@@ -59,7 +59,7 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
       // Navigate to next screen upon successful verification
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => NextScreen()),
+        MaterialPageRoute(builder: (context) => HomePage()),
       );
     } catch (e) {
       debugPrint('Error: $e');
@@ -197,10 +197,9 @@ class OtpVerificationPage extends StatelessWidget {
       // Navigate to the next screen upon successful verification
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => NextScreen()),
+        MaterialPageRoute(builder: (context) => HomePage()),
       );
     } catch (e) {
-      // If there's an error during verification, display an error message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Error verifying OTP: $e'),
@@ -240,18 +239,18 @@ class OtpVerificationPage extends StatelessWidget {
   }
 }
 
-class NextScreen extends StatelessWidget {
-  const NextScreen({Key? key}) : super(key: key);
+// class NextScreen extends StatelessWidget {
+//   const NextScreen({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Next Screen'),
-      ),
-      body: Center(
-        child: const Text('You have successfully logged in!'),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Next Screen'),
+//       ),
+//       body: Center(
+//         child: const Text('You have successfully logged in!'),
+//       ),
+//     );
+//   }
+// }

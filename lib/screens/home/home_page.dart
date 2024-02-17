@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gdsc/palette.dart';
+import 'package:gdsc/screens/Maps/maps.dart';
+import 'package:gdsc/screens/Profile/profilemain.dart';
+import 'package:gdsc/screens/Volunteer/volunteer.dart';
 import 'package:gdsc/screens/home/post_scroll_page.dart';
 import 'package:gdsc/screens/home/title_page.dart';
 import 'package:gdsc/screens/home/yo.dart';
+import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,7 +18,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int current_index = 0;
-  final List<Widget> pages = [PostScrollPage(), yo(), yoo()];
+  final List<Widget> pages = [
+    PostScrollPage(),
+    yo(),
+    volunteer(),
+    Profilemain()
+  ];
 
   void OnTapped(int index) {
     setState(() {
@@ -26,6 +35,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: const Color.fromRGBO(2, 78, 166, 1),
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text('Welcome, @username!',
@@ -43,7 +53,9 @@ class _HomePageState extends State<HomePage> {
         ]),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              nextScreen(context, Maps());
+            },
             icon: Icon(Icons.mail),
             color: Colors.white,
           ),
@@ -54,22 +66,33 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: pages[current_index],
-      bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: const Color.fromRGBO(2, 78, 166, 1),
-          iconSize: 26,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white,
-          currentIndex: current_index,
-          selectedFontSize: 20,
-          unselectedFontSize: 14,
-          onTap: OnTapped,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.settings), label: "Settings"),
-          ]),
+      body: pages.elementAt(current_index),
+      bottomNavigationBar: Container(
+        color: Color.fromRGBO(2, 78, 166, 1),
+        child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            iconSize: 26,
+            backgroundColor: Color.fromRGBO(2, 78, 166, 1),
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Colors.white,
+            currentIndex: current_index,
+            selectedFontSize: 20,
+            unselectedFontSize: 14,
+            onTap: (index) {
+              OnTapped(index);
+            },
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+              BottomNavigationBarItem(
+                  icon: ImageIcon(AssetImage("assets/Icons/Donation.png")),
+                  label: "Donate"),
+              BottomNavigationBarItem(
+                  icon: ImageIcon(AssetImage("assets/Icons/Vactivity.png")),
+                  label: "Volunteer"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.person), label: "Profile"),
+            ]),
+      ),
     );
   }
 }

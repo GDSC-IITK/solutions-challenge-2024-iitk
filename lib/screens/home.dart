@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:gdsc/provider.dart';
 
-
 class HomePagenew extends StatefulWidget {
   HomePagenew({Key? key}) : super(key: key);
 
@@ -12,7 +11,7 @@ class HomePagenew extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePagenew> {
   List<String> imageUrls = [
     'assets/images/home_image.jpeg',
     'assets/images/home_image.jpeg',
@@ -50,36 +49,6 @@ class _HomePageState extends State<HomePage> {
     UserProvider userProvider = Provider.of<UserProvider>(context);
     String userName = userProvider.user?.displayName ?? 'Guest';
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 2, 78, 166),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Welcome, @$_UserName!',
-                style: TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold)),
-            Text('Your step to eradicate hunger',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12.0,
-                )),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add, color: Colors.white),
-            onPressed: () {
-              // to do
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.notifications, color: Colors.white),
-            onPressed: () {
-              // to do
-            },
-          ),
-        ],
-      ),
       body: GridView.count(
         crossAxisCount: 2,
         children: List.generate(imageUrls.length, (index) {
@@ -93,7 +62,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16.0),
-                  child: Image.network(
+                  child: Image.asset(
                     imageUrls[index],
                     fit: BoxFit.cover,
                     width: double.infinity,

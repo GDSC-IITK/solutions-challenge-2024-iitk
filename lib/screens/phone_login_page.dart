@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gdsc/screens/home.dart';
+import 'package:gdsc/screens/home/home_page.dart';
 
 class PhoneLoginPage extends StatefulWidget {
   const PhoneLoginPage({Key? key}) : super(key: key);
@@ -168,8 +169,6 @@ class _PhoneLoginPageState extends State<PhoneLoginPage> {
     );
   }
 }
-
-
 
 class OtpVerificationPage extends StatelessWidget {
   final String verificationId;

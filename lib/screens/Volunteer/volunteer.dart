@@ -2,8 +2,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:gdsc/screens/Volunteer/DistancePage/custom.dart';
-import 'package:gdsc/screens/Volunteer/DistancePage/twotofive.dart';
+
 import 'package:gdsc/screens/Volunteer/Vcard.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:http/http.dart' as http;

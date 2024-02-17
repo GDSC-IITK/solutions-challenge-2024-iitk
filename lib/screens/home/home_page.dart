@@ -9,6 +9,9 @@ import 'package:gdsc/screens/home/title_page.dart';
 import 'package:gdsc/screens/home/yo.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gdsc/function/getuser.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -27,6 +30,29 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  String _userMail = "";
+  String _UserName = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserName();
+  }
+
+  // Function to load user's name from Firebase
+  void _loadUserName() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        _userMail = user.email ?? "";
+      });
+      Map<String, String> userData = await fetchData(_userMail);
+      setState(() {
+        _UserName = userData['userName'] ?? '';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +60,7 @@ class _HomePageState extends State<HomePage> {
         automaticallyImplyLeading: false,
         backgroundColor: const Color.fromRGBO(2, 78, 166, 1),
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('Welcome, @username!',
+          Text('Welcome, @$_UserName!',
               style: GoogleFonts.inter(
                 color: Color.fromRGBO(255, 253, 251, 1),
                 fontWeight: FontWeight.w600,

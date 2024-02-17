@@ -8,7 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:gdsc/screens/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gdsc/screens/Profile/profilemain.dart';
+import 'package:gdsc/provider.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -237,7 +238,10 @@ class _LoginPageState extends State<LoginPage> {
 
       if (user != null) {
         print('User signed in successfully: ${user.uid}');
-        nextScreenReplace(context, Profilemain());
+        // nextScreenReplace(context, HomePage());
+        Provider.of<UserProvider>(context, listen: false).updateUser(user);
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       } else {
         print('Failed to sign in with email and password');
       }

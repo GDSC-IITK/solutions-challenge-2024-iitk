@@ -278,6 +278,7 @@ class _LoginPageState extends State<LoginPage> {
       if (querySnapshot.docs.isNotEmpty) {
         return querySnapshot.docs.first.get('email');
       } else {
+        // If no matching document is found, throw an error
         throw 'User not found';
       }
     } catch (error) {

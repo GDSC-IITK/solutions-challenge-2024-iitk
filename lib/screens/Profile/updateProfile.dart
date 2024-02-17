@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gdsc/function/getuser.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class updateProfile extends StatefulWidget {
-  const updateProfile({super.key});
+  const updateProfile({Key? key}) : super(key: key);
 
   @override
   State<updateProfile> createState() => _updateProfileState();
@@ -13,6 +16,68 @@ class _updateProfileState extends State<updateProfile> {
   TextEditingController c3 = TextEditingController();
   TextEditingController c4 = TextEditingController();
   TextEditingController c5 = TextEditingController();
+
+  String _userMail = "";
+  String _UserName = "";
+  String _fullName = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserName();
+  }
+
+  // Function to load user's name from Firebase
+  void _loadUserName() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        _userMail = user.email ?? "";
+      });
+      Map<String, String> userData = await fetchData(_userMail);
+      setState(() {
+        _UserName = userData['userName'] ?? '';
+        _fullName = userData['fullName'] ?? '';
+      });
+    }
+  }
+
+  Future<void> _updateProfile() async {
+    try {
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('Users');
+
+      QuerySnapshot querySnapshot =
+          await users.where('email', isEqualTo: _userMail).get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        // Update the first document found with the provided email
+        await querySnapshot.docs.first.reference.update({
+          'fullName': c1.text,
+          'phoneNumber': c2.text,
+          'email': c3.text,
+          'address': c4.text,
+          'dateOfBirth': c5.text,
+        });
+
+        // Show a success message or perform any other action upon successful update
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Profile updated successfully')),
+        );
+      } else {
+        // Handle case where user document is not found
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('User document not found')),
+        );
+      }
+    } catch (error) {
+      // Handle error
+      print('Error updating profile: $error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to update profile')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +110,13 @@ class _updateProfileState extends State<updateProfile> {
                     ),
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Name",
+                        "$_fullName",
                         style: TextStyle(
                             shadows: <Shadow>[
                               Shadow(
@@ -66,7 +131,7 @@ class _updateProfileState extends State<updateProfile> {
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        "@name",
+                        "$_UserName",
                         style: TextStyle(
                           shadows: <Shadow>[
                             Shadow(
@@ -200,9 +265,10 @@ class _updateProfileState extends State<updateProfile> {
           height: 160,
         ),
         InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
+          onTap: _updateProfile, //() {
+          // Navigator.pop(context);
+
+          // },
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),

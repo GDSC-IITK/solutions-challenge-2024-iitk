@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gdsc/screens/home/home_page.dart';
 import 'package:gdsc/screens/login_page.dart';
 import 'package:gdsc/screens/signup_page.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
@@ -12,6 +14,7 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,4 +107,5 @@ class _WelcomePageState extends State<WelcomePage> {
               ),
             ])))));
   }
+  
 }

@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gdsc/screens/home/home_page.dart';
 import 'package:gdsc/screens/login_page.dart';
 import 'package:gdsc/screens/signup_page.dart';
 import 'package:gdsc/screens/welcome_page.dart';
@@ -14,6 +16,25 @@ class VisionPage extends StatefulWidget {
 }
 
 class _VisionPageState extends State<VisionPage> {
+   @override
+  void initState() {
+    super.initState();
+    checkAuthState();
+  }
+
+  void checkAuthState() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    if (auth.currentUser != null) {
+      Future.delayed(const Duration(milliseconds: 500), () {
+    setState(() {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => HomePage()),
+        (route) => false);
+    });
+  });
+    }
+  }
+  
   final List<ImageWithText> imagesWithText = [
     ImageWithText(
       'Join us in ending hunger. Your support as a donor or volunteer can be a beacon of hope for those in need.',

@@ -3,6 +3,7 @@ import 'package:gdsc/screens/Profile/donationactivity.dart';
 import 'package:gdsc/screens/Profile/settings.dart';
 import 'package:gdsc/screens/Profile/updateProfile.dart';
 import 'package:gdsc/screens/Profile/volunteeractivity.dart';
+import 'package:gdsc/screens/vision_page.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -41,56 +42,63 @@ class _ProfilemainState extends State<Profilemain> {
     }
   }
 
+  void _handleLogout() async {
+  try {
+    await FirebaseAuth.instance.signOut();
+    // Navigate to the login page or any other appropriate screen after logout
+    nextScreenReplace(context, VisionPage());
+  } catch (error) {
+    print('Error signing out: $error');
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xFFCAE3FF),
-        title: const Text("Profile Page"),
-      ),
+      // appBar: AppBar(
+      //   automaticallyImplyLeading: false,
+      //   backgroundColor: const Color(0xFFCAE3FF),
+      //   title: const Text("Profile Page"),
+      // ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Container(
-                height: 128,
-                decoration: const BoxDecoration(color: Color(0xFFCAE3FF)),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: CircleAvatar(
-                        radius: 44,
-                      ),
+            Container(
+              height: 128,
+              decoration: const BoxDecoration(color: Color(0xFFCAE3FF)),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: CircleAvatar(
+                      radius: 44,
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "$_fullName",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontFamily: "Inter",
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "@$_UserName",
-                            style: TextStyle(
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "$_fullName",
+                          style: TextStyle(
+                              fontSize: 20,
                               fontFamily: "Inter",
-                            ),
-                          )
-                        ],
-                      ),
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          "@$_UserName",
+                          style: TextStyle(
+                            fontFamily: "Inter",
+                          ),
+                        )
+                      ],
                     ),
-                    SizedBox(
-                      width: 150,
-                    ),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    width: 150,
+                  ),
+                ],
               ),
             ),
             const SizedBox(
@@ -323,7 +331,9 @@ class _ProfilemainState extends State<Profilemain> {
                                           height: 10,
                                         ),
                                         InkWell(
-                                          onTap: () {},
+                                          onTap: () {
+                                            _handleLogout();
+                                          },
                                           child: Container(
                                             height: 40,
                                             width: double.infinity,

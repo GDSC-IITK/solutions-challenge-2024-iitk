@@ -50,7 +50,7 @@ class _OTPPageState extends State<OTPPage> {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    nextScreenReplace(context, HomePage());
+                    nextScreen(context, HomePage());
                     // OTP verification
                   },
                   child: Text('Verify'),

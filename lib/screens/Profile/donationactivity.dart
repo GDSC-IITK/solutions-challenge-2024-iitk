@@ -10,6 +10,7 @@ class donationactivity extends StatefulWidget {
 }
 
 class _donationactivityState extends State<donationactivity> {
+  int donations = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,37 +62,21 @@ class _donationactivityState extends State<donationactivity> {
             ),
           ),
           AppBar(
-            title: Text(
+            title: const Text(
               "Donation Details",
-              style: TextStyle(fontWeight: FontWeight.w600),
+              style: const TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Material(
               elevation: 4,
-              shadowColor: Color(0xFF000000),
+              shadowColor: const Color(0xFF000000),
               child: ListTile(
-                tileColor: Color(0xFFCAE3FF),
+                tileColor: const Color(0xFFCAE3FF),
                 title: Text(
-                  "Number of Donations",
-                  style: TextStyle(
-                    fontFamily: "Inter",
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Material(
-              elevation: 4,
-              shadowColor: Color(0xFF000000),
-              child: ListTile(
-                tileColor: Color(0xFFCAE3FF),
-                title: Text(
-                  "Donation Goals",
-                  style: TextStyle(
+                  "Number of Donations : $donations",
+                  style: const TextStyle(
                     fontFamily: "Inter",
                   ),
                 ),
@@ -99,12 +84,12 @@ class _donationactivityState extends State<donationactivity> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Material(
               elevation: 4,
-              shadowColor: Color(0xFF000000),
+              shadowColor: const Color(0xFF000000),
               child: ListTile(
-                tileColor: Color(0xFFCAE3FF),
+                tileColor: const Color(0xFFCAE3FF),
                 title: const Text(
                   "Donation History",
                   style: TextStyle(

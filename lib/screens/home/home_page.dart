@@ -7,6 +7,7 @@ import 'package:gdsc/screens/home.dart';
 import 'package:gdsc/screens/home/post_scroll_page.dart';
 import 'package:gdsc/screens/home/title_page.dart';
 import 'package:gdsc/screens/home/yo.dart';
+import 'package:gdsc/screens/notification_page.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gdsc/function/getuser.dart';
@@ -80,7 +81,9 @@ class _HomePageState extends State<HomePage> {
             color: Colors.white,
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              nextScreen(context, NotificationScreen());
+            },
             icon: Icon(Icons.notifications),
             color: Colors.white,
           ),

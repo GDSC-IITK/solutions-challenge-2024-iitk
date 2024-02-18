@@ -49,14 +49,17 @@ class DonationConfirmPage extends StatelessWidget {
             onTap: () {
               //nextScreenReplace(context, DonationConfirmPage());
             },
-            child: Center(
-              child: Text("Reach out for volunteer",
-                  textAlign: TextAlign.start,
-                  style: GoogleFonts.inter(
-                    color: Color.fromRGBO(102, 102, 102, 0.77),
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.0,
-                  )),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Center(
+                child: Text("Reach out for volunteer",
+                    textAlign: TextAlign.start,
+                    style: GoogleFonts.inter(
+                      color: Color.fromRGBO(102, 102, 102, 0.77),
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18.0,
+                    )),
+              ),
             ),
           )
         ])));

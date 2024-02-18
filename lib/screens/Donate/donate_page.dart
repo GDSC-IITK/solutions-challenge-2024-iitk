@@ -23,6 +23,7 @@ class _DonatePageState extends State<DonatePage> {
   String location = "null";
   String remarks = "null";
   String organization = "null";
+  
 
   @override
   Widget build(BuildContext context) {
@@ -85,44 +86,7 @@ class _DonatePageState extends State<DonatePage> {
                       const SizedBox(
                         height: 10,
                       ),
-                      InkWell(
-                        onTap: () {
-                          nextScreenReplace(
-                            context,
-                            Donate_3(
-                                itemname: itemname,
-                                quantity: quantity,
-                                location: location,
-                                remarks: remarks,
-                                organization: organization),
-                          );
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Color.fromRGBO(2, 78, 166, 1),
-                              ),
-                              width: Width / 1.1,
-                              height: 50,
-                              child: const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Continue",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: "Inter"),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
+                      
                     ])))));
   }
 }

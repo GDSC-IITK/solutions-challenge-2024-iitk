@@ -45,6 +45,7 @@ class _HomePageState extends State<HomePage> {
 
   String _userMail = "";
   String _UserName = "";
+  String _fullName = "";
 
   Future<void> checkIfEmailOrPhoneNumberExists(
       String email, String phoneNumber) async {
@@ -120,6 +121,8 @@ class _HomePageState extends State<HomePage> {
   // Function to load user's name from Firebase
   void _loadUserName() async {
     User? user = FirebaseAuth.instance.currentUser;
+    print(user);
+    print("load user name");
     if (user != null) {
       setState(() {
         _userMail = user.email ?? "";
@@ -127,11 +130,26 @@ class _HomePageState extends State<HomePage> {
       Map<String, String> userData = await fetchData(_userMail);
       setState(() {
         _UserName = userData['userName'] ?? '';
+        _fullName = userData['fullName'] ?? '';
       });
       checkIfEmailOrPhoneNumberExists(_userMail, user.phoneNumber!);
 
       print(user);
+      print(_userMail);
+      print(_UserName);
+      print(_fullName);
       print("here");
+    }
+    else
+    {
+       Future.delayed(const Duration(milliseconds: 500), () {
+      User? refreshedUser = FirebaseAuth.instance.currentUser;
+      if (refreshedUser != null) {
+        print('User is signed in after delay: ${refreshedUser.uid}');
+      } else {
+        print('User is still not signed in after delay');
+      }
+    });
     }
   }
 
@@ -142,7 +160,7 @@ class _HomePageState extends State<HomePage> {
         automaticallyImplyLeading: false,
         backgroundColor: const Color.fromRGBO(2, 78, 166, 1),
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('Welcome, @$_UserName!',
+          Text('Welcome, ${_UserName.isNotEmpty ? '@$_UserName' : (_fullName.isNotEmpty ? _fullName : _userMail)}',
               style: GoogleFonts.inter(
                 color: Color.fromRGBO(255, 253, 251, 1),
                 fontWeight: FontWeight.w600,

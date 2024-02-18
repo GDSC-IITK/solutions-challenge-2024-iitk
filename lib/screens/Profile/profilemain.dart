@@ -43,14 +43,19 @@ class _ProfilemainState extends State<Profilemain> {
   }
 
   void _handleLogout() async {
-  try {
-    await FirebaseAuth.instance.signOut();
-    // Navigate to the login page or any other appropriate screen after logout
-    nextScreenReplace(context, VisionPage());
-  } catch (error) {
-    print('Error signing out: $error');
+    try {
+      await FirebaseAuth.instance.signOut();
+      // Navigate to the login page or any other appropriate screen after logout
+      nextScreenReplace(context, VisionPage());
+    } catch (error) {
+      print('Error signing out: $error');
+    }
   }
-}
+
+  Future<String> getAppVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    return packageInfo.version;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -218,7 +223,7 @@ class _ProfilemainState extends State<Profilemain> {
                                       fontWeight: FontWeight.bold),
                                 )),
                                 content: SizedBox(
-                                  height: 140,
+                                  height: 300,
                                   child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -234,10 +239,22 @@ class _ProfilemainState extends State<Profilemain> {
                                                   horizontal: BorderSide(
                                                       color: Colors.grey))),
                                           child: Center(
-                                            child: Text(
-                                              "App version:",
-                                              style: TextStyle(
-                                                  fontFamily: "Inter"),
+                                            child: FutureBuilder<String>(
+                                              future: getAppVersion(),
+                                              builder: (BuildContext context,
+                                                  AsyncSnapshot<String>
+                                                      snapshot) {
+                                                if (snapshot.connectionState ==
+                                                    ConnectionState.waiting) {
+                                                  return CircularProgressIndicator();
+                                                } else if (snapshot.hasError) {
+                                                  return Text(
+                                                      'Error: ${snapshot.error}');
+                                                } else {
+                                                  return Text(
+                                                      'App Version: ${snapshot.data}');
+                                                }
+                                              },
                                             ),
                                           ),
                                         ),
@@ -271,6 +288,26 @@ class _ProfilemainState extends State<Profilemain> {
                                             child: const Center(
                                               child: Text(
                                                 "Privacy Policy",
+                                                style: TextStyle(
+                                                  fontFamily: "Inter",
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {},
+                                          child: Container(
+                                            height: 150,
+                                            width: double.infinity,
+                                            decoration: const BoxDecoration(
+                                                border: Border.symmetric(
+                                                    horizontal: BorderSide(
+                                                        color: Colors.grey))),
+                                            child: const Center(
+                                              child: Text(
+                                                "Developers:\n\nSahil\nSaugat\nRushab\nKushagra\nSanskar",
+                                                textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontFamily: "Inter",
                                                 ),
@@ -377,6 +414,20 @@ class _ProfilemainState extends State<Profilemain> {
                             });
                       },
                       icon: const Icon(Icons.arrow_forward_ios)),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Text(
+                "Developed by GDSC IITK",
+                style: TextStyle(
+                  fontFamily: "Inter",
                 ),
               ),
             ),

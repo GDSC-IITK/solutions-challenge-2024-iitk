@@ -78,40 +78,40 @@ class spotSomeoneState extends State<spotSomeone> {
           style: TextStyle(fontFamily: "Inter"),
         ),
       ),
-      body: Column(
-        children: [
-          SafeArea(
-            child: SizedBox(
-              height: 580,
-              child: GoogleMap(
-                onTap: (LatLng latlng) {
-                  _marker.add(
-                    Marker(
-                        markerId: MarkerId("3"),
-                        position: latlng,
-                        infoWindow: InfoWindow(title: "Destination")),
-                  );
-                  setState(() {});
-                },
-                initialCameraPosition: loc,
-                markers: Set<Marker>.of(_marker),
-                // mapType: MapType.satellite,
-                //compassEnabled: false,
-                myLocationButtonEnabled: true,
-                onMapCreated: (GoogleMapController controller) {
-                  _controller.complete(controller);
-                },
+      body: Container(
+                        color: const Color(0xFF024EA6),
+        child: Column(
+          children: [
+            SafeArea(
+              child: SizedBox(
+                height: 580,
+                child: GoogleMap(
+                  onTap: (LatLng latlng) {
+                    _marker.add(
+                      Marker(
+                          markerId: MarkerId("3"),
+                          position: latlng,
+                          infoWindow: InfoWindow(title: "Destination")),
+                    );
+                    setState(() {});
+                  },
+                  initialCameraPosition: loc,
+                  markers: Set<Marker>.of(_marker),
+                  // mapType: MapType.satellite,
+                  //compassEnabled: false,
+                  myLocationButtonEnabled: true,
+                  onMapCreated: (GoogleMapController controller) {
+                    _controller.complete(controller);
+                  },
+                ),
               ),
             ),
-          ),
-          Container(
-            height: 178.4,
-            width: double.infinity,
-            color: const Color(0xFF024EA6),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
+            SingleChildScrollView(
+              child: Container(
+                height: 200,
+                width: double.infinity,
+                color: const Color(0xFF024EA6),
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
@@ -177,13 +177,13 @@ class spotSomeoneState extends State<spotSomeone> {
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(top: 40.0),
+        padding: const EdgeInsets.only(top: 15.0),
         child: FloatingActionButton(
           onPressed: () async {
             print("My Current Location");

@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
     volunteer(),
     Profilemain()
   ];
+  bool _isLoading = false; // Add a boolean variable to track loading state
 
   void OnTapped(int index) {
     setState(() {
@@ -60,10 +61,20 @@ class _HomePageState extends State<HomePage> {
         .collection("Users")
         .where("phoneNumber", isEqualTo: phoneNumber)
         .get();
-    // if (emailQuery.docs.isEmpty==false)
-    //   context.read<Providers>().setUserFromFirestoreEmail(email);
-    // else if(phoneNumberQuery.docs.isEmpty==false)
-    //   context.read<Providers>().setUserFromFirestorePhone(phoneNumber);
+    setState(() {
+      _isLoading = true;
+    });
+    if (emailQuery.docs.isEmpty == false)
+      await context
+          .read<Providers>()
+          .setUserFromFirestoreId(emailQuery.docs.first.id);
+    else if (phoneNumberQuery.docs.isEmpty == false)
+      await context
+          .read<Providers>()
+          .setUserFromFirestoreId(phoneNumberQuery.docs.first.id);
+    setState(() {
+      _isLoading = false;
+    });
 
     if (emailQuery.docs.isEmpty && phoneNumberQuery.docs.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -190,6 +201,9 @@ class _HomePageState extends State<HomePage> {
 
   // Function to load user's name from Firebase
   void _loadUserName() async {
+    setState(() {
+      _isLoading = true;
+    });
     User? user = FirebaseAuth.instance.currentUser;
     print(user);
     print("load user name");
@@ -210,6 +224,9 @@ class _HomePageState extends State<HomePage> {
       print(_userMail);
       print(_UserName);
       print(_fullName);
+      setState(() {
+        _isLoading = false;
+      });
     } else {
       Future.delayed(const Duration(milliseconds: 500), () {
         User? refreshedUser = FirebaseAuth.instance.currentUser;
@@ -218,6 +235,9 @@ class _HomePageState extends State<HomePage> {
         } else {
           print('User is still not signed in after delay');
         }
+      });
+      setState(() {
+        _isLoading = false;
       });
     }
   }
@@ -318,7 +338,11 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: pages.elementAt(current_index),
+      body: _isLoading
+          ? Center(
+              child:
+                  CircularProgressIndicator()) // Show loader if data is loading
+          : pages.elementAt(current_index),
       bottomNavigationBar: Container(
         color: Color.fromRGBO(2, 78, 166, 1),
         child: BottomNavigationBar(

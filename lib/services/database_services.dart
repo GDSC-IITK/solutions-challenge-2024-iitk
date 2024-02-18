@@ -42,7 +42,7 @@ class DatabaseService {
       "userName": userName,
       "createdAt": Timestamp.now(),
       "updatedAt": Timestamp.now(),
-      "age": age,
+      "age": int.parse(age),
       "currentLocation": "",
     });
   }

@@ -2,9 +2,11 @@ import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:gdsc/screens/Profile/upatePassword.dart';
 import 'package:gdsc/screens/Profile/updateProfile.dart';
+import 'package:gdsc/services/providers.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gdsc/function/getuser.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class settings extends StatefulWidget {
@@ -83,6 +85,8 @@ class _settingsState extends State<settings> {
                       padding: EdgeInsets.all(8.0),
                       child: CircleAvatar(
                         radius: 44,
+                        backgroundImage:
+                          NetworkImage(context.read<Providers>().user_data.toJson()['profileImageLink'].toString()),
                       ),
                     ),
                     Padding(

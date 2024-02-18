@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gdsc/function/generateUserName.dart';
 import 'package:gdsc/function/getuser.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gdsc/screens/Profile/profileImage.dart';
 import 'package:gdsc/services/database_services.dart';
 import 'package:gdsc/services/helper/getCurrentLoc.dart';
 import 'package:gdsc/services/providers.dart';
@@ -92,7 +93,7 @@ class _updateProfileState extends State<updateProfile> {
         await querySnapshot.docs.first.reference.update({
           'fullName': c1.text,
           'phoneNumber': c2.text,
-          'age': c3.text,
+          'age': int.parse(c3.text),
           'address': c4.text,
           'dateOfBirth': c5.text,
           'currentLocation': getCurrentLocation(),
@@ -110,7 +111,7 @@ class _updateProfileState extends State<updateProfile> {
           'fullName': c1.text,
           'phoneNumber': c2.text,
           'email': _userMail,
-          'age': c3.text,
+          'age': int.parse(c3.text),
           'address': c4.text,
           'dateOfBirth': c5.text,
           'currentLocation': getCurrentLocation(),
@@ -157,25 +158,7 @@ class _updateProfileState extends State<updateProfile> {
               decoration: const BoxDecoration(color: Color(0xFF024EA6)),
               child: Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(199, 255, 255, 255),
-                        shape: BoxShape.circle,
-                        // boxShadow: [
-                        //   BoxShadow(
-                        //       offset: Offset(0, 4),
-                        //       blurRadius: 4,
-                        //       color: Color(0xFF000000),
-                        //       spreadRadius: 0.8)
-                        // ],
-                      ),
-                      child: const CircleAvatar(
-                        radius: 44,
-                      ),
-                    ),
-                  ),
+                  ProfileImageWidget(),
                   Padding(
                     padding: EdgeInsets.fromLTRB(8.0, 0, 8.0, 8.0),
                     child: Column(
@@ -399,7 +382,7 @@ class _updateProfileState extends State<updateProfile> {
           ),
         ),
         const SizedBox(
-          height: 160,
+          height: 20,
         ),
         InkWell(
           onTap: _updateProfile, //() {

@@ -30,36 +30,36 @@ class spotSomeoneState extends State<spotSomeone> {
   void initState() {
     //TODO: implement initState
     super.initState();
-    loadData();
+    // loadData();
   }
 
-  Future<Position> getUserCurrentLocation() async {
-    await Geolocator.requestPermission()
-        .then((value) {})
-        .onError((error, stackTrace) {
-      print("Error$error");
-    });
-    return await Geolocator.getCurrentPosition();
-  }
+  // Future<Position> getUserCurrentLocation() async {
+  //   await Geolocator.requestPermission()
+  //       .then((value) {})
+  //       .onError((error, stackTrace) {
+  //     print("Error$error");
+  //   });
+  //   return await Geolocator.getCurrentPosition();
+  // }
 
-  loadData() {
-    getUserCurrentLocation().then((value) async {
-      print("My Current Location");
-      print("${value.latitude} ${value.longitude}");
-      _marker.add(
-        Marker(
-            markerId: MarkerId("2"),
-            position: LatLng(value.latitude, value.longitude),
-            infoWindow: InfoWindow(title: "My Current location")),
-      );
-      CameraPosition cameraPosition = CameraPosition(
-          zoom: 14, target: LatLng(value.latitude, value.longitude));
+  // loadData() {
+  //   getUserCurrentLocation().then((value) async {
+  //     print("My Current Location");
+  //     print("${value.latitude} ${value.longitude}");
+  //     _marker.add(
+  //       Marker(
+  //           markerId: MarkerId("2"),
+  //           position: LatLng(value.latitude, value.longitude),
+  //           infoWindow: InfoWindow(title: "My Current location")),
+  //     );
+  //     CameraPosition cameraPosition = CameraPosition(
+  //         zoom: 14, target: LatLng(value.latitude, value.longitude));
 
-      final GoogleMapController controller = await _controller.future;
-      controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-    });
-    setState(() {});
-  }
+  //     final GoogleMapController controller = await _controller.future;
+  //     controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+  //   });
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +79,7 @@ class spotSomeoneState extends State<spotSomeone> {
         ),
       ),
       body: Container(
-                        color: const Color(0xFF024EA6),
+        color: const Color(0xFF024EA6),
         child: Column(
           children: [
             SafeArea(
@@ -108,7 +108,7 @@ class spotSomeoneState extends State<spotSomeone> {
             ),
             SingleChildScrollView(
               child: Container(
-                height: 200,
+                height: 170,
                 width: double.infinity,
                 color: const Color(0xFF024EA6),
                 child: Column(
@@ -182,31 +182,31 @@ class spotSomeoneState extends State<spotSomeone> {
           ],
         ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(top: 15.0),
-        child: FloatingActionButton(
-          onPressed: () async {
-            print("My Current Location");
-            getUserCurrentLocation().then((value) async {
-              print("${value.latitude} ${value.longitude}");
-              _marker.add(
-                Marker(
-                    markerId: MarkerId("2"),
-                    position: LatLng(value.latitude, value.longitude),
-                    infoWindow: InfoWindow(title: "My Current location")),
-              );
-              CameraPosition cameraPosition = CameraPosition(
-                  zoom: 16, target: LatLng(value.latitude, value.longitude));
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.only(top: 15.0),
+      //   child: FloatingActionButton(
+      //     onPressed: () async {
+      //       print("My Current Location");
+      //       getUserCurrentLocation().then((value) async {
+      //         print("${value.latitude} ${value.longitude}");
+      //         _marker.add(
+      //           Marker(
+      //               markerId: MarkerId("2"),
+      //               position: LatLng(value.latitude, value.longitude),
+      //               infoWindow: InfoWindow(title: "My Current location")),
+      //         );
+      //         CameraPosition cameraPosition = CameraPosition(
+      //             zoom: 16, target: LatLng(value.latitude, value.longitude));
 
-              final GoogleMapController controller = await _controller.future;
-              controller.animateCamera(
-                  CameraUpdate.newCameraPosition(cameraPosition));
-            });
-            setState(() {});
-          },
-          child: Icon(Icons.location_disabled_outlined),
-        ),
-      ),
+      //         final GoogleMapController controller = await _controller.future;
+      //         controller.animateCamera(
+      //             CameraUpdate.newCameraPosition(cameraPosition));
+      //       });
+      //       setState(() {});
+      //     },
+      //     child: Icon(Icons.location_disabled_outlined),
+      //   ),
+      // ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
   }

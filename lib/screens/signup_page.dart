@@ -1,4 +1,3 @@
-
 // import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:gdsc/palette.dart';
@@ -62,14 +61,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text("Create an account",
-                                                  style: GoogleFonts.poppins(
+                                                  style: GoogleFonts.inter(
                                                     color: Color.fromRGBO(
                                                         255, 253, 251, 1),
                                                     fontWeight: FontWeight.w600,
                                                     fontSize: 25.0,
                                                   )),
                                               Text("Sign up to continue",
-                                                  style: GoogleFonts.poppins(
+                                                  style: GoogleFonts.inter(
                                                     color: Color.fromRGBO(
                                                         255, 255, 255, 0.59),
                                                     fontWeight: FontWeight.w600,
@@ -82,6 +81,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                                   constraints:
                                                       const BoxConstraints(),
                                                   child: TextFormField(
+                                                    style: TextStyle(
+                                                        color: Colors.white),
                                                     decoration: textInputDecoration
                                                         .copyWith(
                                                             focusedBorder:
@@ -132,14 +133,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                                                 "Full Name",
                                                             labelStyle:
                                                                 GoogleFonts
-                                                                    .poppins(
+                                                                    .inter(
                                                               color:
                                                                   Colors.white,
                                                               fontSize: 15.0,
                                                             ),
                                                             errorStyle:
                                                                 GoogleFonts
-                                                                    .firaMono(
+                                                                    .inter(
                                                               color:
                                                                   Colors.white,
                                                               fontSize: 10.0,
@@ -170,6 +171,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                                   constraints:
                                                       const BoxConstraints(),
                                                   child: TextFormField(
+                                                    style: TextStyle(
+                                                        color: Colors.white),
                                                     decoration: textInputDecoration
                                                         .copyWith(
                                                             focusedBorder:
@@ -220,14 +223,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                                                 "Username",
                                                             labelStyle:
                                                                 GoogleFonts
-                                                                    .poppins(
+                                                                    .inter(
                                                               color:
                                                                   Colors.white,
                                                               fontSize: 15.0,
                                                             ),
                                                             errorStyle:
                                                                 GoogleFonts
-                                                                    .firaMono(
+                                                                    .inter(
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600,
@@ -261,6 +264,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                                   constraints:
                                                       const BoxConstraints(),
                                                   child: TextFormField(
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+
                                                     decoration: textInputDecoration
                                                         .copyWith(
                                                             focusedBorder:
@@ -310,14 +316,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                                             labelText: "Email",
                                                             labelStyle:
                                                                 GoogleFonts
-                                                                    .poppins(
+                                                                    .inter(
                                                               color:
                                                                   Colors.white,
                                                               fontSize: 15.0,
                                                             ),
                                                             errorStyle:
                                                                 GoogleFonts
-                                                                    .firaMono(
+                                                                    .inter(
                                                               color:
                                                                   Colors.white,
                                                               fontSize: 10.0,
@@ -350,6 +356,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                                   constraints:
                                                       const BoxConstraints(),
                                                   child: TextFormField(
+                                                    style: TextStyle(
+                                                        color: Colors.white),
                                                     obscureText: true,
                                                     decoration: textInputDecoration
                                                         .copyWith(
@@ -401,14 +409,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                                                 "Password",
                                                             labelStyle:
                                                                 GoogleFonts
-                                                                    .poppins(
+                                                                    .inter(
                                                               color:
                                                                   Colors.white,
                                                               fontSize: 15.0,
                                                             ),
                                                             errorStyle:
                                                                 GoogleFonts
-                                                                    .firaMono(
+                                                                    .inter(
                                                               color:
                                                                   Colors.white,
                                                               fontSize: 10.0,
@@ -446,7 +454,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                                 ),
                                                 child: Text(
                                                   "Get Started",
-                                                  style: GoogleFonts.poppins(
+                                                  style: GoogleFonts.inter(
                                                     color: Color.fromRGBO(
                                                         2, 78, 166, 1),
                                                     fontWeight: FontWeight.w600,
@@ -462,22 +470,21 @@ class _SignUpPageState extends State<SignUpPage> {
                                               ),
                                               Center(
                                                   child: GestureDetector(
-                                                    onTap: (){
-                                                      nextScreen(context, const LoginPage());
-                                                    },
-                                                    child: Text(
-                                                        "Already have an account ? Login",
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          color: Color.fromRGBO(
-                                                              255, 253, 251, 1),
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 15.0,
-                                                        )),
-                                                  )),
+                                                onTap: () {
+                                                  nextScreen(context,
+                                                      const LoginPage());
+                                                },
+                                                child: Text(
+                                                    "Already have an account ? Login",
+                                                    textAlign: TextAlign.center,
+                                                    style: GoogleFonts.inter(
+                                                      color: Color.fromRGBO(
+                                                          255, 253, 251, 1),
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 15.0,
+                                                    )),
+                                              )),
                                             ])))),
                           ]),
                     ))),

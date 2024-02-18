@@ -62,13 +62,53 @@ class _HomePageState extends State<HomePage> {
     // else if(phoneNumberQuery.docs.isEmpty==false)
     //   context.read<Providers>().setUserFromFirestorePhone(phoneNumber);
 
-    if (emailQuery.docs.isEmpty && phoneNumberQuery.docs.isEmpty) {
+    if (emailQuery.docs.isEmpty && phoneNumberQuery.docs.isEmpty ) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please update your profile first')),
       );
       // Neither email nor phone number exists, redirect user to edit profile page
       nextScreenReplace(context, updateProfile());
     }
+    print(emailQuery);
+    print(phoneNumberQuery);
+    print("check");
+    if(emailQuery.docs.isNotEmpty)
+    {
+    final name = emailQuery.docs.first.get('fullName');
+    final userName = emailQuery.docs.first.get('userName');
+    final phoneNumber = emailQuery.docs.first.get('phoneNumber');
+    final dob = emailQuery.docs.first.get('dateOfBirth');
+    final currentLocation = emailQuery.docs.first.get('currentLocation');
+    final age = emailQuery.docs.first.get('age');
+    print(name+userName+phoneNumber+dob+currentLocation+age
+    );
+    if(name.isEmpty || userName.isEmpty || phoneNumber.isEmpty || dob.isEmpty || currentLocation.isEmpty || age.isEmpty)
+    {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please update your profile first')),
+      );
+      // Neither email nor phone number exists, redirect user to edit profile page
+      nextScreenReplace(context, updateProfile());
+    }
+    }
+    else if(phoneNumberQuery.docs.isNotEmpty)
+    {
+    final name = phoneNumberQuery.docs.first.get('fullName');
+    final userName = phoneNumberQuery.docs.first.get('userName');
+    final email = phoneNumberQuery.docs.first.get('email');
+    final dob = phoneNumberQuery.docs.first.get('dateOfBirth');
+    final currentLocation = phoneNumberQuery.docs.first.get('currentLocation');
+    final age = phoneNumberQuery.docs.first.get('age');
+    if(name.isEmpty || userName.isEmpty || email.isEmpty || dob.isEmpty || currentLocation.isEmpty || age.isEmpty)
+    {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please update your profile first')),
+      );
+      // Neither email nor phone number exists, redirect user to edit profile page
+      nextScreenReplace(context, updateProfile());
+    }
+    }
+    
   }
 
   @override

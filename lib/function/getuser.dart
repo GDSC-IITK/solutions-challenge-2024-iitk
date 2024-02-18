@@ -7,17 +7,23 @@ Future<Map<String, String>> fetchData(String email) async {
     QuerySnapshot querySnapshot = await users.where('email', isEqualTo: email).get();
 
     if (querySnapshot.docs.isNotEmpty) {
-      String fullName = querySnapshot.docs.first.get('fullName');
-      String userName = querySnapshot.docs.first.get('userName');
+    // Initialize an empty map to store user data
+    Map<String, String> userData = {};
 
-      // Construct a map containing the user data
-      Map<String, String> userData = {
-        'fullName': fullName,
-        'userName': userName,
-      };
+    // Get the first document in the query snapshot
+    QueryDocumentSnapshot firstDocument = querySnapshot.docs.first;
 
-      return userData;
-    } else {
+    // Check if the data of the first document is not null
+    Map<String, dynamic>? data = firstDocument.data() as Map<String, dynamic>?;
+    if (data != null) {
+      // Iterate over the data in the document and add it to the userData map
+      data.forEach((key, value) {
+        userData[key] = value.toString(); // Convert value to string if needed
+      });
+    }
+
+    return userData;
+  } else {
       print('User document does not exist');
       return {};
     }

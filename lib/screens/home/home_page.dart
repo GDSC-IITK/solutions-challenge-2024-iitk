@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gdsc/function/generateUserName.dart';
 import 'package:gdsc/palette.dart';
 import 'package:gdsc/screens/Maps/maps.dart';
 import 'package:gdsc/screens/Maps/spotsomeone.dart';
@@ -13,6 +14,7 @@ import 'package:gdsc/screens/home/post_scroll_page.dart';
 import 'package:gdsc/screens/home/title_page.dart';
 import 'package:gdsc/screens/home/yo.dart';
 import 'package:gdsc/screens/notification_page.dart';
+import 'package:gdsc/services/database_services.dart';
 import 'package:gdsc/services/providers.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -63,7 +65,7 @@ class _HomePageState extends State<HomePage> {
     // else if(phoneNumberQuery.docs.isEmpty==false)
     //   context.read<Providers>().setUserFromFirestorePhone(phoneNumber);
 
-    if (emailQuery.docs.isEmpty && phoneNumberQuery.docs.isEmpty ) {
+    if (emailQuery.docs.isEmpty && phoneNumberQuery.docs.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please update your profile first')),
       );
@@ -73,43 +75,111 @@ class _HomePageState extends State<HomePage> {
     print(emailQuery);
     print(phoneNumberQuery);
     print("check");
-    if(emailQuery.docs.isNotEmpty)
-    {
-    final name = emailQuery.docs.first.get('fullName');
-    final userName = emailQuery.docs.first.get('userName');
-    final phoneNumber = emailQuery.docs.first.get('phoneNumber');
-    final dob = emailQuery.docs.first.get('dateOfBirth');
-    final currentLocation = emailQuery.docs.first.get('currentLocation');
-    final age = emailQuery.docs.first.get('age');
-    print(name+userName+phoneNumber+dob+currentLocation+age
-    );
-    if(name.isEmpty || userName.isEmpty || phoneNumber.isEmpty || dob.isEmpty || currentLocation.isEmpty || age.isEmpty)
-    {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please update your profile first')),
-      );
-      // Neither email nor phone number exists, redirect user to edit profile page
-      nextScreenReplace(context, updateProfile());
+    if (emailQuery.docs.isNotEmpty) {
+      final name = emailQuery.docs.isNotEmpty &&
+              (emailQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('fullName')
+          ? emailQuery.docs.first.get('fullName')
+          : "";
+      final userName = emailQuery.docs.isNotEmpty &&
+              (emailQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('userName')
+          ? emailQuery.docs.first.get('userName')
+          : "";
+      final phoneNumber = emailQuery.docs.isNotEmpty &&
+              (emailQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('phoneNumber')
+          ? emailQuery.docs.first.get('phoneNumber')
+          : "";
+      final dob = emailQuery.docs.isNotEmpty &&
+              (emailQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('dateOfBirth')
+          ? emailQuery.docs.first.get('dateOfBirth')
+          : "";
+      final currentLocation = emailQuery.docs.isNotEmpty &&
+              (emailQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('currentLocation')
+          ? emailQuery.docs.first.get('currentLocation')
+          : "";
+      final age = emailQuery.docs.isNotEmpty &&
+              (emailQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('age')
+          ? emailQuery.docs.first.get('age')
+          : "";
+
+      print(emailQuery.docs.first.id);
+      print("email query");
+
+      if (userName == "") {
+        print("updating username");
+        String usernameFinal =
+            await DatabaseService(uid: emailQuery.docs.first.id)
+                .ensureUniqueUsername(generateUsername(_userMail, _fullName));
+
+        print(usernameFinal);
+
+        // Update the first document found with the provided email
+        await emailQuery.docs.first.reference
+            .update({'userName': usernameFinal, 'updatedAt': Timestamp.now()});
+      }
+
+      if (name.isEmpty ||
+          userName.isEmpty ||
+          phoneNumber.isEmpty ||
+          dob.isEmpty ||
+          currentLocation.isEmpty ||
+          age.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please update your profile first')),
+        );
+        // Neither email nor phone number exists, redirect user to edit profile page
+        nextScreen(context, updateProfile());
+      }
+    } else if (phoneNumberQuery.docs.isNotEmpty) {
+      final name = phoneNumberQuery.docs.isNotEmpty &&
+              (phoneNumberQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('fullName')
+          ? phoneNumberQuery.docs.first.get('fullName')
+          : "";
+      final userName = phoneNumberQuery.docs.isNotEmpty &&
+              (phoneNumberQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('userName')
+          ? phoneNumberQuery.docs.first.get('userName')
+          : "";
+      final email = phoneNumberQuery.docs.isNotEmpty &&
+              (phoneNumberQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('email')
+          ? phoneNumberQuery.docs.first.get('email')
+          : "";
+      final dob = phoneNumberQuery.docs.isNotEmpty &&
+              (phoneNumberQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('dateOfBirth')
+          ? phoneNumberQuery.docs.first.get('dateOfBirth')
+          : "";
+      final currentLocation = phoneNumberQuery.docs.isNotEmpty &&
+              (phoneNumberQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('currentLocation')
+          ? phoneNumberQuery.docs.first.get('currentLocation')
+          : "";
+      final age = phoneNumberQuery.docs.isNotEmpty &&
+              (phoneNumberQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('age')
+          ? phoneNumberQuery.docs.first.get('age')
+          : "";
+
+      if (name.isEmpty ||
+          userName.isEmpty ||
+          email.isEmpty ||
+          dob.isEmpty ||
+          currentLocation.isEmpty ||
+          age.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please update your profile first')),
+        );
+        // Neither email nor phone number exists, redirect user to edit profile page
+        nextScreen(context, updateProfile());
+      }
     }
-    }
-    else if(phoneNumberQuery.docs.isNotEmpty)
-    {
-    final name = phoneNumberQuery.docs.first.get('fullName');
-    final userName = phoneNumberQuery.docs.first.get('userName');
-    final email = phoneNumberQuery.docs.first.get('email');
-    final dob = phoneNumberQuery.docs.first.get('dateOfBirth');
-    final currentLocation = phoneNumberQuery.docs.first.get('currentLocation');
-    final age = phoneNumberQuery.docs.first.get('age');
-    if(name.isEmpty || userName.isEmpty || email.isEmpty || dob.isEmpty || currentLocation.isEmpty || age.isEmpty)
-    {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please update your profile first')),
-      );
-      // Neither email nor phone number exists, redirect user to edit profile page
-      nextScreenReplace(context, updateProfile());
-    }
-    }
-    
   }
 
   @override
@@ -132,24 +202,23 @@ class _HomePageState extends State<HomePage> {
         _UserName = userData['userName'] ?? '';
         _fullName = userData['fullName'] ?? '';
       });
-      checkIfEmailOrPhoneNumberExists(_userMail, user.phoneNumber!);
+      print("here home page");
+      print(user.phoneNumber);
+      checkIfEmailOrPhoneNumberExists(_userMail ?? "", user.phoneNumber ?? "");
 
       print(user);
       print(_userMail);
       print(_UserName);
       print(_fullName);
-      print("here");
-    }
-    else
-    {
-       Future.delayed(const Duration(milliseconds: 500), () {
-      User? refreshedUser = FirebaseAuth.instance.currentUser;
-      if (refreshedUser != null) {
-        print('User is signed in after delay: ${refreshedUser.uid}');
-      } else {
-        print('User is still not signed in after delay');
-      }
-    });
+    } else {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        User? refreshedUser = FirebaseAuth.instance.currentUser;
+        if (refreshedUser != null) {
+          print('User is signed in after delay: ${refreshedUser.uid}');
+        } else {
+          print('User is still not signed in after delay');
+        }
+      });
     }
   }
 
@@ -160,7 +229,8 @@ class _HomePageState extends State<HomePage> {
         automaticallyImplyLeading: false,
         backgroundColor: const Color.fromRGBO(2, 78, 166, 1),
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('Welcome, ${_UserName.isNotEmpty ? '@$_UserName' : (_fullName.isNotEmpty ? _fullName : _userMail)}',
+          Text(
+              'Welcome, ${_UserName.isNotEmpty ? '@$_UserName' : (_fullName.isNotEmpty ? _fullName : _userMail)}',
               style: GoogleFonts.inter(
                 color: Color.fromRGBO(255, 253, 251, 1),
                 fontWeight: FontWeight.w600,

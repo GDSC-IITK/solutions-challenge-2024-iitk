@@ -23,6 +23,9 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Color(0xFF024EA6), // Set your desired status bar color here
+    ));
     return MultiProvider(
       // Use MultiProvider if you have multiple providers
       providers: [
@@ -32,7 +35,12 @@ class MyApp extends StatelessWidget {
         // Add other providers if needed
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+      //   theme: ThemeData(
+      //   appBarTheme: AppBarTheme(
+      //     color: Color(0xFF024EA6), // Set your desired app bar color here
+      //   ),
+      // ),
+        title: 'Feed Harmony',
         debugShowCheckedModeBanner: false,
         home: AuthenticationWrapper(),
       ),

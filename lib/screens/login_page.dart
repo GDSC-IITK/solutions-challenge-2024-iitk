@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gdsc/function/generateUserName.dart';
 import 'package:gdsc/screens/OTP_page.dart';
 import 'package:gdsc/screens/home/home_page.dart';
 import 'package:gdsc/screens/phone_login_page.dart';
@@ -326,7 +327,8 @@ class _LoginPageState extends State<LoginPage> {
           await DatabaseService(uid: googleUser?.id).savingUserData(
               googleUser?.displayName ?? "",
               googleUser?.email ?? "",
-              "");
+              generateUsername(googleUser?.email ?? "", googleUser?.displayName ?? ""),
+              );
         }
 
       return await FirebaseAuth.instance.signInWithCredential(credential);

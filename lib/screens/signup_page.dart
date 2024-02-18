@@ -20,7 +20,7 @@ class _SignUpPageState extends State<SignUpPage> {
   String email = "";
   String password = "";
   String fullName = "";
-  String userName = "";
+  String age = "";
   AuthService authService = AuthService();
   @override
   Widget build(BuildContext context) {
@@ -220,7 +220,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                                               ),
                                                             ),
                                                             labelText:
-                                                                "Username",
+                                                                "Age",
                                                             labelStyle:
                                                                 GoogleFonts
                                                                     .inter(
@@ -246,14 +246,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                                             )),
                                                     onChanged: (val) {
                                                       setState(() {
-                                                        userName = val;
+                                                        age = val;
                                                       });
                                                     },
                                                     validator: (val) {
                                                       if (val!.isNotEmpty) {
                                                         return null;
                                                       } else {
-                                                        return "Name cannot be empty";
+                                                        return "Age cannot be empty";
                                                       }
                                                     },
                                                   )),
@@ -498,7 +498,7 @@ class _SignUpPageState extends State<SignUpPage> {
         _isLoading = true;
       });
       await authService
-          .registerUserWithEmailandPassword(fullName, email, password, userName)
+          .registerUserWithEmailandPassword(fullName, email, password, age)
           .then((value) async {
         if (value == true) {
           nextScreenReplace(context, const LoginPage());

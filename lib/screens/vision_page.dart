@@ -16,7 +16,7 @@ class VisionPage extends StatefulWidget {
 }
 
 class _VisionPageState extends State<VisionPage> {
-   @override
+  @override
   void initState() {
     super.initState();
     checkAuthState();
@@ -26,15 +26,15 @@ class _VisionPageState extends State<VisionPage> {
     FirebaseAuth auth = FirebaseAuth.instance;
     if (auth.currentUser != null) {
       Future.delayed(const Duration(milliseconds: 500), () {
-    setState(() {
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => HomePage()),
-        (route) => false);
-    });
-  });
+        setState(() {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => HomePage()),
+              (route) => false);
+        });
+      });
     }
   }
-  
+
   final List<ImageWithText> imagesWithText = [
     ImageWithText(
       'Join us in ending hunger. Your support as a donor or volunteer can be a beacon of hope for those in need.',

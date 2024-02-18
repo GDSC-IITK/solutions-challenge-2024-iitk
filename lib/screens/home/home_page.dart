@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gdsc/palette.dart';
 import 'package:gdsc/screens/Maps/maps.dart';
 import 'package:gdsc/screens/Maps/spotsomeone.dart';
 import 'package:gdsc/screens/Profile/profilemain.dart';
+import 'package:gdsc/screens/Volunteer/donate_page.dart';
+import 'package:gdsc/screens/Profile/updateProfile.dart';
 import 'package:gdsc/screens/Volunteer/donate_page.dart';
 import 'package:gdsc/screens/Volunteer/volunteer.dart';
 import 'package:gdsc/screens/home.dart';
@@ -10,10 +13,13 @@ import 'package:gdsc/screens/home/post_scroll_page.dart';
 import 'package:gdsc/screens/home/title_page.dart';
 import 'package:gdsc/screens/home/yo.dart';
 import 'package:gdsc/screens/notification_page.dart';
+import 'package:gdsc/services/providers.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gdsc/function/getuser.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:gdsc/data_models/user.dart' as User_1;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,12 +30,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int current_index = 0;
-  final List<Widget> pages = [
-    HomePagenew(),
-    DonatePage(),
-    volunteer(),
-    Profilemain()
-  ];
+  final List<Widget> pages = [HomePagenew(), DonatePage(), volunteer(), Profilemain()];
 
   void OnTapped(int index) {
     setState(() {
@@ -39,6 +40,30 @@ class _HomePageState extends State<HomePage> {
 
   String _userMail = "";
   String _UserName = "";
+
+  Future<void> checkIfEmailOrPhoneNumberExists(String email, String phoneNumber) async {
+  final QuerySnapshot emailQuery = await FirebaseFirestore.instance
+      .collection("Users")
+      .where("email", isEqualTo: email)
+      .get();
+
+  final QuerySnapshot phoneNumberQuery = await FirebaseFirestore.instance
+      .collection("Users")
+      .where("phoneNumber", isEqualTo: phoneNumber)
+      .get();
+    // if (emailQuery.docs.isEmpty==false)
+    //   context.read<Providers>().setUserFromFirestoreEmail(email);
+    // else if(phoneNumberQuery.docs.isEmpty==false)
+    //   context.read<Providers>().setUserFromFirestorePhone(phoneNumber);
+
+  if (emailQuery.docs.isEmpty && phoneNumberQuery.docs.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please update your profile first')),
+        );
+    // Neither email nor phone number exists, redirect user to edit profile page
+    nextScreenReplace(context, updateProfile());
+  }
+}
 
   @override
   void initState() {
@@ -57,6 +82,10 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _UserName = userData['userName'] ?? '';
       });
+      checkIfEmailOrPhoneNumberExists(_userMail, user.phoneNumber!);
+      
+      print(user);
+      print("here");
     }
   }
 

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gdsc/screens/OTP_page.dart';
 import 'package:gdsc/screens/home/home_page.dart';
 import 'package:gdsc/screens/phone_login_page.dart';
+import 'package:gdsc/services/database_services.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -255,7 +256,17 @@ class _LoginPageState extends State<LoginPage> {
       final GoogleSignInAccount? googleSignInAccount =
           await _googleSignIn.signIn();
       if (googleSignInAccount != null) {
-        print('User signed in with Google: ${googleSignInAccount.displayName}');
+        print('User signed in with Google: ${googleSignInAccount}');
+
+      final CollectionReference userCollection =
+      FirebaseFirestore.instance.collection("Users");
+      QuerySnapshot querySnapshot = await userCollection.where('email', isEqualTo: googleSignInAccount.email).get();
+
+      if (querySnapshot.docs.isEmpty) {
+        // If user doesn't exist, add their data to Firestore
+        await DatabaseService(uid: googleSignInAccount.id)
+            .savingUserData(googleSignInAccount.displayName ?? "", googleSignInAccount.email ?? "", "");
+      }
         nextScreenReplace(context, HomePage());
       } else {
         print('Failed to sign in with Google');

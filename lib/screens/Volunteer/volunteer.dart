@@ -79,13 +79,28 @@ class _volunteerState extends State<volunteer>
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Color.fromRGBO(78, 134, 199, 0.83),
+              // color: Color.fromRGBO(78, 134, 199, 0.83),
             ),
             height: 50,
             child: const Center(
-              child: Text(
-                "Volunteer Page",
-                style: TextStyle(),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(width: 8, height: 8),
+                    Text("Volunteer Page",
+                        style: TextStyle(
+                          fontSize: 23,
+                          fontWeight: FontWeight.w700,
+                        )),
+                    Text("Pick from locations and drop at nearby points",
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Color.fromARGB(255, 102, 98, 88))),
+                  ],
+                ),
               ),
             ),
           ),
@@ -93,26 +108,29 @@ class _volunteerState extends State<volunteer>
         bottom: TabBar(
           controller: _tabController,
           tabs: [
-            Container(
-              height: 30,
-              width: MediaQuery.of(context).size.width / 4,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: Color.fromRGBO(2, 78, 166, 1),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 30,
+                width: MediaQuery.of(context).size.width / 4,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: Color.fromRGBO(2, 78, 166, 1),
+                  ),
+                  color: _tabController!.index == 0
+                      ? Color.fromRGBO(2, 78, 166, 1)
+                      : Colors.white,
                 ),
-                color: _tabController!.index == 0
-                    ? Color.fromRGBO(2, 78, 166, 1)
-                    : Colors.white,
-              ),
-              child: Center(
-                child: Text(
-                  "0-2 km",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: _tabController!.index == 0
-                        ? Colors.white
-                        : Color.fromRGBO(2, 78, 166, 1),
+                child: Center(
+                  child: Text(
+                    "0-2 km",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: _tabController!.index == 0
+                          ? Colors.white
+                          : Color.fromRGBO(2, 78, 166, 1),
+                    ),
                   ),
                 ),
               ),
@@ -155,7 +173,7 @@ class _volunteerState extends State<volunteer>
               ),
               child: Center(
                 child: Text(
-                  "Custom",
+                  "5+ km",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: _tabController!.index == 2

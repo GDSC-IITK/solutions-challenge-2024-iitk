@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:gdsc/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gdsc/screens/vision_page.dart';
@@ -18,6 +19,10 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
     return MultiProvider(
       // Use MultiProvider if you have multiple providers
       providers: [

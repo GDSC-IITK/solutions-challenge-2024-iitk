@@ -212,7 +212,7 @@ class _donatehistoryState extends State<donatehistory> {
                   builder: (BuildContext context,
                       AsyncSnapshot<List<Widget>> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator(); // Show a loading indicator while waiting for data
+                      return Center(child: CircularProgressIndicator()); // Show a loading indicator while waiting for data
                     } else if (snapshot.hasError) {
                       return Text(
                           'Error: ${snapshot.error}'); // Show an error message if an error occurred

@@ -1,9 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gdsc/function/getuser.dart';
+import 'package:gdsc/screens/Volunteer/map_animation_page.dart';
+import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -11,9 +15,11 @@ import 'package:url_launcher/url_launcher.dart';
 class volunteerMaps extends StatefulWidget {
   const volunteerMaps({
     super.key,
-    required this.id,
+    required this.donationId,
+    required this.pickupId,
   });
-  final String id;
+  final String donationId;
+  final String pickupId;
 
   @override
   State<volunteerMaps> createState() => _MapsState();
@@ -90,6 +96,12 @@ class _MapsState extends State<volunteerMaps> {
                 infoWindow: InfoWindow(title: "Destination")),
           );
         });
+        CameraPosition cameraPosition = CameraPosition(
+            zoom: 16, target: LatLng(_coord.latitude, _coord.longitude));
+
+        final GoogleMapController controller = await _controller.future;
+        controller
+            .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
 
         return jsonData;
       } else {
@@ -105,27 +117,48 @@ class _MapsState extends State<volunteerMaps> {
 
   loadData() async {
     Map<String, dynamic>? data =
-        await fetchDocumentAsJsonByUID('Donations', widget.id);
+        await fetchDocumentAsJsonByUID('Donations', widget.donationId);
     setState(() {
       _donData = data;
     });
     getUserCurrentLocation().then((value) async {
       print("My Current Location");
       print("${value.latitude} ${value.longitude}");
+      Uint8List? markerIcon = await createCurrentLocationMarker();
 
       setState(() {
         _marker.add(Marker(
             markerId: MarkerId("2"),
             position: LatLng(value.latitude, value.longitude),
+            icon: BitmapDescriptor.fromBytes(markerIcon!),
             infoWindow: InfoWindow(title: "My Current location")));
       });
-      CameraPosition cameraPosition = CameraPosition(
-          zoom: 14, target: LatLng(value.latitude, value.longitude));
-
-      final GoogleMapController controller = await _controller.future;
-      controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
     });
     setState(() {});
+  }
+
+  Future<Uint8List?> createCurrentLocationMarker() async {
+    final double markerSize = 80.0; // Adjust the size of the marker as needed
+
+    final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
+    final Canvas canvas = Canvas(pictureRecorder);
+    final Paint paintCircle = Paint()
+      ..color = Colors.blue; // Blue color for the circle
+
+    // Draw the circle for the marker
+    canvas.drawCircle(
+      Offset(markerSize / 2, markerSize / 2), // Center of the circle
+      markerSize / 2, // Radius of the circle
+      paintCircle,
+    );
+
+    // Convert the canvas to an image
+    final img = await pictureRecorder
+        .endRecording()
+        .toImage(markerSize.toInt(), markerSize.toInt());
+    final imgByteData = await img.toByteData(format: ui.ImageByteFormat.png);
+
+    return imgByteData?.buffer.asUint8List();
   }
 
   @override
@@ -344,10 +377,10 @@ class _MapsState extends State<volunteerMaps> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                        "You picked up the order, Great job. Let;s deliver the order"),
+                                                        "You picked up the order, Great job. Let's deliver the order"),
                                                     SizedBox(height: 10),
                                                     Text(
-                                                        "Continue to destination"),
+                                                        ""),
                                                   ],
                                                 ),
                                                 actions: [
@@ -356,8 +389,9 @@ class _MapsState extends State<volunteerMaps> {
                                                       Navigator.pop(
                                                           context); // Close the dialog
                                                       // Add navigation logic here
+                                                      nextScreen(context, MapAnimationPage(donationId:widget.donationId??'',pickupId:widget.pickupId??''));
                                                     },
-                                                    child: Text("Navigate"),
+                                                    child: Text("Continue"),
                                                   ),
                                                 ],
                                               );
@@ -414,22 +448,23 @@ class _MapsState extends State<volunteerMaps> {
         padding: const EdgeInsets.only(top: 40.0),
         child: FloatingActionButton(
           onPressed: () async {
-            print("My Current Location");
-            getUserCurrentLocation().then((value) async {
-              print("${value.latitude} ${value.longitude}");
-              _marker.add(
-                Marker(
-                    markerId: MarkerId("2"),
-                    position: LatLng(value.latitude, value.longitude),
-                    infoWindow: InfoWindow(title: "My Current location")),
-              );
-              CameraPosition cameraPosition = CameraPosition(
-                  zoom: 16, target: LatLng(value.latitude, value.longitude));
+            print("Destination Location");
+            _marker.add(
+              Marker(
+                  markerId: MarkerId("2"),
+                  position: LatLng(_coord.latitude, _coord.longitude),
+                  infoWindow: InfoWindow(title: "Destination location")),
+            );
+            CameraPosition cameraPosition = CameraPosition(
+                zoom: 16, target: LatLng(_coord.latitude, _coord.longitude));
 
-              final GoogleMapController controller = await _controller.future;
-              controller.animateCamera(
-                  CameraUpdate.newCameraPosition(cameraPosition));
-            });
+            final GoogleMapController controller = await _controller.future;
+            controller
+                .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+            // getUserCurrentLocation().then((value) async {
+            //   print("${value.latitude} ${value.longitude}");
+
+            // });
             setState(() {});
           },
           child: Icon(Icons.location_disabled_outlined),

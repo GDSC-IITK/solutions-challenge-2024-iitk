@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:gdsc/screens/Volunteer/Vcard.dart';
 import 'package:gdsc/services/helper/formatTimestamp.dart';
 import 'package:gdsc/services/helper/getCurrentLoc.dart';
+import 'package:gdsc/services/providers.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class volunteer extends StatefulWidget {
   const volunteer({super.key});
@@ -98,10 +100,15 @@ class _volunteerState extends State<volunteer>
   }
 
   Future<void> fetchData() async {
-    setState(() async {
+    GeoPoint? currentLoc = await context.read<Providers>().current_loc_data;
+
+    setState(() {
       fetchDonations().then((value) => {items = value});
-      GeoPoint? currentLoc = await getCurrentLocation();
-      current = currentLoc!;
+      print(currentLoc!.latitude.toString());
+      print("fetch current loc");
+    });
+    setState(() {
+      current = currentLoc;
     });
   }
 
@@ -118,10 +125,15 @@ class _volunteerState extends State<volunteer>
     for (int i = 0; i < items.length; i++) {
       var item = items[i];
       GeoPoint? loc = item.extraData['location'] ?? current;
+      // print("loc");
+      // print(context.read<Providers>().current_loc_data?.latitude);
+      //       print(context.read<Providers>().current_loc_data?.longitude);
+      // print(loc?.latitude);
+      // print(loc?.longitude);
       double distance = calculateDistanceNew(
-          current?.latitude, current?.longitude, loc?.latitude, loc?.longitude);
-      print(distance);
-      print("distance");
+           context.read<Providers>().current_loc_data?.latitude, context.read<Providers>().current_loc_data?.longitude, loc?.latitude, loc?.longitude);
+      // print(distance);
+
       item.distance = distance;
       if (distance < 2) {
         VCard1.add(item);

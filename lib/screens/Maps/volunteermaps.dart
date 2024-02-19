@@ -114,11 +114,10 @@ class _MapsState extends State<volunteerMaps> {
       print("${value.latitude} ${value.longitude}");
 
       setState(() {
-        _marker.add(
-          Marker(
-              markerId: MarkerId("2"),
-              position: LatLng(value.latitude, value.longitude),
-              infoWindow: InfoWindow(title: "My Current location")));
+        _marker.add(Marker(
+            markerId: MarkerId("2"),
+            position: LatLng(value.latitude, value.longitude),
+            infoWindow: InfoWindow(title: "My Current location")));
       });
       CameraPosition cameraPosition = CameraPosition(
           zoom: 14, target: LatLng(value.latitude, value.longitude));
@@ -311,7 +310,7 @@ class _MapsState extends State<volunteerMaps> {
                             )),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 30.0),
+                        padding: const EdgeInsets.only(left: 5.0),
                         child: IconButton(
                             onPressed: () async {
                               showDialog(
@@ -376,7 +375,33 @@ class _MapsState extends State<volunteerMaps> {
                               Icons.done,
                               color: Colors.white,
                             )),
-                      )
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 0.0),
+                        child: IconButton(
+                            onPressed: () async {
+                              // Example coordinates (latitude and longitude)
+                              double destinationLatitude = _coord.latitude;
+                              double destinationLongitude = _coord.longitude;
+
+                              // Construct the URL for Google Maps with the destination coordinates
+                              String googleMapsUrl =
+                                  'https://www.google.com/maps/dir/?api=1&destination=$destinationLatitude,$destinationLongitude';
+
+                              // Check if the URL can be launched
+                              if (await canLaunch(googleMapsUrl)) {
+                                // Launch Google Maps with the specified URL
+                                await launch(googleMapsUrl);
+                              } else {
+                                // Handle error if Google Maps cannot be launched
+                                throw 'Could not launch $googleMapsUrl';
+                              }
+                            },
+                            icon: const Icon(
+                              Icons.navigation,
+                              color: Colors.white,
+                            )),
+                      ),
                     ],
                   )
                 ],

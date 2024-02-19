@@ -15,6 +15,7 @@ import 'package:gdsc/screens/home/title_page.dart';
 import 'package:gdsc/screens/home/yo.dart';
 import 'package:gdsc/screens/notification_page.dart';
 import 'package:gdsc/services/database_services.dart';
+import 'package:gdsc/services/helper/getCurrentLoc.dart';
 import 'package:gdsc/services/providers.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -64,6 +65,8 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _isLoading = true;
     });
+    GeoPoint? curr = await getCurrentLocation();
+    context.read<Providers>().setCurrentLocation(curr);
     if (emailQuery.docs.isEmpty == false)
       await context
           .read<Providers>()

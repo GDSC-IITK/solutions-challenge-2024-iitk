@@ -18,9 +18,17 @@ class Providers with ChangeNotifier {
     "email",
     "profileImageLink",
   );
+  GeoPoint? _current_location =  GeoPoint(0, 0);
+  GeoPoint? get current_loc_data => _current_location;
   User get user_data => _user;
   void setUser(User value) {
     _user = value;
+    notifyListeners();
+  }
+  void setCurrentLocation(GeoPoint? value) {
+    print(value);
+    print("current loc");
+    _current_location = value;
     notifyListeners();
   }
   Future<void> setUserFromFirestoreEmail(String email) async {

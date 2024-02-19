@@ -74,175 +74,178 @@ class _MapsState extends State<Maps> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Map"),
-        backgroundColor: Color(0xFFCAE3FF),
+        backgroundColor: Color(0xFF024EA6),
       ),
-      body: Column(
-        children: [
-          SafeArea(
-            child: SizedBox(
-              height: 580,
-              child: GoogleMap(
-                onTap: (LatLng latlng) {
-                  _marker.add(
-                    Marker(
-                        markerId: MarkerId("3"),
-                        position: latlng,
-                        infoWindow: InfoWindow(title: "Destination")),
-                  );
-                  setState(() {});
-                },
-                initialCameraPosition: loc,
-                markers: Set<Marker>.of(_marker),
-                // mapType: MapType.satellite,
-                //compassEnabled: false,
-                myLocationButtonEnabled: true,
-                onMapCreated: (GoogleMapController controller) {
-                  _controller.complete(controller);
-                },
+      body: Container(
+        color: Color(0xFF024EA6),
+        child: Column(
+          children: [
+            SafeArea(
+              child: SizedBox(
+                height: 580,
+                child: GoogleMap(
+                  onTap: (LatLng latlng) {
+                    _marker.add(
+                      Marker(
+                          markerId: MarkerId("3"),
+                          position: latlng,
+                          infoWindow: InfoWindow(title: "Destination")),
+                    );
+                    setState(() {});
+                  },
+                  initialCameraPosition: loc,
+                  markers: Set<Marker>.of(_marker),
+                  // mapType: MapType.satellite,
+                  //compassEnabled: false,
+                  myLocationButtonEnabled: true,
+                  onMapCreated: (GoogleMapController controller) {
+                    _controller.complete(controller);
+                  },
+                ),
               ),
             ),
-          ),
-          Container(
-            height: 178.4,
-            width: double.infinity,
-            color: const Color(0xFF024EA6),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Donor's Name",
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white),
-                          ),
-                          Text(
-                            "Donor's address",
-                            style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white),
-                          )
-                        ],
+            Container(
+              height: 178.4,
+              width: double.infinity,
+              color: const Color(0xFF024EA6),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Donor's Name",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white),
+                            ),
+                            Text(
+                              "Donor's address",
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Details",
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white),
-                          ),
-                          Text(
-                            "Items",
-                            style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white),
-                          ),
-                          Text(
-                            "Quantity: 10 kgs",
-                            style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white),
-                          )
-                        ],
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Details",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white),
+                            ),
+                            Text(
+                              "Items",
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white),
+                            ),
+                            Text(
+                              "Quantity: 10 kgs",
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Arrival Time",
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white),
-                          ),
-                          Text(
-                            "5-8 min",
-                            style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white),
-                          )
-                        ],
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Arrival Time",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white),
+                            ),
+                            Text(
+                              "5-8 min",
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  Container(
+                    height: 2,
+                    color: Color.fromARGB(255, 78, 134, 197),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: CircleAvatar(
+                          radius: 35,
+                        ),
                       ),
-                    )
-                  ],
-                ),
-                Container(
-                  height: 2,
-                  color: Color.fromARGB(255, 78, 134, 197),
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: CircleAvatar(
-                        radius: 35,
+                      const Padding(
+                        padding: EdgeInsets.only(left: 12.0),
+                        child: Column(
+                          children: [
+                            Text(
+                              "Elijah",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: "Inter",
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w800),
+                            ),
+                            Text(
+                              "Donor",
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  fontFamily: "Inter",
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 12.0),
-                      child: Column(
-                        children: [
-                          Text(
-                            "Elijah",
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontFamily: "Inter",
-                                color: Colors.white,
-                                fontWeight: FontWeight.w800),
-                          ),
-                          Text(
-                            "Donor",
-                            style: TextStyle(
-                                fontSize: 13,
-                                fontFamily: "Inter",
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 190.0),
-                      child: IconButton(
-                          onPressed: () async {
-                            await call("7984419251");
-                          },
-                          icon: const Icon(
-                            Icons.call,
-                            color: Colors.white,
-                          )),
-                    )
-                  ],
-                )
-              ],
+                      Padding(
+                        padding: const EdgeInsets.only(left: 190.0),
+                        child: IconButton(
+                            onPressed: () async {
+                              await call("7984419251");
+                            },
+                            icon: const Icon(
+                              Icons.call,
+                              color: Colors.white,
+                            )),
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(top: 40.0),

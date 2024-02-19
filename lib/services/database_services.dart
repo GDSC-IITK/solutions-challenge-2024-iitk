@@ -24,6 +24,10 @@ class DatabaseService {
       "createdAt": Timestamp.now(),
       "updatedAt": Timestamp.now(),
       "currentLocation": "",
+      "donationsDone":0,
+      "pickupsDone":0,
+      "donationIds":[],
+      "pickupIds":[],
     });
   }
 
@@ -44,6 +48,10 @@ class DatabaseService {
       "updatedAt": Timestamp.now(),
       "age": int.parse(age),
       "currentLocation": "",
+      "donationsDone":0,
+      "pickupsDone":0,
+      "donationIds":[],
+      "pickupIds":[],
     });
   }
 

@@ -501,7 +501,7 @@ class _IndividualDonateContainerState extends State<IndividualDonateContainer> {
                       ),
                       // SizedBox(width: 10),
                       Text(
-                        'Upload Image',
+                        '${_downloadLink==''?'Upload Image':'Upload Another Image'}',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

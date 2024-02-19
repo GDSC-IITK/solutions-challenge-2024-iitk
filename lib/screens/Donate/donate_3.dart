@@ -1,6 +1,9 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gdsc/function/getuser.dart';
 import 'package:gdsc/screens/Donate/donation_confirmed.dart';
 import 'package:gdsc/services/helper/getCurrentLoc.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
@@ -52,8 +55,32 @@ class _Donate_3State extends State<Donate_3> {
       // Get a reference to the Firestore instance
       FirebaseFirestore firestore = FirebaseFirestore.instance;
       User? user = FirebaseAuth.instance.currentUser;
+      final QuerySnapshot emailQuery = await FirebaseFirestore.instance
+          .collection("Users")
+          .where("email", isEqualTo: user?.email ?? '')
+          .get();
+
+      final QuerySnapshot phoneNumberQuery = await FirebaseFirestore.instance
+          .collection("Users")
+          .where("phoneNumber", isEqualTo: user?.phoneNumber ?? '')
+          .get();
       // Add the donation document to the Donations collection
-      await firestore.collection('Donations').add({
+      String phone = '';
+      if (emailQuery.docs.first.exists) {
+        phone = emailQuery.docs.isNotEmpty &&
+                (emailQuery.docs.first.data() as Map<String, dynamic>)
+                    .containsKey('phoneNumber')
+            ? emailQuery.docs.first.get('phoneNumber')
+            : "";
+      }
+      else if (phoneNumberQuery.docs.first.exists) {
+        phone = phoneNumberQuery.docs.isNotEmpty &&
+                (phoneNumberQuery.docs.first.data() as Map<String, dynamic>)
+                    .containsKey('phoneNumber')
+            ? phoneNumberQuery.docs.first.get('phoneNumber')
+            : "";
+      }
+      var donation = await firestore.collection('Donations').add({
         'itemname': itemname,
         'quantity': int.parse(quantity),
         'address': location,
@@ -71,28 +98,52 @@ class _Donate_3State extends State<Donate_3> {
         'weightMetric': weightMetric,
         'type': type,
         'imageUrl': imageUrl,
+        'phoneNumber': user?.phoneNumber!=null ? user?.phoneNumber : phone,
       });
-      await firestore.collection('HomePage').add({
-        'itemname': itemname,
-        'quantity': int.parse(quantity),
-        'address': location,
-        'remarks': remarks,
-        'name': organization,
-        'itemdesc': itemdesc,
-        'createdAt': Timestamp.now(),
-        'updatedAt': Timestamp.now(),
-        'status': 'posted',
-        'availableTime': 180,
-        'donatorName': user?.displayName,
-        'isIndividual': false,
-        'userId': user?.uid,
-        'location': await getCurrentLocation(),
-        'weightMetric': weightMetric,
-        'type': type,
-        'imageUrl': imageUrl,
-        'likes': 0,
-        'type': 'donate',
-      });
+      // await firestore.collection('HomePage').add({
+      //   'itemname': itemname,
+      //   'quantity': int.parse(quantity),
+      //   'address': location,
+      //   'remarks': remarks,
+      //   'name': organization,
+      //   'itemdesc': itemdesc,
+      //   'createdAt': Timestamp.now(),
+      //   'updatedAt': Timestamp.now(),
+      //   'status': 'posted',
+      //   'availableTime': 180,
+      //   'donatorName': user?.displayName,
+      //   'isIndividual': false,
+      //   'userId': user?.uid,
+      //   'location': await getCurrentLocation(),
+      //   'weightMetric': weightMetric,
+      //   'type': type,
+      //   'imageUrl': imageUrl,
+      //   'likes': 0,
+      //   'type': 'donate',
+      // });
+      if (user != null) {
+        String id = user.email ?? "";
+        CollectionReference users =
+            FirebaseFirestore.instance.collection('Users');
+
+        QuerySnapshot querySnapshot =
+          await users.where('email', isEqualTo: id).get();
+        int donationsDone = querySnapshot.docs.first.get('donationsDone') ?? 0;
+
+        if (querySnapshot.docs.isNotEmpty) {
+            DocumentSnapshot docSnapshot = querySnapshot.docs.first;
+
+          // Update the data in the document
+          await docSnapshot.reference.update({
+            // Specify the fields you want to update along with their new values
+            // For example:
+            'donationIds': FieldValue.arrayUnion([donation.id]),
+            'donationsDone': donationsDone + 1,
+            'updatedAt': Timestamp.now()
+            // Add more fields as needed
+          });
+        }
+      }
     } catch (e) {
       setState(() {
         _isLoading = false;
@@ -176,7 +227,7 @@ class _Donate_3State extends State<Donate_3> {
           Padding(
             padding: EdgeInsets.only(left: 35.0),
             child: Text(
-              "Image Uploaded: ${widget.imageUrl!=''?'Yes':'No'}",
+              "Image Uploaded: ${widget.imageUrl != '' ? 'Yes' : 'No'}",
               style: TextStyle(fontFamily: "Inter", color: Color(0xFF666666)),
             ),
           ),

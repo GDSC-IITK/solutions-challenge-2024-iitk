@@ -3,14 +3,20 @@ import 'package:gdsc/screens/Volunteer/Page1.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 
 class Vcard extends StatelessWidget {
-  const Vcard(
+  Vcard(
       {super.key,
       required this.item,
+      this.distance = 0,
       required this.quantity,
+      required this.id,
+      required this.extraData,
       required this.location});
   final String item;
-  final String quantity;
+  final int quantity;
   final String location;
+  double distance;
+  final Map<dynamic, dynamic> extraData;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +35,13 @@ class Vcard extends StatelessWidget {
             onTap: () {
               nextScreen(
                   context,
-                  const Page1(
-                    itemname: 'Carrot',
-                    quantity: '10 kg',
-                    location: 'location',
-                    remarks: 'remarks',
-                    organization: 'McD',
+                  Page1(
+                    itemname: item,
+                    quantity: quantity.toString(),
+                    location: location,
+                    remarks: '',
+                    extraData: extraData,
+                    id:id,
                   ));
             },
             leading: Image.asset(
@@ -56,8 +63,8 @@ class Vcard extends StatelessWidget {
                 ),
                 Text("Location: $location",
                     style: TextStyle(color: Colors.grey)),
-                const Text(
-                  "300 mts away",
+                Text(
+                  '${distance.toStringAsFixed(2)} kms away',
                   style: TextStyle(color: Color.fromRGBO(2, 78, 166, 1)),
                 ),
               ],

@@ -74,8 +74,7 @@ class _updateProfileState extends State<updateProfile> {
         return;
       }
 
-      if(c2.text.length!=10)
-      {
+      if (c2.text.length != 10) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Please fill 10 digit phone number')),
         );
@@ -117,6 +116,10 @@ class _updateProfileState extends State<updateProfile> {
           'currentLocation': getCurrentLocation(),
           'createdAt': Timestamp.now(),
           'updatedAt': Timestamp.now(),
+          "donationsDone": 0,
+          "pickupsDone": 0,
+          "donationIds": [],
+          "pickupIds": [],
         });
         String userId = newUserRef.id;
         String usernameFinal = await DatabaseService(uid: userId)

@@ -43,7 +43,8 @@ class _volunteerhistoryState extends State<volunteerhistory> {
           String donationId = doc.id;
           Map<String, dynamic> donationData =
               doc.data() as Map<String, dynamic>;
-          Volunteering donation = Volunteering(id: donationId, data: donationData);
+          Volunteering donation =
+              Volunteering(id: donationId, data: donationData);
           userVolunteerings.add(donation);
         });
       } else {
@@ -89,7 +90,7 @@ class _volunteerhistoryState extends State<volunteerhistory> {
     List<Widget> widgets = [];
     for (var userVolunteering in userVolunteerings) {
       String location =
-          await getLocationFromGeoPoint(userVolunteering.data['address']);
+          await getLocationFromGeoPoint(userVolunteering.data['location']);
       widgets.add(
         Container(
           height: 115,
@@ -103,12 +104,11 @@ class _volunteerhistoryState extends State<volunteerhistory> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Organisation name: ${userVolunteering.data['donatorName'] ?? 'N/A'}",
+                "Donation Id: ${userVolunteering.data['donationId'] ?? 'N/A'}",
                 style: TextStyle(fontSize: 15, color: Color(0xFF666666)),
               ),
               Text(
-                "Quantity: ${userVolunteering.data['quantity'] ?? 'N/A'}" +
-                    " ${userVolunteering.data['weightMetric'] ?? ''}",
+                "Status: ${userVolunteering.data['status'] ?? ''}",
                 style: TextStyle(fontSize: 15, color: Color(0xFF666666)),
               ),
               Text(
@@ -226,8 +226,19 @@ class _volunteerhistoryState extends State<volunteerhistory> {
                         );
                       } else {
                         return Container(
-                          child: ListView(
-                            children: snapshot.data!,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListView.builder(
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, index) {
+                                // Add padding between each list item
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: snapshot.data![index],
+                                );
+                              },
+                            ),
                           ),
                         );
                       }

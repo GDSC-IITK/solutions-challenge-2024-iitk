@@ -10,12 +10,14 @@ class Page1 extends StatelessWidget {
       required this.quantity,
       required this.location,
       required this.remarks,
-      required this.organization});
+      required this.id,
+      required this.extraData});
   final String itemname;
   final String quantity;
   final String location;
   final String remarks;
-  final String organization;
+  final String id;
+  final Map<dynamic,dynamic> extraData;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class Page1 extends StatelessWidget {
             width: double.infinity,
           ),
           Padding(
-            padding: EdgeInsets.only(left: 20.0),
+            padding: EdgeInsets.only(left: 20.0,bottom: 10),
             child: Text(
               itemname,
               textAlign: TextAlign.start,
@@ -49,7 +51,7 @@ class Page1 extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 35.0),
             child: Text(
-              "Organization: $organization",
+              "Organization: ",
               style: TextStyle(fontFamily: "Inter", color: Color(0xFF666666)),
             ),
           ),
@@ -75,12 +77,13 @@ class Page1 extends StatelessWidget {
                     itemname: itemname,
                     quantity: quantity,
                     location: location,
+                    id: id,
                     remarks: remarks,
-                    organization: organization),
+                    extraData: extraData),
               );
             },
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(16.0),
               child: Center(
                 child: Container(
                   decoration: BoxDecoration(

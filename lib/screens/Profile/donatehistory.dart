@@ -88,8 +88,9 @@ class _donatehistoryState extends State<donatehistory> {
   Future<List<Widget>> _buildDonationWidgets() async {
     List<Widget> widgets = [];
     for (var userDonation in userDonations) {
-      String location =
-          await getLocationFromGeoPoint(userDonation.data['address']);
+      // String location =
+      //     await getLocationFromGeoPoint(userDonation.data['location']);
+
       widgets.add(
         Container(
           height: 115,
@@ -112,7 +113,7 @@ class _donatehistoryState extends State<donatehistory> {
                 style: TextStyle(fontSize: 15, color: Color(0xFF666666)),
               ),
               Text(
-                "Location: $location", // Use the fetched location here
+                "Location: ${userDonation.data['address'] ?? 'N/A'}", // Use the fetched location here
                 style: TextStyle(fontSize: 15, color: Color(0xFF666666)),
               ),
               Text(
@@ -226,8 +227,19 @@ class _donatehistoryState extends State<donatehistory> {
                         );
                       } else {
                         return Container(
-                          child: ListView(
-                            children: snapshot.data!,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListView.builder(
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, index) {
+                                // Add padding between each list item
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: snapshot.data![index],
+                                );
+                              },
+                            ),
                           ),
                         );
                       }

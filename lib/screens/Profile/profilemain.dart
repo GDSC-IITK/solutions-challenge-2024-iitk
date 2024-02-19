@@ -1,13 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gdsc/screens/Profile/donationactivity.dart';
 import 'package:gdsc/screens/Profile/settings.dart';
 import 'package:gdsc/screens/Profile/updateProfile.dart';
 import 'package:gdsc/screens/Profile/volunteeractivity.dart';
 import 'package:gdsc/screens/vision_page.dart';
+import 'package:gdsc/services/providers.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gdsc/function/getuser.dart';
+import 'package:provider/provider.dart';
+import 'package:gdsc/data_models/user.dart' as user_data;
 
 class Profilemain extends StatefulWidget {
   const Profilemain({Key? key}) : super(key: key);
@@ -20,15 +24,26 @@ class _ProfilemainState extends State<Profilemain> {
   String _userMail = "";
   String _UserName = "";
   String _fullName = "";
+  user_data.User? _user;
 
   @override
   void initState() {
     super.initState();
     _loadUserName();
+    print("provider");
+    print(context.read<Providers>().user_data.toJson());
+    print(context
+        .read<Providers>()
+        .user_data
+        .toJson()['profileImageLink']
+        .toString());
   }
 
   // Function to load user's name from Firebase
   void _loadUserName() async {
+    setState(() {
+      _user = context.read<Providers>().user_data.toJson() as user_data.User;
+    });
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       setState(() {
@@ -45,6 +60,8 @@ class _ProfilemainState extends State<Profilemain> {
   void _handleLogout() async {
     try {
       await FirebaseAuth.instance.signOut();
+      // Pop out all screens until reaching the root page
+      Navigator.of(context).popUntil((route) => route.isFirst);
       // Navigate to the login page or any other appropriate screen after logout
       nextScreenReplace(context, VisionPage());
     } catch (error) {
@@ -70,33 +87,51 @@ class _ProfilemainState extends State<Profilemain> {
           children: [
             Container(
               height: 128,
-              decoration: const BoxDecoration(color: Color(0xFFCAE3FF)),
+              color: Color(0xFF024EA6), // Set your desired app bar color here
               child: Row(
                 children: [
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: CircleAvatar(
                       radius: 44,
+                      backgroundImage:
+                          NetworkImage(context.read<Providers>().user_data.toJson()['profileImageLink'].toString()),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "$_fullName",
+                          context
+                                      .read<Providers>()
+                                      .user_data
+                                      .toJson()['fullName'] !=
+                                  null
+                              ? "${context.read<Providers>().user_data.toJson()['fullName'].toString()}"
+                              : "", // Empty string if full name is null
                           style: TextStyle(
-                              fontSize: 20,
-                              fontFamily: "Inter",
-                              fontWeight: FontWeight.bold),
+                            fontSize: 20,
+                            fontFamily: "Inter",
+                            color: Color.fromARGB(199, 255, 255, 255),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         Text(
-                          "@$_UserName",
+                          context
+                                      .read<Providers>()
+                                      .user_data
+                                      .toJson()['userName'] !=
+                                  null
+                              ? "@${context.read<Providers>().user_data.toJson()['userName'].toString()}"
+                              : "", // Empty string if username is null
                           style: TextStyle(
                             fontFamily: "Inter",
+                            color: Color.fromARGB(199, 255, 255, 255),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gdsc/function/generateUserName.dart';
 import 'package:gdsc/palette.dart';
 import 'package:gdsc/screens/Maps/maps.dart';
 import 'package:gdsc/screens/Maps/spotsomeone.dart';
@@ -13,6 +14,7 @@ import 'package:gdsc/screens/home/post_scroll_page.dart';
 import 'package:gdsc/screens/home/title_page.dart';
 import 'package:gdsc/screens/home/yo.dart';
 import 'package:gdsc/screens/notification_page.dart';
+import 'package:gdsc/services/database_services.dart';
 import 'package:gdsc/services/providers.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,6 +38,7 @@ class _HomePageState extends State<HomePage> {
     volunteer(),
     Profilemain()
   ];
+  bool _isLoading = false; // Add a boolean variable to track loading state
 
   void OnTapped(int index) {
     setState(() {
@@ -45,6 +48,7 @@ class _HomePageState extends State<HomePage> {
 
   String _userMail = "";
   String _UserName = "";
+  String _fullName = "";
 
   Future<void> checkIfEmailOrPhoneNumberExists(
       String email, String phoneNumber) async {
@@ -57,10 +61,20 @@ class _HomePageState extends State<HomePage> {
         .collection("Users")
         .where("phoneNumber", isEqualTo: phoneNumber)
         .get();
-    // if (emailQuery.docs.isEmpty==false)
-    //   context.read<Providers>().setUserFromFirestoreEmail(email);
-    // else if(phoneNumberQuery.docs.isEmpty==false)
-    //   context.read<Providers>().setUserFromFirestorePhone(phoneNumber);
+    setState(() {
+      _isLoading = true;
+    });
+    if (emailQuery.docs.isEmpty == false)
+      await context
+          .read<Providers>()
+          .setUserFromFirestoreId(emailQuery.docs.first.id);
+    else if (phoneNumberQuery.docs.isEmpty == false)
+      await context
+          .read<Providers>()
+          .setUserFromFirestoreId(phoneNumberQuery.docs.first.id);
+    setState(() {
+      _isLoading = false;
+    });
 
     if (emailQuery.docs.isEmpty && phoneNumberQuery.docs.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -68,6 +82,114 @@ class _HomePageState extends State<HomePage> {
       );
       // Neither email nor phone number exists, redirect user to edit profile page
       nextScreenReplace(context, updateProfile());
+    }
+    print(emailQuery);
+    print(phoneNumberQuery);
+    print("check");
+    if (emailQuery.docs.isNotEmpty) {
+      final name = emailQuery.docs.isNotEmpty &&
+              (emailQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('fullName')
+          ? emailQuery.docs.first.get('fullName')
+          : "";
+      final userName = emailQuery.docs.isNotEmpty &&
+              (emailQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('userName')
+          ? emailQuery.docs.first.get('userName')
+          : "";
+      final phoneNumber = emailQuery.docs.isNotEmpty &&
+              (emailQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('phoneNumber')
+          ? emailQuery.docs.first.get('phoneNumber')
+          : "";
+      final dob = emailQuery.docs.isNotEmpty &&
+              (emailQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('dateOfBirth')
+          ? emailQuery.docs.first.get('dateOfBirth')
+          : "";
+      final currentLocation = emailQuery.docs.isNotEmpty &&
+              (emailQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('currentLocation')
+          ? emailQuery.docs.first.get('currentLocation')
+          : "";
+      final age = emailQuery.docs.isNotEmpty &&
+              (emailQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('age')
+          ? emailQuery.docs.first.get('age')
+          : "";
+
+      print(emailQuery.docs.first.id);
+      print("email query");
+
+      if (userName == "") {
+        print("updating username");
+        String usernameFinal =
+            await DatabaseService(uid: emailQuery.docs.first.id)
+                .ensureUniqueUsername(generateUsername(_userMail, _fullName));
+
+        print(usernameFinal);
+
+        // Update the first document found with the provided email
+        await emailQuery.docs.first.reference
+            .update({'userName': usernameFinal, 'updatedAt': Timestamp.now()});
+      }
+
+      if (name.isEmpty ||
+          userName.isEmpty ||
+          phoneNumber.isEmpty ||
+          dob.isEmpty ||
+          currentLocation.isEmpty ||
+          age.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please update your profile first')),
+        );
+        // Neither email nor phone number exists, redirect user to edit profile page
+        nextScreen(context, updateProfile());
+      }
+    } else if (phoneNumberQuery.docs.isNotEmpty) {
+      final name = phoneNumberQuery.docs.isNotEmpty &&
+              (phoneNumberQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('fullName')
+          ? phoneNumberQuery.docs.first.get('fullName')
+          : "";
+      final userName = phoneNumberQuery.docs.isNotEmpty &&
+              (phoneNumberQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('userName')
+          ? phoneNumberQuery.docs.first.get('userName')
+          : "";
+      final email = phoneNumberQuery.docs.isNotEmpty &&
+              (phoneNumberQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('email')
+          ? phoneNumberQuery.docs.first.get('email')
+          : "";
+      final dob = phoneNumberQuery.docs.isNotEmpty &&
+              (phoneNumberQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('dateOfBirth')
+          ? phoneNumberQuery.docs.first.get('dateOfBirth')
+          : "";
+      final currentLocation = phoneNumberQuery.docs.isNotEmpty &&
+              (phoneNumberQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('currentLocation')
+          ? phoneNumberQuery.docs.first.get('currentLocation')
+          : "";
+      final age = phoneNumberQuery.docs.isNotEmpty &&
+              (phoneNumberQuery.docs.first.data() as Map<String, dynamic>)
+                  .containsKey('age')
+          ? phoneNumberQuery.docs.first.get('age')
+          : "";
+
+      if (name.isEmpty ||
+          userName.isEmpty ||
+          email.isEmpty ||
+          dob.isEmpty ||
+          currentLocation.isEmpty ||
+          age.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please update your profile first')),
+        );
+        // Neither email nor phone number exists, redirect user to edit profile page
+        nextScreen(context, updateProfile());
+      }
     }
   }
 
@@ -79,7 +201,12 @@ class _HomePageState extends State<HomePage> {
 
   // Function to load user's name from Firebase
   void _loadUserName() async {
+    setState(() {
+      _isLoading = true;
+    });
     User? user = FirebaseAuth.instance.currentUser;
+    print(user);
+    print("load user name");
     if (user != null) {
       setState(() {
         _userMail = user.email ?? "";
@@ -87,11 +214,31 @@ class _HomePageState extends State<HomePage> {
       Map<String, String> userData = await fetchData(_userMail);
       setState(() {
         _UserName = userData['userName'] ?? '';
+        _fullName = userData['fullName'] ?? '';
       });
-      checkIfEmailOrPhoneNumberExists(_userMail, user.phoneNumber!);
+      print("here home page");
+      print(user.phoneNumber);
+      checkIfEmailOrPhoneNumberExists(_userMail ?? "", user.phoneNumber ?? "");
 
       print(user);
-      print("here");
+      print(_userMail);
+      print(_UserName);
+      print(_fullName);
+      setState(() {
+        _isLoading = false;
+      });
+    } else {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        User? refreshedUser = FirebaseAuth.instance.currentUser;
+        if (refreshedUser != null) {
+          print('User is signed in after delay: ${refreshedUser.uid}');
+        } else {
+          print('User is still not signed in after delay');
+        }
+      });
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -102,7 +249,8 @@ class _HomePageState extends State<HomePage> {
         automaticallyImplyLeading: false,
         backgroundColor: const Color.fromRGBO(2, 78, 166, 1),
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('Welcome, @$_UserName!',
+          Text(
+              'Welcome, ${_UserName.isNotEmpty ? '@$_UserName' : (_fullName.isNotEmpty ? _fullName : _userMail)}',
               style: GoogleFonts.inter(
                 color: Color.fromRGBO(255, 253, 251, 1),
                 fontWeight: FontWeight.w600,
@@ -190,7 +338,11 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: pages.elementAt(current_index),
+      body: _isLoading
+          ? Center(
+              child:
+                  CircularProgressIndicator()) // Show loader if data is loading
+          : pages.elementAt(current_index),
       bottomNavigationBar: Container(
         color: Color.fromRGBO(2, 78, 166, 1),
         child: BottomNavigationBar(

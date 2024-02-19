@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gdsc/screens/Profile/volunteerhistory.dart';
+import 'package:gdsc/services/providers.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
+import 'package:provider/provider.dart';
 
 class volunteeractivity extends StatefulWidget {
   const volunteeractivity({super.key});
@@ -20,41 +22,53 @@ class _volunteeractivityState extends State<volunteeractivity> {
             height: 50,
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 8.0),
+            padding: const EdgeInsets.only(top: 0.0),
             child: Container(
               height: 128,
-              decoration: const BoxDecoration(color: Color(0xFFCAE3FF)),
-              child: const Row(
+              decoration: const BoxDecoration(color: Color(0xFF024EA6)),
+              child: Row(
                 children: [
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: CircleAvatar(
                       radius: 44,
+                      backgroundImage: NetworkImage(context
+                          .read<Providers>()
+                          .user_data
+                          .toJson()['profileImageLink']
+                          .toString()),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Name",
+                          context
+                              .read<Providers>()
+                              .user_data
+                              .toJson()['fullName']
+                              .toString(),
                           style: TextStyle(
                               fontSize: 20,
                               fontFamily: "Inter",
+                              color: Color.fromARGB(199, 255, 255, 255),
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          "@name",
+                          "@${context.read<Providers>().user_data.toJson()['userName'].toString()}",
                           style: TextStyle(
                             fontFamily: "Inter",
+                            color: Color.fromARGB(199, 255, 255, 255),
                           ),
                         )
                       ],
                     ),
                   ),
                   SizedBox(
-                    width: 150,
+                    width: 50,
                   ),
                 ],
               ),
@@ -66,25 +80,22 @@ class _volunteeractivityState extends State<volunteeractivity> {
               style: TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
-          // Padding(
-          //   padding: const EdgeInsets.all(8.0),
-          //   child: Material(
-          //     elevation: 4,
-          //     shadowColor: const Color(0xFF000000),
-          //     child: ListTile(
-          //       tileColor: const Color(0xFFCAE3FF),
-          //       title: const Text(
-          //         "Hours Contributed",
-          //         style: TextStyle(
-          //           fontFamily: "Inter",
-          //         ),
-          //       ),
-          //       trailing: IconButton(
-          //           onPressed: () {},
-          //           icon: const Icon(Icons.arrow_forward_ios)),
-          //     ),
-          //   ),
-          // ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Material(
+              elevation: 4,
+              shadowColor: const Color(0xFF000000),
+              child: ListTile(
+                tileColor: const Color(0xFFCAE3FF),
+                title: Text(
+                  "Number of Volunteering Activity : ${context.read<Providers>().user_data.toJson()['pickupIds'].length.toString()}",
+                  style: const TextStyle(
+                    fontFamily: "Inter",
+                  ),
+                ),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Material(

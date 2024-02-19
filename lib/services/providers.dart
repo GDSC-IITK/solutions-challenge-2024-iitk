@@ -16,6 +16,7 @@ class Providers with ChangeNotifier {
     [],
     0,
     "email",
+    "profileImageLink",
   );
   User get user_data => _user;
   void setUser(User value) {
@@ -54,4 +55,32 @@ class Providers with ChangeNotifier {
       // Handle case when user data is not found
     }
   }
+    Future<void> setUserFromFirestoreId(String id) async {
+      CollectionReference users = FirebaseFirestore.instance.collection('Users');
+      print("user firestore");
+        DocumentSnapshot querySnapshot = await users.doc(id).get();
+
+          // Check if the document exists
+          if (querySnapshot.exists) {
+            // Initialize an empty map to store user data
+            Map<String, String> userData = {};
+
+            // Get the data from the document
+            Map<dynamic, dynamic>? data = querySnapshot.data() as Map<dynamic, dynamic>?;
+            print(data);
+            print("data stored in provider");
+            // Check if the data is not null
+            if (data != null) {
+              // Iterate over the data in the document and add it to the userData map
+              data.forEach((key, value) {
+                userData[key] = value.toString(); // Convert value to string if needed
+              });
+            }
+            setUser(User.fromJson(data!));
+          } else {
+            // Document does not exist
+            print('User document does not exist');
+          }
+      }
 }
+

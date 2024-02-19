@@ -13,6 +13,7 @@ class User {
   late List pickupIds;
   late int donationsDone;
   late String email;
+  late String profileImageLink;
 
   User(
     String id,
@@ -27,6 +28,7 @@ class User {
     List pickupIds,
     int donationsDone,
     String email,
+    String profileImageLink,
   ) {
     this.id = id;
     this.fullName = fullName;
@@ -40,21 +42,23 @@ class User {
     this.pickupIds = pickupIds;
     this.donationsDone = donationsDone;
     this.email = email;
+    this.profileImageLink = profileImageLink;
   }
 
   User.fromJson(Map json)
-      : id = json['id'],
+      : id = json['id'] ?? "",
         fullName = json['fullName'].toString(),
         userName = json['userName'].toString(),
-        age = json['age'],
+        age = json['age']??"",
         mobileNumber = json['mobileNumber'].toString(),
         currentLocation = json['currentLocation'],
-        createdAt = json['createdAt'],
-        updatedAt = json['updatedAt'],
-        donationIds = json['donationIds'],
-        pickupIds = json['pickupIds'],
-        donationsDone = json['donationsDone'],
-        email = json['email'].toString();
+        createdAt = json['createdAt']??Timestamp.now(),
+        updatedAt = json['updatedAt']??Timestamp.now(),
+        donationIds = json['donationIds']??[],
+        pickupIds = json['pickupIds']??[],
+        donationsDone = json['donationsDone']??0,
+        email = json['email'].toString(),
+        profileImageLink = json['profileImageLink'].toString();
 
   Map toJson() {
     return {
@@ -70,6 +74,7 @@ class User {
       'pickupIds': pickupIds,
       'donationsDone': donationsDone,
       'email': email,
+      'profileImageLink': profileImageLink,
     };
   }
 }

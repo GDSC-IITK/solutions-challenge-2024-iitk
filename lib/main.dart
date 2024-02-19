@@ -5,6 +5,7 @@ import 'package:gdsc/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gdsc/screens/vision_page.dart';
 import 'package:gdsc/screens/welcome_page.dart';
+import 'package:gdsc/services/providers.dart';
 import 'package:provider/provider.dart'; // Import Provider
 import 'package:gdsc/screens/login_page.dart';
 import 'package:gdsc/screens/home/home_page.dart';
@@ -23,6 +24,9 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Color(0xFF024EA6), // Set your desired status bar color here
+    ));
     return MultiProvider(
       // Use MultiProvider if you have multiple providers
       providers: [
@@ -30,9 +34,17 @@ class MyApp extends StatelessWidget {
           value: UserProvider(), // Provide your UserProvider instance
         ),
         // Add other providers if needed
+        ChangeNotifierProvider<Providers>.value(
+          value: Providers(), // Provide your UserProvider instance
+        ),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+      //   theme: ThemeData(
+      //   appBarTheme: AppBarTheme(
+      //     color: Color(0xFF024EA6), // Set your desired app bar color here
+      //   ),
+      // ),
+        title: 'Feed Harmony',
         debugShowCheckedModeBanner: false,
         home: AuthenticationWrapper(),
       ),

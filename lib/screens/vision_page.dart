@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gdsc/screens/home/home_page.dart';
@@ -24,6 +26,11 @@ class _VisionPageState extends State<VisionPage> {
 
   void checkAuthState() async {
     FirebaseAuth auth = FirebaseAuth.instance;
+    print(
+      auth.currentUser.toString()
+    );
+    print(auth);
+    print("here");
     if (auth.currentUser != null) {
       Future.delayed(const Duration(milliseconds: 500), () {
         setState(() {

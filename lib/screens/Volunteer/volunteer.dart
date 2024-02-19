@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:gdsc/screens/Volunteer/Vcard.dart';
+import 'package:gdsc/services/helper/formatTimestamp.dart';
+import 'package:gdsc/services/helper/getCurrentLoc.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,6 +21,9 @@ class _volunteerState extends State<volunteer>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
   int _newIndex = 0;
+  bool _isLoading = false;
+  List<Vcard> items = [];
+  GeoPoint? current;
 
   @override
   void initState() {
@@ -32,6 +38,9 @@ class _volunteerState extends State<volunteer>
     _tabController!.addListener(() {
       setState(() {});
     });
+    if (current != null) {
+      _tab(0);
+    }
   }
 
   @override
@@ -42,31 +51,170 @@ class _volunteerState extends State<volunteer>
 
   Map<String, dynamic> distance = {'distance': 'Loading...'};
 
-  Future<void> fetchData() async {
-    var url =
-        "https://api.jsonbin.io/v3/qs/65cc9a5d1f5677401f2f1a3c"; // Replace with your JSON bin ID
-    final response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
+  Future<List<Vcard>> fetchDonations() async {
+    List<Vcard> notificationItems = [];
+
+    try {
       setState(() {
-        distance = jsonDecode(response.body) as Map<String, dynamic>;
+        _isLoading = true;
       });
-    } else {
-      print("Unable to fetch data. Status code: ${response.statusCode}");
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await FirebaseFirestore.instance.collection('Donations').get();
+
+      querySnapshot.docs.forEach((doc) {
+        Timestamp timestamp = doc['createdAt'];
+        Map<String, String> timestamp_format = formatDateAndTime(timestamp);
+        print(timestamp_format['date']!);
+        // String date = formatDate(timestamp);
+        // String heading = doc['title'];
+        // String content = doc['message'];
+        // String time = timestamp_format['time']!;
+        print(doc.data());
+        print(doc.id);
+        print("id");
+        Vcard item = Vcard(
+            item: doc['itemname'] ?? '',
+            quantity: doc['quantity'] ??
+                '0', // Use null-aware operator to handle null quantity
+            location: doc['address'] ??
+                '', // Use null-aware operator to handle null address
+            id: doc.id,
+            extraData: doc.data());
+        print(item);
+        notificationItems.add(item);
+      });
+    } catch (error) {
+      setState(() {
+        _isLoading = false;
+      });
+      print('Error fetching data: $error');
+      // Handle error gracefully
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
+    return notificationItems;
+  }
+
+  Future<void> fetchData() async {
+    setState(() async {
+      fetchDonations().then((value) => {items = value});
+      GeoPoint? currentLoc = await getCurrentLocation();
+      current = currentLoc!;
+    });
   }
 
   Widget _tab(int index) {
     double Width = MediaQuery.of(context).size.width; // Gives the width
+    setState(() {
+      _isLoading = true;
+      // GeoPoint? curr = await getCurrentLocation();
+      // current = curr;
+    });
+    List<Vcard> VCard1 = [];
+    List<Vcard> VCard2 = [];
+    List<Vcard> VCard3 = [];
+    for (int i = 0; i < items.length; i++) {
+      var item = items[i];
+      GeoPoint? loc = item.extraData['location'] ?? current;
+      double distance = calculateDistanceNew(
+          current?.latitude, current?.longitude, loc?.latitude, loc?.longitude);
+      print(distance);
+      print("distance");
+      item.distance = distance;
+      if (distance < 2) {
+        VCard1.add(item);
+      } else if (distance >= 2 && distance < 5) {
+        VCard2.add(item);
+      } else if (distance >= 5) {
+        VCard3.add(item);
+      }
+    }
 
-    List<Widget> VCard = [
-      const Vcard(item: "item", quantity: "quantity", location: "location"),
-      const Vcard(item: "item", quantity: "quantity1", location: "location"),
-      const Vcard(item: "item", quantity: "quantity2", location: "location"),
-    ];
+//     // Sort VCard1 list
+    VCard1.sort((a, b) => a.distance.compareTo(b.distance));
 
-    return SingleChildScrollView(
-      child: VCard[index],
+// Sort VCard2 list
+    VCard2.sort((a, b) => a.distance.compareTo(b.distance));
+
+// Sort VCard3 list
+    VCard3.sort((a, b) => a.distance.compareTo(b.distance));
+
+    List<Widget> parsedWidgets = [];
+    if (index == 0)
+      for (int i = 0; i < VCard1.length; i++) {
+        parsedWidgets.add(SingleChildScrollView(
+          child: VCard1[i],
+        ));
+      }
+    else if (index == 1)
+      for (int i = 0; i < VCard2.length; i++) {
+        parsedWidgets.add(SingleChildScrollView(
+          child: VCard2[i],
+        ));
+      }
+    else if (index == 2)
+      for (int i = 0; i < VCard3.length; i++) {
+        parsedWidgets.add(SingleChildScrollView(
+          child: VCard3[i],
+        ));
+      }
+    setState(() {
+      _isLoading = false;
+    });
+
+    return ListView(
+      children: parsedWidgets.length > 0
+          ? parsedWidgets
+          : [
+              Center(
+                  child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text('No data available now'),
+              ))
+            ],
     );
+  }
+
+  double calculateDistance(GeoPoint point1, GeoPoint point2) {
+    const double earthRadius = 6371; // Earth's radius in kilometers
+
+    // Convert latitude and longitude from degrees to radians
+    double lat1 = radians(point1.latitude);
+    double lon1 = radians(point1.longitude);
+    double lat2 = radians(point2.latitude);
+    double lon2 = radians(point2.longitude);
+
+    // Calculate the differences between the latitudes and longitudes
+    double dLat = (lat2 - lat1).abs();
+    double dLon = (lon2 - lon1).abs();
+
+    // Apply the Haversine formula
+    double a =
+        pow(sin(dLat / 2), 2) + cos(lat1) * cos(lat2) * pow(sin(dLon / 2), 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    double distance = earthRadius * c;
+
+    // Return the distance rounded to 2 decimal places
+    return double.parse(distance.toStringAsFixed(2));
+  }
+
+  double calculateDistanceNew(lat1, lon1, lat2, lon2) {
+    print(lat1);
+    print(lon1);
+    print(lat2);
+    print(lon2);
+    var p = 0.017453292519943295;
+    var c = cos;
+    var a = 0.5 -
+        c((lat2 - lat1) * p) / 2 +
+        c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+    return 12742 * asin(sqrt(a));
+  }
+
+  double radians(double degrees) {
+    return degrees * (pi / 180);
   }
 
   @override
@@ -186,14 +334,16 @@ class _volunteerState extends State<volunteer>
           ],
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          _tab(0),
-          _tab(1),
-          _tab(2),
-        ],
-      ),
+      body: !_isLoading
+          ? TabBarView(
+              controller: _tabController,
+              children: [
+                _tab(0),
+                _tab(1),
+                _tab(2),
+              ],
+            )
+          : Center(child: CircularProgressIndicator()),
     );
   }
 }

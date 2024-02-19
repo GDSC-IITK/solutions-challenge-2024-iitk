@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gdsc/function/generateUserName.dart';
 import 'package:gdsc/screens/OTP_page.dart';
 import 'package:gdsc/screens/home/home_page.dart';
 import 'package:gdsc/screens/phone_login_page.dart';
@@ -24,12 +25,56 @@ class _LoginPageState extends State<LoginPage> {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
+  ValueNotifier userCredential = ValueNotifier('');
 
   @override
   void initState() {
     super.initState();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+  }
+
+  Future<void> loginUserWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      // Attempt to sign in with email and password
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      nextScreen(context, HomePage());
+      // User successfully logged in
+      print('User logged in successfully!');
+
+      // You can navigate to the next screen or perform other actions here
+    } catch (error) {
+      String errorCode = (error as FirebaseAuthException).code;
+      // Handle different error cases
+      switch (errorCode) {
+        case 'user-not-found':
+          // Handle when user does not exist
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('No user found with this email. Please register!'),
+            ),
+          );
+          print('No user found with this email. Please register!');
+          break;
+        case 'wrong-password':
+          // Handle when password is incorrect
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Incorrect password. Please try again!'),
+          ));
+          print('Incorrect password. Please try again!');
+          break;
+        default:
+          // Handle other errors
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Error: $error'),
+          ));
+          print('Error: $error');
+      }
+    }
   }
 
   @override
@@ -65,10 +110,10 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           SizedBox(height: 80.0),
                           TextFormField(
+                            controller: _emailController,
                             style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
-                              labelText:
-                                  'Phone Number, email address or username',
+                              labelText: 'Email address',
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.never,
                               labelStyle:
@@ -89,6 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           SizedBox(height: 10),
                           TextFormField(
+                            controller: _passwordController,
                             style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                               labelText: 'Password',
@@ -113,7 +159,9 @@ class _LoginPageState extends State<LoginPage> {
                           SizedBox(height: 10),
                           ElevatedButton(
                             onPressed: () {
-                              nextScreen(context, HomePage());
+                              loginUserWithEmailAndPassword(
+                                  _emailController.text,
+                                  _passwordController.text);
                             },
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
@@ -180,8 +228,13 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           SizedBox(height: 10),
                           RawMaterialButton(
-                            onPressed: () {
-                              _handleGoogleSignIn();
+                            onPressed: () async {
+                             userCredential.value = await signInWithGoogle();
+                            if (userCredential.value != null)
+                            {
+                              print(userCredential.value.user!.email);
+                              nextScreen(context, HomePage());
+                            }
                             },
                             elevation: 2.0,
                             fillColor: Colors.white,
@@ -251,28 +304,37 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  Future<void> _handleGoogleSignIn() async {
+  Future<dynamic> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await _googleSignIn.signIn();
-      if (googleSignInAccount != null) {
-        print('User signed in with Google: ${googleSignInAccount}');
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
 
       final CollectionReference userCollection =
-      FirebaseFirestore.instance.collection("Users");
-      QuerySnapshot querySnapshot = await userCollection.where('email', isEqualTo: googleSignInAccount.email).get();
+            FirebaseFirestore.instance.collection("Users");
+        QuerySnapshot querySnapshot = await userCollection
+            .where('email', isEqualTo: googleUser?.email)
+            .get();
+        print(querySnapshot);
+        if (querySnapshot.docs.isEmpty) {
+          // If user doesn't exist, add their data to Firestore
+          await DatabaseService(uid: googleUser?.id).savingUserData(
+              googleUser?.displayName ?? "",
+              googleUser?.email ?? "",
+              generateUsername(googleUser?.email ?? "", googleUser?.displayName ?? ""),
+              );
+        }
 
-      if (querySnapshot.docs.isEmpty) {
-        // If user doesn't exist, add their data to Firestore
-        await DatabaseService(uid: googleSignInAccount.id)
-            .savingUserData(googleSignInAccount.displayName ?? "", googleSignInAccount.email ?? "", "");
-      }
-        nextScreenReplace(context, HomePage());
-      } else {
-        print('Failed to sign in with Google');
-      }
-    } catch (error) {
-      print('Error signing in with Google: $error');
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } on Exception catch (e) {
+      // TODO
+      print('exception->$e');
     }
   }
 

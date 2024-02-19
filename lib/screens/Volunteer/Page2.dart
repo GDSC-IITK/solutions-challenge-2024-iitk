@@ -31,9 +31,10 @@ class Page2 extends StatefulWidget {
 class _Page2State extends State<Page2> {
   bool _isLoading = false;
 
-  Future<void> addDonationToCollection({
+  Future<String> addDonationToCollection({
     required String donationId,
   }) async {
+          var id='';
     try {
       setState(() {
         _isLoading = true;
@@ -50,6 +51,7 @@ class _Page2State extends State<Page2> {
         'location': await getCurrentLocation(),
         'donationId': donationId.toString(),
       });
+      id = pickup.id.toString();
       // await firestore.collection('HomePage').add({
       //   'itemname': itemname,
       //   'quantity': int.parse(quantity),
@@ -135,6 +137,7 @@ class _Page2State extends State<Page2> {
         _isLoading = false;
       });
     }
+    return id;
   }
 
   @override
@@ -198,8 +201,8 @@ class _Page2State extends State<Page2> {
           ),
           InkWell(
             onTap: () async {
-              await addDonationToCollection(donationId: widget.id);
-              nextScreen(context, volunteerMaps(id: widget.id));
+               String? pickupId= await addDonationToCollection(donationId: widget.id);
+              nextScreen(context, volunteerMaps(donationId: widget.id,pickupId:pickupId));
             },
             child: !_isLoading
                 ? Padding(

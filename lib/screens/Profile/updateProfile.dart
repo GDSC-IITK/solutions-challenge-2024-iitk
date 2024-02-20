@@ -118,8 +118,12 @@ class _updateProfileState extends State<updateProfile> {
           'updatedAt': Timestamp.now(),
           "donationsDone": 0,
           "pickupsDone": 0,
+          "dropsDone": 0,
+          "dropsIds": [],
           "donationIds": [],
           "pickupIds": [],
+          "spotsDone": 0,
+          "spotIds": []
         });
         String userId = newUserRef.id;
         String usernameFinal = await DatabaseService(uid: userId)

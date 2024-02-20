@@ -1,10 +1,24 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:gdsc/screens/Maps/maps.dart';
+import 'package:gdsc/widgets/nextscreen.dart';
 
 class locationcard extends StatefulWidget {
-  const locationcard({super.key});
+  const locationcard(
+      {super.key,
+      required this.heading,
+      required this.address,
+      required this.coordinates,
+      required this.donationId,
+      required this.pickupId});
 
+  final String heading;
+  final String address;
+  final GeoPoint coordinates;
+  final String donationId;
+  final String pickupId;
   @override
   State<locationcard> createState() => _locationcardState();
 }
@@ -26,12 +40,12 @@ class _locationcardState extends State<locationcard> {
             ),
             borderRadius: BorderRadius.circular(7),
           ),
-          title: const Text(
-            "Text",
+          title: Text(
+            widget.heading ?? "",
             style: TextStyle(fontSize: 13),
           ),
-          subtitle: const Text(
-            "data",
+          subtitle: Text(
+            widget.address ?? "",
             style: TextStyle(fontSize: 10, color: Color(0xFF048228)),
           ),
           leading: const ImageIcon(
@@ -46,7 +60,14 @@ class _locationcardState extends State<locationcard> {
                   style: const ButtonStyle(
                       backgroundColor:
                           MaterialStatePropertyAll(Color(0xFF048228))),
-                  onPressed: () {},
+                  onPressed: () {
+                    nextScreen(
+                        context,
+                        Maps(
+                            donationId: widget.donationId,
+                            pickupId: widget.pickupId,
+                            location: widget.coordinates));
+                  },
                   child: const Text(
                     "Confirm",
                     style: TextStyle(

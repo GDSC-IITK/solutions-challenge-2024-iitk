@@ -24,14 +24,18 @@ class DatabaseService {
       "createdAt": Timestamp.now(),
       "updatedAt": Timestamp.now(),
       "currentLocation": "",
-      "donationsDone":0,
-      "pickupsDone":0,
-      "donationIds":[],
-      "pickupIds":[],
+      "donationsDone": 0,
+      "pickupsDone": 0,
+      "dropsDone": 0,
+      "dropsIds": [],
+      "donationIds": [],
+      "pickupIds": [],
+      "spotsDone": 0,
+      "spotIds": []
     });
   }
 
-   Future<void> savingUserDataAll(
+  Future<void> savingUserDataAll(
       String fullName, String email, String age, String userName) async {
     final CollectionReference userCollection =
         FirebaseFirestore.instance.collection("Users");
@@ -48,10 +52,12 @@ class DatabaseService {
       "updatedAt": Timestamp.now(),
       "age": int.parse(age),
       "currentLocation": "",
-      "donationsDone":0,
-      "pickupsDone":0,
-      "donationIds":[],
-      "pickupIds":[],
+      "donationsDone": 0,
+      "pickupsDone": 0,
+      "donationIds": [],
+      "pickupIds": [],
+      "spotsDone": 0,
+      "spotIds": []
     });
   }
 

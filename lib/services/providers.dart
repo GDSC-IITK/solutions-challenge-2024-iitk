@@ -17,6 +17,11 @@ class Providers with ChangeNotifier {
     0,
     "email",
     "profileImageLink",
+    0,
+    0,
+    [],
+    [],
+    0
   );
   GeoPoint? _current_location =  GeoPoint(0, 0);
   GeoPoint? get current_loc_data => _current_location;

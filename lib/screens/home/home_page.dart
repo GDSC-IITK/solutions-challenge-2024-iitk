@@ -221,7 +221,8 @@ class _HomePageState extends State<HomePage> {
       });
       print("here home page");
       print(user.phoneNumber);
-      checkIfEmailOrPhoneNumberExists(_userMail ?? "", user.phoneNumber ?? "");
+      await checkIfEmailOrPhoneNumberExists(
+          _userMail ?? "", user.phoneNumber ?? "");
 
       print(user);
       print(_userMail);
@@ -235,6 +236,7 @@ class _HomePageState extends State<HomePage> {
         User? refreshedUser = FirebaseAuth.instance.currentUser;
         if (refreshedUser != null) {
           print('User is signed in after delay: ${refreshedUser.uid}');
+          _loadUserName();
         } else {
           print('User is still not signed in after delay');
         }
@@ -313,7 +315,8 @@ class _HomePageState extends State<HomePage> {
                                               BorderRadius.circular(10))),
                                   backgroundColor: MaterialStatePropertyAll(
                                       Color(0xFF024EA6))),
-                            )
+                            ),
+                            
                           ],
                         ),
                         icon: Row(

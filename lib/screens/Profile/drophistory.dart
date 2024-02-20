@@ -6,25 +6,25 @@ import 'package:geocoding/geocoding.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-class volunteerhistory extends StatefulWidget {
-  const volunteerhistory({super.key});
+class drophistory extends StatefulWidget {
+  const drophistory({super.key});
 
   @override
-  State<volunteerhistory> createState() => _volunteerhistoryState();
+  State<drophistory> createState() => _drophistoryState();
 }
 
-class Volunteering {
+class Drop {
   final String id;
   final Map<String, dynamic> data;
 
-  Volunteering({required this.id, required this.data});
+  Drop({required this.id, required this.data});
 }
 
-class _volunteerhistoryState extends State<volunteerhistory> {
-  List<Volunteering> userVolunteerings = [];
+class _drophistoryState extends State<drophistory> {
+  List<Drop> userDrops = [];
 
-  Future<List<Volunteering>> fetchUserVolunteerings() async {
-    List<Volunteering> userVolunteerings = [];
+  Future<List<Drop>> fetchUserDrops() async {
+    List<Drop> userDrops = [];
 
     try {
       // Get the current user ID
@@ -32,38 +32,37 @@ class _volunteerhistoryState extends State<volunteerhistory> {
       print(userId);
       print("user id");
       if (userId != null) {
-        // Fetch documents from the "Volunteerings" collection where "userId" matches the current user's ID
+        // Fetch documents from the "Drops" collection where "userId" matches the current user's ID
         QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-            .collection('Pickup')
+            .collection('HomePage')
             .where('userId', isEqualTo: userId)
             .get();
 
-        // Iterate through the documents and store them as Volunteering objects
+        // Iterate through the documents and store them as Drop objects
         querySnapshot.docs.forEach((doc) {
-          String donationId = doc.id;
-          Map<String, dynamic> donationData =
+          String dropId = doc.id;
+          Map<String, dynamic> dropData =
               doc.data() as Map<String, dynamic>;
-          Volunteering donation =
-              Volunteering(id: donationId, data: donationData);
-          userVolunteerings.add(donation);
+          Drop drop = Drop(id: dropId, data: dropData);
+          userDrops.add(drop);
         });
       } else {
         print('User is not logged in.');
       }
     } catch (error) {
-      print('Error fetching user donations: $error');
+      print('Error fetching user drops: $error');
     }
-    print(userVolunteerings[0].data);
-    return userVolunteerings;
+    print(userDrops[0].data);
+    return userDrops;
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchUserVolunteerings().then((donations) {
+    fetchUserDrops().then((drops) {
       setState(() {
-        userVolunteerings = donations;
+        userDrops = drops;
       });
     });
   }
@@ -86,11 +85,12 @@ class _volunteerhistoryState extends State<volunteerhistory> {
     }
   }
 
-  Future<List<Widget>> _buildVolunteeringWidgets() async {
+  Future<List<Widget>> _buildDropWidgets() async {
     List<Widget> widgets = [];
-    for (var userVolunteering in userVolunteerings) {
-      String location =
-          await getLocationFromGeoPoint(userVolunteering.data['location']);
+    for (var userDrop in userDrops) {
+      // String location =
+      //     await getLocationFromGeoPoint(userDrop.data['location']);
+
       widgets.add(
         Container(
           height: 115,
@@ -104,23 +104,24 @@ class _volunteerhistoryState extends State<volunteerhistory> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Donation Id: ${userVolunteering.data['donationId'] ?? 'N/A'}",
+                "Organisation name: ${userDrop.data['donatorName'] ?? 'N/A'}",
                 style: TextStyle(fontSize: 15, color: Color(0xFF666666)),
               ),
               Text(
-                "Status: ${userVolunteering.data['status'] ?? ''}",
+                "Quantity: ${userDrop.data['quantity'] ?? 'N/A'}" +
+                    " ${userDrop.data['weightMetric'] ?? ''}",
                 style: TextStyle(fontSize: 15, color: Color(0xFF666666)),
               ),
               Text(
-                "Location: $location", // Use the fetched location here
+                "Location: ${userDrop.data['address'] ?? 'N/A'}", // Use the fetched location here
                 style: TextStyle(fontSize: 15, color: Color(0xFF666666)),
               ),
               Text(
-                "Remarks: ${userVolunteering.data['comment'] ?? 'N/A'}",
+                "Remarks: ${userDrop.data['comment'] ?? 'N/A'}",
                 style: TextStyle(fontSize: 15, color: Color(0xFF666666)),
               ),
               Text(
-                "Date: ${userVolunteering.data['updatedAt'] != null ? DateFormat('dd/MM/yyyy hh:mm a').format(DateTime.fromMillisecondsSinceEpoch(userVolunteering.data['updatedAt'].millisecondsSinceEpoch)) : 'N/A'}",
+                "Date: ${userDrop.data['updatedAt'] != null ? DateFormat('dd/MM/yyyy hh:mm a').format(DateTime.fromMillisecondsSinceEpoch(userDrop.data['updatedAt'].millisecondsSinceEpoch)) : 'N/A'}",
                 style: TextStyle(fontSize: 15, color: Color(0xFF666666)),
               ),
             ],
@@ -195,7 +196,7 @@ class _volunteerhistoryState extends State<volunteerhistory> {
           ),
           AppBar(
             title: const Text(
-              "Pickup History",
+              "Drop History",
               style: TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
@@ -207,7 +208,7 @@ class _volunteerhistoryState extends State<volunteerhistory> {
               child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: FutureBuilder<List<Widget>>(
-                  future: _buildVolunteeringWidgets(),
+                  future: _buildDropWidgets(),
                   builder: (BuildContext context,
                       AsyncSnapshot<List<Widget>> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {

@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gdsc/screens/Profile/donationactivity.dart';
+import 'package:gdsc/screens/Profile/dropActivity.dart';
 import 'package:gdsc/screens/Profile/settings.dart';
+import 'package:gdsc/screens/Profile/spotSomeoneActivity.dart';
 import 'package:gdsc/screens/Profile/updateProfile.dart';
 import 'package:gdsc/screens/Profile/volunteeractivity.dart';
 import 'package:gdsc/screens/vision_page.dart';
@@ -69,6 +71,83 @@ class _ProfilemainState extends State<Profilemain> {
     }
   }
 
+  void _showFeedbackDialog(BuildContext context) {
+    String name = '';
+    String feedback = '';
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Provide Feedback'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  decoration: InputDecoration(labelText: 'Your Name'),
+                  onChanged: (value) {
+                    setState(() {
+                      name = value;
+                    });
+                  },
+                ),
+                TextField(
+                  decoration: InputDecoration(labelText: 'Feedback'),
+                  onChanged: (value) {
+                    setState(() {
+                      feedback = value;
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                // Submit feedback here
+                print("here");
+                print(name);
+                print(feedback);
+                _submitFeedback(name, feedback);
+                Navigator.of(context).pop();
+              },
+              child: Text('Submit'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _submitFeedback(String name, String feedback) async {
+    // Save feedback to Firestore collection named "Feedback"
+    User? user = FirebaseAuth.instance.currentUser;
+
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    await firestore.collection('Feedback').add({
+      'name': name,
+      'feedback': feedback,
+      'createdAt': Timestamp.now(),
+      'updatedAt': Timestamp.now(),
+      'userId': user!.uid
+    }).then((value) {
+      // Feedback submitted successfully
+      // You can add any additional handling here, such as showing a confirmation message
+      print('Feedback submitted successfully');
+    }).catchError((error) {
+      // Error handling if submission fails
+      print('Failed to submit feedback: $error');
+    });
+  }
+
   Future<String> getAppVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     return packageInfo.version;
@@ -94,8 +173,11 @@ class _ProfilemainState extends State<Profilemain> {
                     padding: EdgeInsets.all(8.0),
                     child: CircleAvatar(
                       radius: 44,
-                      backgroundImage:
-                          NetworkImage(context.read<Providers>().user_data.toJson()['profileImageLink'].toString()),
+                      backgroundImage: NetworkImage(context
+                          .read<Providers>()
+                          .user_data
+                          .toJson()['profileImageLink']
+                          .toString()),
                     ),
                   ),
                   Padding(
@@ -185,7 +267,7 @@ class _ProfilemainState extends State<Profilemain> {
                     color: Color(0xFF024EA6),
                   ),
                   title: const Text(
-                    "Volunteering Activity",
+                    "Pickup Activity",
                     style: TextStyle(
                       fontFamily: "Inter",
                     ),
@@ -193,6 +275,60 @@ class _ProfilemainState extends State<Profilemain> {
                   trailing: IconButton(
                       onPressed: () {
                         nextScreen(context, volunteeractivity());
+                      },
+                      icon: const Icon(Icons.arrow_forward_ios)),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Material(
+                elevation: 4,
+                shadowColor: const Color(0xFF000000),
+                child: ListTile(
+                  tileColor: const Color(0xFFCAE3FF),
+                  leading: const ImageIcon(
+                    AssetImage(
+                      "assets/Icons/Vactivity.png",
+                    ),
+                    color: Color(0xFF024EA6),
+                  ),
+                  title: const Text(
+                    "Drop Activity",
+                    style: TextStyle(
+                      fontFamily: "Inter",
+                    ),
+                  ),
+                  trailing: IconButton(
+                      onPressed: () {
+                        nextScreen(context, dropactivity());
+                      },
+                      icon: const Icon(Icons.arrow_forward_ios)),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Material(
+                elevation: 4,
+                shadowColor: const Color(0xFF000000),
+                child: ListTile(
+                  tileColor: const Color(0xFFCAE3FF),
+                  leading: const ImageIcon(
+                    AssetImage(
+                      "assets/Icons/Vactivity.png",
+                    ),
+                    color: Color(0xFF024EA6),
+                  ),
+                  title: const Text(
+                    "Spot Someone Activity",
+                    style: TextStyle(
+                      fontFamily: "Inter",
+                    ),
+                  ),
+                  trailing: IconButton(
+                      onPressed: () {
+                        nextScreen(context, spotactivity());
                       },
                       icon: const Icon(Icons.arrow_forward_ios)),
                 ),
@@ -220,6 +356,31 @@ class _ProfilemainState extends State<Profilemain> {
                   trailing: IconButton(
                       onPressed: () {
                         nextScreen(context, settings());
+                      },
+                      icon: const Icon(Icons.arrow_forward_ios)),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Material(
+                elevation: 4,
+                shadowColor: const Color(0xFF000000),
+                child: ListTile(
+                  tileColor: const Color(0xFFCAE3FF),
+                  leading: Icon(
+                    Icons.feedback,
+                    color: Color(0xFF024EA6),
+                  ),
+                  title: const Text(
+                    "Provide Feedback",
+                    style: TextStyle(
+                      fontFamily: "Inter",
+                    ),
+                  ),
+                  trailing: IconButton(
+                      onPressed: () {
+                        _showFeedbackDialog(context);
                       },
                       icon: const Icon(Icons.arrow_forward_ios)),
                 ),
@@ -287,7 +448,7 @@ class _ProfilemainState extends State<Profilemain> {
                                                       'Error: ${snapshot.error}');
                                                 } else {
                                                   return Text(
-                                                      'App Version: ${snapshot.data}');
+                                                      'App Version: ${snapshot.data} (Alpha Testing)');
                                                 }
                                               },
                                             ),
@@ -466,6 +627,7 @@ class _ProfilemainState extends State<Profilemain> {
                 ),
               ),
             ),
+            const SizedBox(height: 30),
           ],
         ),
       ),

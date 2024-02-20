@@ -21,7 +21,7 @@ class Donate_3 extends StatefulWidget {
       required this.organization,
       required this.itemdesc});
 
-  final String imageUrl;
+  final List<String> imageUrl;
   final String weightMetric;
   final String itemname;
   final String quantity;
@@ -46,7 +46,7 @@ class _Donate_3State extends State<Donate_3> {
     required String itemdesc,
     required String weightMetric,
     required String type,
-    required String imageUrl,
+    required List<String> imageUrl,
   }) async {
     try {
       setState(() {

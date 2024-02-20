@@ -7,7 +7,7 @@ class Providers with ChangeNotifier {
     "id",
     "fullName",
     "userName",
-    0,
+    "0",
     "mobileNumber",
     GeoPoint(0, 0),
     Timestamp.now(),
@@ -82,13 +82,14 @@ class Providers with ChangeNotifier {
             Map<dynamic, dynamic>? data = querySnapshot.data() as Map<dynamic, dynamic>?;
             print(data);
             print("data stored in provider");
+            
             // Check if the data is not null
-            if (data != null) {
-              // Iterate over the data in the document and add it to the userData map
-              data.forEach((key, value) {
-                userData[key] = value.toString(); // Convert value to string if needed
-              });
-            }
+            // if (data != null) {
+            //   // Iterate over the data in the document and add it to the userData map
+            //   data.forEach((key, value) {
+            //     userData[key] = value.toString(); // Convert value to string if needed
+            //   });
+            // }
             setUser(User.fromJson(data!));
           } else {
             // Document does not exist

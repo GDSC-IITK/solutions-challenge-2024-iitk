@@ -35,7 +35,7 @@ class _LocationState extends State<Location>
   }
 
   loadData() {
-    getCurrentLocation().then((value) => {
+    getCurrentLocation(context).then((value) => {
           setState(() {
             _currentLoc = value!;
           })

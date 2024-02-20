@@ -225,7 +225,7 @@ class _Page7State extends State<Page7> {
               await fetchDocumentByDonationId('Donations', widget.donationId);
           Map<String, dynamic>? pickupData =
               await fetchDocumentByDonationId('Pickup', widget.pickupId);
-          GeoPoint? currentLocation = await getCurrentLocation();
+          GeoPoint? currentLocation = await getCurrentLocation(context);
 
           var payload = {
             'donationData': donationData ?? {},

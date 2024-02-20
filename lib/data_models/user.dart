@@ -4,7 +4,7 @@ class User {
   late String id;
   late String fullName;
   late String userName;
-  late int age;
+  late String age;
   late String mobileNumber;
   late GeoPoint currentLocation;
   late Timestamp createdAt;
@@ -24,7 +24,7 @@ class User {
     String id,
     String fullName,
     String userName,
-    int age,
+    String age,
     String mobileNumber,
     GeoPoint currentLocation,
     Timestamp createdAt,
@@ -64,7 +64,7 @@ class User {
       : id = json['id'] ?? "",
         fullName = json['fullName'].toString(),
         userName = json['userName'].toString(),
-        age = json['age'] ?? "",
+        age = json['age'].toString(),
         mobileNumber = json['mobileNumber'].toString(),
         currentLocation = json['currentLocation'],
         createdAt = json['createdAt'] ?? Timestamp.now(),

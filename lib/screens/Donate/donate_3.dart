@@ -94,7 +94,7 @@ class _Donate_3State extends State<Donate_3> {
         'donatorName': user?.displayName,
         'isIndividual': false,
         'userId': user?.uid,
-        'location': await getCurrentLocation(),
+        'location': await getCurrentLocation(context),
         'weightMetric': weightMetric,
         'type': type,
         'imageUrl': imageUrl,

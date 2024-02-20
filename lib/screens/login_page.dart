@@ -327,7 +327,7 @@ class _LoginPageState extends State<LoginPage> {
           await DatabaseService(uid: googleUser?.id).savingUserData(
               googleUser?.displayName ?? "",
               googleUser?.email ?? "",
-              generateUsername(googleUser?.email ?? "", googleUser?.displayName ?? ""),
+              generateUsername(googleUser?.email ?? "", googleUser?.displayName ?? "")
               );
         }
 

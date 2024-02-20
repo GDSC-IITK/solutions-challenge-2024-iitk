@@ -37,7 +37,7 @@ class _MapAnimationPageState extends State<MapAnimationPage> {
       _allData = data;
       print(data);
     });
-    getCurrentLocation().then((value) async {
+    getCurrentLocation(context).then((value) async {
       print("My Current Location");
     });
     setState(() {});

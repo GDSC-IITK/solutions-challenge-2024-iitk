@@ -135,7 +135,7 @@ class spotSomeoneState extends State<spotSomeone> {
   loadData() async {
     Uint8List? markerIcon = await createCurrentLocationMarker();
 
-    GeoPoint? _currentLocTemp = await getCurrentLocation();
+    GeoPoint? _currentLocTemp = await getCurrentLocation(context);
     setState(() {
       _currentLoc = _currentLocTemp;
       print(_currentLoc);
@@ -490,7 +490,7 @@ class spotSomeoneState extends State<spotSomeone> {
                                                     String landmark =
                                                         landmarkController.text;
                                                     GeoPoint? currentLocation =
-                                                        await getCurrentLocation();
+                                                        await getCurrentLocation(context);
                                                     GeoPoint? enteredLocation =
                                                         GeoPoint(
                                                             _coordinates

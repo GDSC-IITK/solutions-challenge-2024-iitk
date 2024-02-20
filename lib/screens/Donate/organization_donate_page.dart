@@ -375,7 +375,7 @@ class _OrganisationDonateContainerState extends State<OrganisationDonateContaine
               location.text =
                   "Fetching location..."; // or any other loading message
             });
-            GeoPoint? currentLocation = await getCurrentLocation();
+            GeoPoint? currentLocation = await getCurrentLocation(context);
             if (currentLocation != null) {
               location.text = await getLocationFromGeoPoint(currentLocation);
             } else {

@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:gdsc/services/helper/getCurrentLoc.dart';
 
 class DatabaseService {
   final String? uid;
@@ -23,7 +25,7 @@ class DatabaseService {
       "userName": userName,
       "createdAt": Timestamp.now(),
       "updatedAt": Timestamp.now(),
-      "currentLocation": "",
+      "currentLocation": GeoPoint(0,0),
       "donationsDone": 0,
       "pickupsDone": 0,
       "dropsDone": 0,
@@ -31,7 +33,8 @@ class DatabaseService {
       "donationIds": [],
       "pickupIds": [],
       "spotsDone": 0,
-      "spotIds": []
+      "spotIds": [],
+      "age": "0",
     });
   }
 
@@ -50,14 +53,14 @@ class DatabaseService {
       "userName": userName,
       "createdAt": Timestamp.now(),
       "updatedAt": Timestamp.now(),
-      "age": int.parse(age),
-      "currentLocation": "",
+      "age": age,
+      "currentLocation": GeoPoint(0,0),
       "donationsDone": 0,
       "pickupsDone": 0,
       "donationIds": [],
       "pickupIds": [],
       "spotsDone": 0,
-      "spotIds": []
+      "spotIds": [],
     });
   }
 

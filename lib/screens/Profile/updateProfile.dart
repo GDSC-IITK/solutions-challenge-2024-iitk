@@ -95,7 +95,7 @@ class _updateProfileState extends State<updateProfile> {
           'age': int.parse(c3.text),
           'address': c4.text,
           'dateOfBirth': c5.text,
-          'currentLocation': getCurrentLocation(),
+          'currentLocation': await getCurrentLocation(context),
           'updatedAt': Timestamp.now()
         });
 
@@ -110,10 +110,10 @@ class _updateProfileState extends State<updateProfile> {
           'fullName': c1.text,
           'phoneNumber': c2.text,
           'email': _userMail,
-          'age': int.parse(c3.text),
+          'age': c3.text,
           'address': c4.text,
           'dateOfBirth': c5.text,
-          'currentLocation': getCurrentLocation(),
+          'currentLocation': await getCurrentLocation(context),
           'createdAt': Timestamp.now(),
           'updatedAt': Timestamp.now(),
           "donationsDone": 0,

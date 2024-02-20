@@ -48,7 +48,7 @@ class _Page2State extends State<Page2> {
         'updatedAt': Timestamp.now(),
         'status': 'voluntered',
         'userId': user?.uid.toString(),
-        'location': await getCurrentLocation(),
+        'location': await getCurrentLocation(context),
         'donationId': donationId.toString(),
       });
       id = pickup.id.toString();

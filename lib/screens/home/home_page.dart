@@ -65,16 +65,24 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _isLoading = true;
     });
-    GeoPoint? curr = await getCurrentLocation();
+    GeoPoint? curr = await getCurrentLocation(context);
+    print("Current Location");
+    print(curr?.latitude);
+    print(curr?.latitude);
     context.read<Providers>().setCurrentLocation(curr);
-    if (emailQuery.docs.isEmpty == false)
+    if (emailQuery.docs.isEmpty == false && emailQuery.docs.first.id.isNotEmpty)
       await context
           .read<Providers>()
           .setUserFromFirestoreId(emailQuery.docs.first.id);
-    else if (phoneNumberQuery.docs.isEmpty == false)
+    else if (phoneNumberQuery.docs.isEmpty == false  && phoneNumberQuery.docs.first.id.isNotEmpty)
       await context
           .read<Providers>()
           .setUserFromFirestoreId(phoneNumberQuery.docs.first.id);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Fetching All data...'),
+      ),
+    );
     setState(() {
       _isLoading = false;
     });
@@ -316,7 +324,6 @@ class _HomePageState extends State<HomePage> {
                                   backgroundColor: MaterialStatePropertyAll(
                                       Color(0xFF024EA6))),
                             ),
-                            
                           ],
                         ),
                         icon: Row(

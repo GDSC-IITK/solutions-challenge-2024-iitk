@@ -332,7 +332,7 @@ class _MapsState extends State<volunteerMaps> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 120.0),
+                        padding: const EdgeInsets.only(left: 100.0),
                         child: IconButton(
                             onPressed: () async {
                               await call(_phoneNo);
@@ -350,7 +350,7 @@ class _MapsState extends State<volunteerMaps> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    title: Text("Confirm Drop"),
+                                    title: Text("Confirm Pickup"),
                                     content: Text(
                                         "Are you sure that you want to pickup the food from here?"),
                                     actions: [

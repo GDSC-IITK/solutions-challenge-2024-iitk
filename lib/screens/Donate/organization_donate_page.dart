@@ -46,6 +46,7 @@ class _OrganisationDonateContainerState extends State<OrganisationDonateContaine
   String _UserId = "";
   String _userMail = "";
   String _downloadLink = "";
+  List<String> _images = [];
   @override
   void initState() {
     super.initState();
@@ -111,6 +112,8 @@ class _OrganisationDonateContainerState extends State<OrganisationDonateContaine
         setState(() {
           _isLoading = false;
           _downloadLink = downloadURL;
+          if(downloadURL!="")
+          _images.add(downloadURL);
         });
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Image uploaded')),
@@ -501,7 +504,7 @@ class _OrganisationDonateContainerState extends State<OrganisationDonateContaine
                       ),
                       // SizedBox(width: 10),
                       Text(
-                        '${_downloadLink==''?'Upload Image':'Upload Another Image'}',
+                        '${_downloadLink==''?'Upload Image':'Upload Other Image (${_images.length})'}',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -528,7 +531,7 @@ class _OrganisationDonateContainerState extends State<OrganisationDonateContaine
             nextScreen(
               context,
               Donate_3(
-                  imageUrl: _downloadLink.toString(),
+                  imageUrl: _images,
                   type: 'organisation',
                   weightMetric: _selectedValue,
                   itemname: itemname.text!,

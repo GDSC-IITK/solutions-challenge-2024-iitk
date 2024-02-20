@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:gdsc/screens/Profile/volunteerhistory.dart';
+import 'package:gdsc/screens/Profile/spotHistory.dart';
 import 'package:gdsc/services/providers.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:provider/provider.dart';
 
-class volunteeractivity extends StatefulWidget {
-  const volunteeractivity({super.key});
+class spotactivity extends StatefulWidget {
+  const spotactivity({super.key});
 
   @override
-  State<volunteeractivity> createState() => _volunteeractivityState();
+  State<spotactivity> createState() => _spotactivityState();
 }
 
-class _volunteeractivityState extends State<volunteeractivity> {
+class _spotactivityState extends State<spotactivity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +76,7 @@ class _volunteeractivityState extends State<volunteeractivity> {
           ),
           AppBar(
             title: Text(
-              "Pickup Details",
+              "Spot Details",
               style: TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
@@ -88,7 +88,7 @@ class _volunteeractivityState extends State<volunteeractivity> {
               child: ListTile(
                 tileColor: const Color(0xFFCAE3FF),
                 title: Text(
-                  "Number of Pickup Activity : ${context.read<Providers>().user_data.toJson()['pickupIds'].length.toString()}",
+                  "Number of Spot Activity : ${context.read<Providers>().user_data.toJson()['spotIds'].length.toString()}",
                   style: const TextStyle(
                     fontFamily: "Inter",
                   ),
@@ -104,14 +104,14 @@ class _volunteeractivityState extends State<volunteeractivity> {
               child: ListTile(
                 tileColor: const Color(0xFFCAE3FF),
                 title: const Text(
-                  "Pickup History",
+                  "Spot History",
                   style: TextStyle(
                     fontFamily: "Inter",
                   ),
                 ),
                 trailing: IconButton(
                     onPressed: () {
-                      nextScreen(context, volunteerhistory());
+                      nextScreen(context, spothistory());
                     },
                     icon: const Icon(Icons.arrow_forward_ios)),
               ),

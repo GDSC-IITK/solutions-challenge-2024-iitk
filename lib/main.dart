@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
@@ -10,10 +12,12 @@ import 'package:provider/provider.dart'; // Import Provider
 import 'package:gdsc/screens/login_page.dart';
 import 'package:gdsc/screens/home/home_page.dart';
 import 'package:gdsc/provider.dart'; // Import your Provider class
+import 'package:google_generative_ai/google_generative_ai.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // Access your API key as an environment variable (see "Set up your API key" above)
   runApp(MyApp());
 }
 
@@ -24,8 +28,9 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Color(0xFF024EA6), // Set your desired status bar color here
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor:
+          Color(0xFF024EA6), // Set your desired status bar color here
     ));
     return MultiProvider(
       // Use MultiProvider if you have multiple providers
@@ -39,11 +44,11 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-      //   theme: ThemeData(
-      //   appBarTheme: AppBarTheme(
-      //     color: Color(0xFF024EA6), // Set your desired app bar color here
-      //   ),
-      // ),
+        //   theme: ThemeData(
+        //   appBarTheme: AppBarTheme(
+        //     color: Color(0xFF024EA6), // Set your desired app bar color here
+        //   ),
+        // ),
         title: 'Feed Harmony',
         debugShowCheckedModeBanner: false,
         home: AuthenticationWrapper(),

@@ -14,6 +14,11 @@ class User {
   late int donationsDone;
   late String email;
   late String profileImageLink;
+  late int dropsDone;
+  late int pickupsDone;
+  late List dropIds;
+  late List spotIds;
+  late int spotsDone;
 
   User(
     String id,
@@ -29,6 +34,11 @@ class User {
     int donationsDone,
     String email,
     String profileImageLink,
+    int dropsDone,
+    int pickupsDone,
+    List dropIds,
+    List spotIds,
+    int spotsDone,
   ) {
     this.id = id;
     this.fullName = fullName;
@@ -43,22 +53,30 @@ class User {
     this.donationsDone = donationsDone;
     this.email = email;
     this.profileImageLink = profileImageLink;
+    this.pickupIds = pickupIds;
+    this.dropsDone = dropsDone;
+    this.dropIds = dropIds;
+    this.spotIds = spotIds;
+    this.spotsDone =spotsDone;
   }
 
   User.fromJson(Map json)
       : id = json['id'] ?? "",
         fullName = json['fullName'].toString(),
         userName = json['userName'].toString(),
-        age = json['age']??"",
+        age = json['age'] ?? "",
         mobileNumber = json['mobileNumber'].toString(),
         currentLocation = json['currentLocation'],
-        createdAt = json['createdAt']??Timestamp.now(),
-        updatedAt = json['updatedAt']??Timestamp.now(),
-        donationIds = json['donationIds']??[],
-        pickupIds = json['pickupIds']??[],
-        donationsDone = json['donationsDone']??0,
+        createdAt = json['createdAt'] ?? Timestamp.now(),
+        updatedAt = json['updatedAt'] ?? Timestamp.now(),
+        donationIds = json['donationIds'] ?? [],
+        pickupIds = json['pickupIds'] ?? [],
+        dropIds = json['dropIds'] ?? [],
+        donationsDone = json['donationsDone'] ?? 0,
         email = json['email'].toString(),
-        profileImageLink = json['profileImageLink'].toString();
+        profileImageLink = json['profileImageLink'].toString(),
+        spotIds = json['spotIds'] ?? [],
+        spotsDone = json['spotsDone'] ?? 0;
 
   Map toJson() {
     return {
@@ -75,6 +93,9 @@ class User {
       'donationsDone': donationsDone,
       'email': email,
       'profileImageLink': profileImageLink,
+      'dropIds': dropIds,
+      'spotIds': spotIds,
+      'spotsDone': spotsDone,
     };
   }
 }

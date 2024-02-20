@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gdsc/screens/Volunteer/location.dart';
 import 'package:gdsc/screens/login_page.dart';
 import 'package:gdsc/screens/signup_page.dart';
 import 'package:gdsc/services/helper/getCurrentLoc.dart';
@@ -8,7 +11,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
 class MapAnimationPage extends StatefulWidget {
-  const MapAnimationPage({super.key, required this.donationId, required this.pickupId});
+  const MapAnimationPage(
+      {super.key, required this.donationId, required this.pickupId});
 
   final String donationId;
   final String pickupId;
@@ -27,6 +31,7 @@ class _MapAnimationPageState extends State<MapAnimationPage> {
   Map<String, dynamic> _allData = {};
 
   loadData() async {
+    print("Loading Data");
     Map<String, dynamic> data = await fetchAllDocumentsFromCollection();
     setState(() {
       _allData = data;
@@ -64,8 +69,24 @@ class _MapAnimationPageState extends State<MapAnimationPage> {
     }
   }
 
+  int generateRandomNumber() {
+    Random random = Random();
+    int randomNumber = random.nextInt(4) +
+        3; // Generates a random number between 0 and 3, then adds 3 to get a number between 3 and 6
+    return randomNumber;
+  }
+
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration(seconds: generateRandomNumber()), () {
+      nextScreenReplace(
+          context,
+          Location(
+            all: _allData,
+            donationId: widget.donationId,
+            pickupId: widget.pickupId,
+          ));
+    });
     return Scaffold(
         backgroundColor: Colors.black,
         body: SingleChildScrollView(

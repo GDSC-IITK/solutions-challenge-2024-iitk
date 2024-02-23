@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gdsc/function/generateUserName.dart';
@@ -40,12 +42,36 @@ class _HomePageState extends State<HomePage> {
     Profilemain()
   ];
   bool _isLoading = false; // Add a boolean variable to track loading state
+  bool _isExpanded = true;
 
   void OnTapped(int index) {
     setState(() {
       current_index = index;
     });
   }
+
+  List<Widget> getDialogContent() {
+    print(_isExpanded);
+    print("getDialogContent");
+  if (_isExpanded) {
+    return [
+      Text(
+        'Before proceeding, we need to inform you about our app\'s usage of location data. FeedHarmony collects location data to enable features such as food donation pickups, volunteer opportunities, and real-time notifications, even when the app is closed or not in use. This data is essential for providing you with the best experience and ensuring efficient delivery of surplus food to those in need.',
+      ),
+      SizedBox(height: 10),
+      Text(
+        'By continuing to use our app, you consent to the collection and use of your location data for these purposes. Rest assured that we prioritize the security and privacy of your data, and it will not be shared with any third parties. If you have any concerns or questions about how we handle your location data, please refer to our privacy policy or contact our support team for assistance.',
+      ),
+      SizedBox(height: 10),
+      Text(
+        'Thank you for your understanding and support in our mission to fight food waste and hunger.',
+      ),
+    ];
+  } else {
+    return [];
+  }
+}
+
 
   String _userMail = "";
   String _UserName = "";
@@ -65,8 +91,65 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _isLoading = true;
     });
-    GeoPoint? curr = await getCurrentLocation(context);
+    GeoPoint? curr;
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Location Usage'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                  'This app collects location data to enable certain features, such as providing nearby services and personalized content.'),
+              SizedBox(height: 10),
+              Text(
+                  'By granting permission, you allow the app to collect location data even when the app is closed or not in use.'),
+              SizedBox(height: 10),
+              Text('Do you wish to proceed and grant location access?'),
+              SizedBox(height: 10),
+          //     GestureDetector(
+          //   onTap: () {
+          //     setState(() {
+          //       _isExpanded = !_isExpanded;
+          //       print(_isExpanded);
+          //     });
+          //   },
+          //   child: Text(
+          //     _isExpanded ? 'Collapse' : 'Expand More',
+          //     style: TextStyle(
+          //       color: Colors.blue,
+          //       decoration: TextDecoration.underline,
+          //     ),
+          //   ),
+          // ),
+          // ...getDialogContent(),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () async {
+                // Request permission
+                Navigator.pop(context);
+                curr = await getCurrentLocation(context);
+              },
+              child: Text('Grant Permission'),
+            ),
+            TextButton(
+              onPressed: () async {
+                // Request permission
+                exit(0);
+              },
+              child: Text('Deny'),
+            ),
+          ],
+        );
+      },
+    );
     print("Current Location");
+    curr = await getCurrentLocation(context);
+
     print(curr?.latitude);
     print(curr?.latitude);
     context.read<Providers>().setCurrentLocation(curr);
@@ -74,7 +157,8 @@ class _HomePageState extends State<HomePage> {
       await context
           .read<Providers>()
           .setUserFromFirestoreId(emailQuery.docs.first.id);
-    else if (phoneNumberQuery.docs.isEmpty == false  && phoneNumberQuery.docs.first.id.isNotEmpty)
+    else if (phoneNumberQuery.docs.isEmpty == false &&
+        phoneNumberQuery.docs.first.id.isNotEmpty)
       await context
           .read<Providers>()
           .setUserFromFirestoreId(phoneNumberQuery.docs.first.id);

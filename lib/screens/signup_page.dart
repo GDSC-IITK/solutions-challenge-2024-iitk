@@ -1,5 +1,3 @@
-
-// import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:gdsc/palette.dart';
 import 'package:gdsc/screens/login_page.dart';
@@ -21,7 +19,7 @@ class _SignUpPageState extends State<SignUpPage> {
   String email = "";
   String password = "";
   String fullName = "";
-  String userName = "";
+  String age = "";
   AuthService authService = AuthService();
   @override
   Widget build(BuildContext context) {
@@ -62,14 +60,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text("Create an account",
-                                                  style: GoogleFonts.poppins(
+                                                  style: GoogleFonts.inter(
                                                     color: Color.fromRGBO(
                                                         255, 253, 251, 1),
                                                     fontWeight: FontWeight.w600,
                                                     fontSize: 25.0,
                                                   )),
                                               Text("Sign up to continue",
-                                                  style: GoogleFonts.poppins(
+                                                  style: GoogleFonts.inter(
                                                     color: Color.fromRGBO(
                                                         255, 255, 255, 0.59),
                                                     fontWeight: FontWeight.w600,
@@ -82,6 +80,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                                   constraints:
                                                       const BoxConstraints(),
                                                   child: TextFormField(
+                                                    style: TextStyle(
+                                                        color: Colors.white),
                                                     decoration: textInputDecoration
                                                         .copyWith(
                                                             focusedBorder:
@@ -132,14 +132,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                                                 "Full Name",
                                                             labelStyle:
                                                                 GoogleFonts
-                                                                    .poppins(
+                                                                    .inter(
                                                               color:
                                                                   Colors.white,
                                                               fontSize: 15.0,
                                                             ),
                                                             errorStyle:
                                                                 GoogleFonts
-                                                                    .firaMono(
+                                                                    .inter(
                                                               color:
                                                                   Colors.white,
                                                               fontSize: 10.0,
@@ -170,6 +170,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                                   constraints:
                                                       const BoxConstraints(),
                                                   child: TextFormField(
+                                                    style: TextStyle(
+                                                        color: Colors.white),
                                                     decoration: textInputDecoration
                                                         .copyWith(
                                                             focusedBorder:
@@ -217,17 +219,17 @@ class _SignUpPageState extends State<SignUpPage> {
                                                               ),
                                                             ),
                                                             labelText:
-                                                                "Username",
+                                                                "Age",
                                                             labelStyle:
                                                                 GoogleFonts
-                                                                    .poppins(
+                                                                    .inter(
                                                               color:
                                                                   Colors.white,
                                                               fontSize: 15.0,
                                                             ),
                                                             errorStyle:
                                                                 GoogleFonts
-                                                                    .firaMono(
+                                                                    .inter(
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600,
@@ -243,14 +245,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                                             )),
                                                     onChanged: (val) {
                                                       setState(() {
-                                                        userName = val;
+                                                        age = val;
                                                       });
                                                     },
                                                     validator: (val) {
                                                       if (val!.isNotEmpty) {
                                                         return null;
                                                       } else {
-                                                        return "Name cannot be empty";
+                                                        return "Age cannot be empty";
                                                       }
                                                     },
                                                   )),
@@ -261,6 +263,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                                   constraints:
                                                       const BoxConstraints(),
                                                   child: TextFormField(
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+
                                                     decoration: textInputDecoration
                                                         .copyWith(
                                                             focusedBorder:
@@ -310,14 +315,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                                             labelText: "Email",
                                                             labelStyle:
                                                                 GoogleFonts
-                                                                    .poppins(
+                                                                    .inter(
                                                               color:
                                                                   Colors.white,
                                                               fontSize: 15.0,
                                                             ),
                                                             errorStyle:
                                                                 GoogleFonts
-                                                                    .firaMono(
+                                                                    .inter(
                                                               color:
                                                                   Colors.white,
                                                               fontSize: 10.0,
@@ -350,6 +355,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                                   constraints:
                                                       const BoxConstraints(),
                                                   child: TextFormField(
+                                                    style: TextStyle(
+                                                        color: Colors.white),
                                                     obscureText: true,
                                                     decoration: textInputDecoration
                                                         .copyWith(
@@ -401,14 +408,14 @@ class _SignUpPageState extends State<SignUpPage> {
                                                                 "Password",
                                                             labelStyle:
                                                                 GoogleFonts
-                                                                    .poppins(
+                                                                    .inter(
                                                               color:
                                                                   Colors.white,
                                                               fontSize: 15.0,
                                                             ),
                                                             errorStyle:
                                                                 GoogleFonts
-                                                                    .firaMono(
+                                                                    .inter(
                                                               color:
                                                                   Colors.white,
                                                               fontSize: 10.0,
@@ -446,7 +453,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                                 ),
                                                 child: Text(
                                                   "Get Started",
-                                                  style: GoogleFonts.poppins(
+                                                  style: GoogleFonts.inter(
                                                     color: Color.fromRGBO(
                                                         2, 78, 166, 1),
                                                     fontWeight: FontWeight.w600,
@@ -461,18 +468,22 @@ class _SignUpPageState extends State<SignUpPage> {
                                                 height: 20,
                                               ),
                                               Center(
-                                                  child: Text(
-                                                      "Already have an account ? Login",
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                        color: Color.fromRGBO(
-                                                            255, 253, 251, 1),
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: 15.0,
-                                                      ))),
+                                                  child: GestureDetector(
+                                                onTap: () {
+                                                  nextScreen(context,
+                                                      const LoginPage());
+                                                },
+                                                child: Text(
+                                                    "Already have an account ? Login",
+                                                    textAlign: TextAlign.center,
+                                                    style: GoogleFonts.inter(
+                                                      color: Color.fromRGBO(
+                                                          255, 253, 251, 1),
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 15.0,
+                                                    )),
+                                              )),
                                             ])))),
                           ]),
                     ))),
@@ -486,7 +497,7 @@ class _SignUpPageState extends State<SignUpPage> {
         _isLoading = true;
       });
       await authService
-          .registerUserWithEmailandPassword(fullName, email, password, userName)
+          .registerUserWithEmailandPassword(fullName, email, password, age)
           .then((value) async {
         if (value == true) {
           nextScreenReplace(context, const LoginPage());

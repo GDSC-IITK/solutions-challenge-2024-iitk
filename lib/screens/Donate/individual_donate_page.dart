@@ -112,8 +112,7 @@ class _IndividualDonateContainerState extends State<IndividualDonateContainer> {
         setState(() {
           _isLoading = false;
           _downloadLink = downloadURL;
-          if(downloadURL!="")
-          _images.add(downloadURL);
+          if (downloadURL != "") _images.add(downloadURL);
         });
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Image uploaded')),
@@ -504,7 +503,7 @@ class _IndividualDonateContainerState extends State<IndividualDonateContainer> {
                       ),
                       // SizedBox(width: 10),
                       Text(
-                        '${_downloadLink==''?'Upload Image':'Upload Another Image (${_images.length})'}',
+                        '${_downloadLink == '' ? 'Upload Image' : 'Upload Another Image (${_images.length})'}',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -562,15 +561,17 @@ class _IndividualDonateContainerState extends State<IndividualDonateContainer> {
               height: 50,
               child: Padding(
                 padding: EdgeInsets.all(8.0),
-                child: !_isLoading?Text(
-                  "Continue",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: "Inter"),
-                ):Center(child: CircularProgressIndicator()),
+                child: !_isLoading
+                    ? Text(
+                        "Continue",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "Inter"),
+                      )
+                    : Center(child: CircularProgressIndicator()),
               ),
             ),
           ),

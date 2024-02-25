@@ -136,6 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                           TextFormField(
                             controller: _passwordController,
                             style: TextStyle(color: Colors.white),
+                            obscureText: true,
                             decoration: InputDecoration(
                               labelText: 'Password',
                               floatingLabelBehavior:
@@ -229,12 +230,11 @@ class _LoginPageState extends State<LoginPage> {
                           SizedBox(height: 10),
                           RawMaterialButton(
                             onPressed: () async {
-                             userCredential.value = await signInWithGoogle();
-                            if (userCredential.value != null)
-                            {
-                              print(userCredential.value.user!.email);
-                              nextScreen(context, HomePage());
-                            }
+                              userCredential.value = await signInWithGoogle();
+                              if (userCredential.value != null) {
+                                print(userCredential.value.user!.email);
+                                nextScreen(context, HomePage());
+                              }
                             },
                             elevation: 2.0,
                             fillColor: Colors.white,
@@ -317,19 +317,19 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       final CollectionReference userCollection =
-            FirebaseFirestore.instance.collection("Users");
-        QuerySnapshot querySnapshot = await userCollection
-            .where('email', isEqualTo: googleUser?.email)
-            .get();
-        print(querySnapshot);
-        if (querySnapshot.docs.isEmpty) {
-          // If user doesn't exist, add their data to Firestore
-          await DatabaseService(uid: googleUser?.id).savingUserData(
-              googleUser?.displayName ?? "",
-              googleUser?.email ?? "",
-              generateUsername(googleUser?.email ?? "", googleUser?.displayName ?? "")
-              );
-        }
+          FirebaseFirestore.instance.collection("Users");
+      QuerySnapshot querySnapshot = await userCollection
+          .where('email', isEqualTo: googleUser?.email)
+          .get();
+      print(querySnapshot);
+      if (querySnapshot.docs.isEmpty) {
+        // If user doesn't exist, add their data to Firestore
+        await DatabaseService(uid: googleUser?.id).savingUserData(
+            googleUser?.displayName ?? "",
+            googleUser?.email ?? "",
+            generateUsername(
+                googleUser?.email ?? "", googleUser?.displayName ?? ""));
+      }
 
       return await FirebaseAuth.instance.signInWithCredential(credential);
     } on Exception catch (e) {

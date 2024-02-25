@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -72,8 +70,7 @@ class _Donate_3State extends State<Donate_3> {
                     .containsKey('phoneNumber')
             ? emailQuery.docs.first.get('phoneNumber')
             : "";
-      }
-      else if (phoneNumberQuery.docs.first.exists) {
+      } else if (phoneNumberQuery.docs.first.exists) {
         phone = phoneNumberQuery.docs.isNotEmpty &&
                 (phoneNumberQuery.docs.first.data() as Map<String, dynamic>)
                     .containsKey('phoneNumber')
@@ -98,7 +95,7 @@ class _Donate_3State extends State<Donate_3> {
         'weightMetric': weightMetric,
         'type': type,
         'imageUrl': imageUrl,
-        'phoneNumber': user?.phoneNumber!=null ? user?.phoneNumber : phone,
+        'phoneNumber': user?.phoneNumber != null ? user?.phoneNumber : phone,
       });
       // await firestore.collection('HomePage').add({
       //   'itemname': itemname,
@@ -127,11 +124,11 @@ class _Donate_3State extends State<Donate_3> {
             FirebaseFirestore.instance.collection('Users');
 
         QuerySnapshot querySnapshot =
-          await users.where('email', isEqualTo: id).get();
+            await users.where('email', isEqualTo: id).get();
         int donationsDone = querySnapshot.docs.first.get('donationsDone') ?? 0;
 
         if (querySnapshot.docs.isNotEmpty) {
-            DocumentSnapshot docSnapshot = querySnapshot.docs.first;
+          DocumentSnapshot docSnapshot = querySnapshot.docs.first;
 
           // Update the data in the document
           await docSnapshot.reference.update({

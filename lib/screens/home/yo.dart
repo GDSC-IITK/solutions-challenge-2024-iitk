@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gdsc/palette.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class yo extends StatefulWidget {
   const yo({super.key});

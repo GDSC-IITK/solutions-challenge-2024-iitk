@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,21 +19,24 @@ class VisionPage extends StatefulWidget {
 }
 
 class _VisionPageState extends State<VisionPage> {
+  final PageController _controller = PageController();
   @override
   void initState() {
     super.initState();
     checkAuthState();
+    Timer.periodic(Duration(seconds: 3), (timer) {
+      _controller.nextPage(
+          duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+    });
   }
 
   void checkAuthState() async {
     FirebaseAuth auth = FirebaseAuth.instance;
-    print(
-      auth.currentUser.toString()
-    );
+    print(auth.currentUser.toString());
     print(auth);
     print("here");
     if (auth.currentUser != null) {
-      Future.delayed(const Duration(milliseconds: 500), () {
+      Future.delayed(const Duration(milliseconds: 300), () {
         setState(() {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) => HomePage()),
@@ -45,14 +49,17 @@ class _VisionPageState extends State<VisionPage> {
   final List<ImageWithText> imagesWithText = [
     ImageWithText(
       'Join us in ending hunger. Your support as a donor or volunteer can be a beacon of hope for those in need.',
+      'VISION',
       'assets/images/vision_1.png',
     ),
     ImageWithText(
       'Donate your excess food by posting its status. Generous donors trigger notifications for nearby volunteers.',
+      'DONOR',
       'assets/images/vision_2.png',
     ),
     ImageWithText(
       'Deliver the excess food its destination. Volunteers act as vectors for delivering food.',
+      'VOLUNTEER',
       'assets/images/vision_3.png',
     ),
   ];
@@ -82,11 +89,16 @@ class _VisionPageState extends State<VisionPage> {
               child: ConstrainedBox(
                   constraints: BoxConstraints(maxHeight: 300),
                   child: PageView.builder(
-                    onPageChanged: (index) =>
-                        setState(() => _currentImageIndex = index),
-                    itemCount: imagesWithText.length,
+                    controller: _controller,
+                    onPageChanged: (index) {
+                      index = index % 3;
+                      _currentImageIndex = index % 3;
+                      print(_currentImageIndex);
+                      setState(() => _currentImageIndex = index % 3);
+                      // if (_currentImageIndex == 3) _controller.jumpToPage(0);
+                    },
                     itemBuilder: (context, index) {
-                      ImageWithText imageWithText = imagesWithText[index];
+                      ImageWithText imageWithText = imagesWithText[index % 3];
                       return Column(
                         children: [
                           ConstrainedBox(
@@ -120,7 +132,7 @@ class _VisionPageState extends State<VisionPage> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Text("VISION",
+                          Text(imageWithText.boldText,
                               textAlign: TextAlign.center,
                               style: GoogleFonts.poppins(
                                 color: Color.fromRGBO(18, 89, 172, 1),
@@ -202,7 +214,8 @@ class _VisionPageState extends State<VisionPage> {
 
 class ImageWithText {
   final String text;
+  final String boldText;
   final String imageUrl;
 
-  ImageWithText(this.text, this.imageUrl);
+  ImageWithText(this.text, this.boldText, this.imageUrl);
 }

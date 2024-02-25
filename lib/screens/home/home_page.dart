@@ -17,6 +17,7 @@ import 'package:gdsc/screens/home/title_page.dart';
 import 'package:gdsc/screens/home/yo.dart';
 import 'package:gdsc/screens/notification_page.dart';
 import 'package:gdsc/services/database_services.dart';
+import 'package:gdsc/services/helper/firebase_api.dart';
 import 'package:gdsc/services/helper/getCurrentLoc.dart';
 import 'package:gdsc/services/providers.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
@@ -34,6 +35,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  FirebaseAPI notificationServices = FirebaseAPI();
   int current_index = 0;
   final List<Widget> pages = [
     HomePagenew(),
@@ -53,25 +55,24 @@ class _HomePageState extends State<HomePage> {
   List<Widget> getDialogContent() {
     print(_isExpanded);
     print("getDialogContent");
-  if (_isExpanded) {
-    return [
-      Text(
-        'Before proceeding, we need to inform you about our app\'s usage of location data. FeedHarmony collects location data to enable features such as food donation pickups, volunteer opportunities, and real-time notifications, even when the app is closed or not in use. This data is essential for providing you with the best experience and ensuring efficient delivery of surplus food to those in need.',
-      ),
-      SizedBox(height: 10),
-      Text(
-        'By continuing to use our app, you consent to the collection and use of your location data for these purposes. Rest assured that we prioritize the security and privacy of your data, and it will not be shared with any third parties. If you have any concerns or questions about how we handle your location data, please refer to our privacy policy or contact our support team for assistance.',
-      ),
-      SizedBox(height: 10),
-      Text(
-        'Thank you for your understanding and support in our mission to fight food waste and hunger.',
-      ),
-    ];
-  } else {
-    return [];
+    if (_isExpanded) {
+      return [
+        Text(
+          'Before proceeding, we need to inform you about our app\'s usage of location data. FeedHarmony collects location data to enable features such as food donation pickups, volunteer opportunities, and real-time notifications, even when the app is closed or not in use. This data is essential for providing you with the best experience and ensuring efficient delivery of surplus food to those in need.',
+        ),
+        SizedBox(height: 10),
+        Text(
+          'By continuing to use our app, you consent to the collection and use of your location data for these purposes. Rest assured that we prioritize the security and privacy of your data, and it will not be shared with any third parties. If you have any concerns or questions about how we handle your location data, please refer to our privacy policy or contact our support team for assistance.',
+        ),
+        SizedBox(height: 10),
+        Text(
+          'Thank you for your understanding and support in our mission to fight food waste and hunger.',
+        ),
+      ];
+    } else {
+      return [];
+    }
   }
-}
-
 
   String _userMail = "";
   String _UserName = "";
@@ -109,22 +110,22 @@ class _HomePageState extends State<HomePage> {
               SizedBox(height: 10),
               Text('Do you wish to proceed and grant location access?'),
               SizedBox(height: 10),
-          //     GestureDetector(
-          //   onTap: () {
-          //     setState(() {
-          //       _isExpanded = !_isExpanded;
-          //       print(_isExpanded);
-          //     });
-          //   },
-          //   child: Text(
-          //     _isExpanded ? 'Collapse' : 'Expand More',
-          //     style: TextStyle(
-          //       color: Colors.blue,
-          //       decoration: TextDecoration.underline,
-          //     ),
-          //   ),
-          // ),
-          // ...getDialogContent(),
+              //     GestureDetector(
+              //   onTap: () {
+              //     setState(() {
+              //       _isExpanded = !_isExpanded;
+              //       print(_isExpanded);
+              //     });
+              //   },
+              //   child: Text(
+              //     _isExpanded ? 'Collapse' : 'Expand More',
+              //     style: TextStyle(
+              //       color: Colors.blue,
+              //       decoration: TextDecoration.underline,
+              //     ),
+              //   ),
+              // ),
+              // ...getDialogContent(),
             ],
           ),
           actions: <Widget>[
@@ -292,6 +293,10 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _loadUserName();
+    notificationServices.requestNotificationPermission();
+    notificationServices.firebaseInit(context);
+    notificationServices.initNotifications();
+    notificationServices.setupInteractMessage(context);
   }
 
   // Function to load user's name from Firebase

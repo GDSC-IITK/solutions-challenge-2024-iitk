@@ -1,68 +1,128 @@
-// import 'dart:html' as html;
-import 'dart:io';
+import 'dart:async';
+import 'dart:math';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:gdsc/services/helper/firebase_file.dart';
-import 'package:path_provider/path_provider.dart';
-
-Future<void> handleBackgroundMessage(RemoteMessage message) async {
-  print("Title: ${message.notification?.title}");
-  print("Body: ${message.notification?.body}");
-  print("Payload: ${message.data}");
-}
+import 'package:flutter/widgets.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:gdsc/screens/notification_page.dart';
+import 'package:gdsc/widgets/nextscreen.dart';
 
 class FirebaseAPI {
-  final _firebaseMessaging = FirebaseMessaging.instance;
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
-  Future<void> initNotifications() async {
-    await _firebaseMessaging.requestPermission();
-    final fCMToken = await _firebaseMessaging.getToken();
-    print("Token: $fCMToken");
-    FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
+  void initLocalNotifications(
+      BuildContext context, RemoteMessage message) async {
+    var androidInitialization =
+        AndroidInitializationSettings("@mipmap/launcher_icon.png");
+    var IOSInitialization = DarwinInitializationSettings();
+    var initializationSetting = const InitializationSettings(
+      android: AndroidInitializationSettings("@mipmap/launcher_icon.png"),
+      iOS: DarwinInitializationSettings(),
+    );
+
+    await _flutterLocalNotificationsPlugin.initialize(
+      initializationSetting,
+      onDidReceiveNotificationResponse: (payload) {
+        handleMessage(context, message);
+      },
+    );
   }
 
-  // static Future<List<String>> _getDownloadLinks(List<Reference> refs) =>
-  //     Future.wait(refs.map((ref) => ref.getDownloadURL()).toList());
+  void handleMessage(BuildContext context, RemoteMessage message) {
+    if (message.data['type']) {
+      nextScreen(context, NotificationScreen());
+    }
+  }
 
-  // static Future<List<FirebaseFile>> listAll(String path) async {
-  //   final ref = FirebaseStorage.instance.ref(path);
-  //   final result = await ref.listAll();
+  Future<void> setupInteractMessage(BuildContext context) async {
+    //when app is terminated
 
-  //   final urls = await _getDownloadLinks(result.items);
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
 
-  //   return urls
-  //       .asMap()
-  //       .map((index, url) {
-  //         final ref = result.items[index];
-  //         final name = ref.name;
-  //         final file = FirebaseFile(ref: ref, name: name, url: url);
+    if (initialMessage != null) {
+      handleMessage(context, initialMessage);
+    }
 
-  //         return MapEntry(index, file);
-  //       })
-  //       .values
-  //       .toList();
-  // }
+    //when app is in background
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      handleMessage(context, event);
+    });
+  }
 
-  // static Future downloadFile(Reference ref) async {
-  //   final dir = await getApplicationDocumentsDirectory();
-  //   final file = File("${dir.absolute}/${ref.name}");
+  Future<void> showNotification(RemoteMessage message) async {
+    AndroidNotificationChannel channel = AndroidNotificationChannel(
+        Random.secure().nextInt(10000).toString(),
+        "High Importance Notification",
+        importance: Importance.max);
 
-  //   await ref.writeToFile(file);
-  // }
+    AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
+            channel.id.toString(), channel.name.toString(),
+            channelDescription: "Your Channel Description",
+            importance: Importance.high,
+            priority: Priority.high,
+            ticker: 'ticker');
 
-  // void downloadFileURM(String url) {
-  //   // Check if the platform is web before using dart:html
-  //   if (kIsWeb) {
-  //     html.AnchorElement anchorElement = html.AnchorElement(href: url)
-  //       ..target = 'blank'
-  //       ..download = url;
-  //     anchorElement.click();
-  //   } else {
-  //     // Handle non-web platforms (e.g., mobile)
-  //     // Implement the download logic for mobile here
-  //     print('Downloading on non-web platform is not supported yet.');
-  //   }
-  // }
+    DarwinNotificationDetails darwinNotificationDetails =
+        const DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+    );
+
+    NotificationDetails notificationDetails = NotificationDetails(
+        android: androidNotificationDetails, iOS: darwinNotificationDetails);
+
+    Future.delayed(Duration.zero, () {
+      _flutterLocalNotificationsPlugin.show(
+          0,
+          message.notification!.title.toString(),
+          message.notification!.body.toString(),
+          notificationDetails);
+    });
+  }
+
+  void requestNotificationPermission() async {
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: true,
+      badge: true,
+      carPlay: true,
+      criticalAlert: true,
+      provisional: true,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print("User Granted Permission");
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      print("User Granted Provisional Permission");
+    } else {
+      print("User denied permission");
+    }
+  }
+
+  void firebaseInit(BuildContext context) {
+    FirebaseMessaging.onMessage.listen((message) {
+      initLocalNotifications(context, message);
+      showNotification(message);
+    });
+  }
+
+  Future<String?> initNotifications() async {
+    await messaging.requestPermission();
+    String? token = await messaging.getToken();
+    print("Token: $token");
+    return token;
+  }
+
+  void isTokenRefresh() async {
+    messaging.onTokenRefresh.listen((event) {
+      event.toString();
+    });
+  }
 }

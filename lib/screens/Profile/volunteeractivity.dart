@@ -101,19 +101,20 @@ class _volunteeractivityState extends State<volunteeractivity> {
             child: Material(
               elevation: 4,
               shadowColor: const Color(0xFF000000),
-              child: ListTile(
-                tileColor: const Color(0xFFCAE3FF),
-                title: const Text(
-                  "Pickup History",
-                  style: TextStyle(
-                    fontFamily: "Inter",
+              child: GestureDetector(
+                onTap: () {
+                  nextScreen(context, volunteerhistory());
+                },
+                child: ListTile(
+                  tileColor: const Color(0xFFCAE3FF),
+                  title: const Text(
+                    "Pickup History",
+                    style: TextStyle(
+                      fontFamily: "Inter",
+                    ),
                   ),
+                  trailing: Icon(Icons.arrow_forward_ios),
                 ),
-                trailing: IconButton(
-                    onPressed: () {
-                      nextScreen(context, volunteerhistory());
-                    },
-                    icon: const Icon(Icons.arrow_forward_ios)),
               ),
             ),
           ),

@@ -231,25 +231,26 @@ class _ProfilemainState extends State<Profilemain> {
               child: Material(
                 elevation: 4,
                 shadowColor: const Color(0xFF000000),
-                child: ListTile(
-                  tileColor: const Color(0xFFCAE3FF),
-                  leading: const ImageIcon(
-                    AssetImage(
-                      "assets/Icons/Donation.png",
+                child: GestureDetector(
+                  onTap: () {
+                    nextScreen(context, donationactivity());
+                  },
+                  child: ListTile(
+                    tileColor: const Color(0xFFCAE3FF),
+                    leading: const ImageIcon(
+                      AssetImage(
+                        "assets/Icons/Donation.png",
+                      ),
+                      color: Color(0xFF024EA6),
                     ),
-                    color: Color(0xFF024EA6),
-                  ),
-                  title: const Text(
-                    "Your Donations",
-                    style: TextStyle(
-                      fontFamily: "Inter",
+                    title: const Text(
+                      "Your Donations",
+                      style: TextStyle(
+                        fontFamily: "Inter",
+                      ),
                     ),
+                    trailing: Icon(Icons.arrow_forward_ios),
                   ),
-                  trailing: IconButton(
-                      onPressed: () {
-                        nextScreen(context, donationactivity());
-                      },
-                      icon: const Icon(Icons.arrow_forward_ios)),
                 ),
               ),
             ),
@@ -258,25 +259,26 @@ class _ProfilemainState extends State<Profilemain> {
               child: Material(
                 elevation: 4,
                 shadowColor: const Color(0xFF000000),
-                child: ListTile(
-                  tileColor: const Color(0xFFCAE3FF),
-                  leading: const ImageIcon(
-                    AssetImage(
-                      "assets/Icons/Vactivity.png",
+                child: GestureDetector(
+                  onTap: () {
+                    nextScreen(context, volunteeractivity());
+                  },
+                  child: ListTile(
+                    tileColor: const Color(0xFFCAE3FF),
+                    leading: const ImageIcon(
+                      AssetImage(
+                        "assets/Icons/Vactivity.png",
+                      ),
+                      color: Color(0xFF024EA6),
                     ),
-                    color: Color(0xFF024EA6),
-                  ),
-                  title: const Text(
-                    "Pickup Activity",
-                    style: TextStyle(
-                      fontFamily: "Inter",
+                    title: const Text(
+                      "Pickup Activity",
+                      style: TextStyle(
+                        fontFamily: "Inter",
+                      ),
                     ),
+                    trailing: Icon(Icons.arrow_forward_ios),
                   ),
-                  trailing: IconButton(
-                      onPressed: () {
-                        nextScreen(context, volunteeractivity());
-                      },
-                      icon: const Icon(Icons.arrow_forward_ios)),
                 ),
               ),
             ),
@@ -285,25 +287,26 @@ class _ProfilemainState extends State<Profilemain> {
               child: Material(
                 elevation: 4,
                 shadowColor: const Color(0xFF000000),
-                child: ListTile(
-                  tileColor: const Color(0xFFCAE3FF),
-                  leading: const ImageIcon(
-                    AssetImage(
-                      "assets/Icons/Vactivity.png",
+                child: GestureDetector(
+                  onTap: () {
+                    nextScreen(context, dropactivity());
+                  },
+                  child: ListTile(
+                    tileColor: const Color(0xFFCAE3FF),
+                    leading: const ImageIcon(
+                      AssetImage(
+                        "assets/Icons/Vactivity.png",
+                      ),
+                      color: Color(0xFF024EA6),
                     ),
-                    color: Color(0xFF024EA6),
-                  ),
-                  title: const Text(
-                    "Drop Activity",
-                    style: TextStyle(
-                      fontFamily: "Inter",
+                    title: const Text(
+                      "Drop Activity",
+                      style: TextStyle(
+                        fontFamily: "Inter",
+                      ),
                     ),
+                    trailing: Icon(Icons.arrow_forward_ios),
                   ),
-                  trailing: IconButton(
-                      onPressed: () {
-                        nextScreen(context, dropactivity());
-                      },
-                      icon: const Icon(Icons.arrow_forward_ios)),
                 ),
               ),
             ),
@@ -312,25 +315,26 @@ class _ProfilemainState extends State<Profilemain> {
               child: Material(
                 elevation: 4,
                 shadowColor: const Color(0xFF000000),
-                child: ListTile(
-                  tileColor: const Color(0xFFCAE3FF),
-                  leading: const ImageIcon(
-                    AssetImage(
-                      "assets/Icons/Vactivity.png",
+                child: GestureDetector(
+                  onTap: () {
+                    nextScreen(context, spotactivity());
+                  },
+                  child: ListTile(
+                    tileColor: const Color(0xFFCAE3FF),
+                    leading: const ImageIcon(
+                      AssetImage(
+                        "assets/Icons/Vactivity.png",
+                      ),
+                      color: Color(0xFF024EA6),
                     ),
-                    color: Color(0xFF024EA6),
-                  ),
-                  title: const Text(
-                    "Spot Someone Activity",
-                    style: TextStyle(
-                      fontFamily: "Inter",
+                    title: const Text(
+                      "Spot Someone Activity",
+                      style: TextStyle(
+                        fontFamily: "Inter",
+                      ),
                     ),
+                    trailing: Icon(Icons.arrow_forward_ios),
                   ),
-                  trailing: IconButton(
-                      onPressed: () {
-                        nextScreen(context, spotactivity());
-                      },
-                      icon: const Icon(Icons.arrow_forward_ios)),
                 ),
               ),
             ),
@@ -339,25 +343,26 @@ class _ProfilemainState extends State<Profilemain> {
               child: Material(
                 elevation: 4,
                 shadowColor: const Color(0xFF000000),
-                child: ListTile(
-                  tileColor: const Color(0xFFCAE3FF),
-                  leading: const ImageIcon(
-                    AssetImage(
-                      "assets/Icons/settings.png",
+                child: GestureDetector(
+                  onTap: () {
+                    nextScreen(context, settings());
+                  },
+                  child: ListTile(
+                    tileColor: const Color(0xFFCAE3FF),
+                    leading: const ImageIcon(
+                      AssetImage(
+                        "assets/Icons/settings.png",
+                      ),
+                      color: Color(0xFF024EA6),
                     ),
-                    color: Color(0xFF024EA6),
-                  ),
-                  title: const Text(
-                    "Settings",
-                    style: TextStyle(
-                      fontFamily: "Inter",
+                    title: const Text(
+                      "Settings",
+                      style: TextStyle(
+                        fontFamily: "Inter",
+                      ),
                     ),
+                    trailing: Icon(Icons.arrow_forward_ios),
                   ),
-                  trailing: IconButton(
-                      onPressed: () {
-                        nextScreen(context, settings());
-                      },
-                      icon: const Icon(Icons.arrow_forward_ios)),
                 ),
               ),
             ),
@@ -366,23 +371,24 @@ class _ProfilemainState extends State<Profilemain> {
               child: Material(
                 elevation: 4,
                 shadowColor: const Color(0xFF000000),
-                child: ListTile(
-                  tileColor: const Color(0xFFCAE3FF),
-                  leading: Icon(
-                    Icons.feedback,
-                    color: Color(0xFF024EA6),
-                  ),
-                  title: const Text(
-                    "Provide Feedback",
-                    style: TextStyle(
-                      fontFamily: "Inter",
+                child: GestureDetector(
+                  onTap: () {
+                    _showFeedbackDialog(context);
+                  },
+                  child: ListTile(
+                    tileColor: const Color(0xFFCAE3FF),
+                    leading: Icon(
+                      Icons.feedback,
+                      color: Color(0xFF024EA6),
                     ),
+                    title: const Text(
+                      "Provide Feedback",
+                      style: TextStyle(
+                        fontFamily: "Inter",
+                      ),
+                    ),
+                    trailing: Icon(Icons.arrow_forward_ios),
                   ),
-                  trailing: IconButton(
-                      onPressed: () {
-                        _showFeedbackDialog(context);
-                      },
-                      icon: const Icon(Icons.arrow_forward_ios)),
                 ),
               ),
             ),
@@ -391,132 +397,139 @@ class _ProfilemainState extends State<Profilemain> {
               child: Material(
                 elevation: 4,
                 shadowColor: const Color(0xFF000000),
-                child: ListTile(
-                  tileColor: const Color(0xFFCAE3FF),
-                  leading: const ImageIcon(
-                    AssetImage(
-                      "assets/Icons/about.png",
-                    ),
-                    color: Color(0xFF024EA6),
-                  ),
-                  title: const Text(
-                    "About",
-                    style: TextStyle(
-                      fontFamily: "Inter",
-                    ),
-                  ),
-                  trailing: IconButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Center(
-                                    child: Text(
-                                  'About',
-                                  style: TextStyle(
-                                      fontFamily: "Inter",
-                                      fontWeight: FontWeight.bold),
-                                )),
-                                content: SizedBox(
-                                  height: 300,
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Container(
-                                          height: 40,
-                                          width: double.infinity,
-                                          decoration: const BoxDecoration(
-                                              border: Border.symmetric(
-                                                  horizontal: BorderSide(
-                                                      color: Colors.grey))),
-                                          child: Center(
-                                            child: FutureBuilder<String>(
-                                              future: getAppVersion(),
-                                              builder: (BuildContext context,
-                                                  AsyncSnapshot<String>
-                                                      snapshot) {
-                                                if (snapshot.connectionState ==
-                                                    ConnectionState.waiting) {
-                                                  return CircularProgressIndicator();
-                                                } else if (snapshot.hasError) {
-                                                  return Text(
-                                                      'Error: ${snapshot.error}');
-                                                } else {
-                                                  return Text(
-                                                      'App Version: ${snapshot.data} (Alpha Testing)');
-                                                }
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {},
-                                          child: Container(
-                                            height: 40,
-                                            width: double.infinity,
-                                            decoration: const BoxDecoration(
-                                                border: Border.symmetric(
-                                                    horizontal: BorderSide(
-                                                        color: Colors.grey))),
-                                            child: const Center(
-                                              child: Text(
-                                                "Terms and Conditions",
-                                                style: TextStyle(
-                                                    fontFamily: "Inter"),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {},
-                                          child: Container(
-                                            height: 40,
-                                            width: double.infinity,
-                                            decoration: const BoxDecoration(
-                                                border: Border.symmetric(
-                                                    horizontal: BorderSide(
-                                                        color: Colors.grey))),
-                                            child: const Center(
-                                              child: Text(
-                                                "Privacy Policy",
-                                                style: TextStyle(
-                                                  fontFamily: "Inter",
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {},
-                                          child: Container(
-                                            height: 150,
-                                            width: double.infinity,
-                                            decoration: const BoxDecoration(
-                                                border: Border.symmetric(
-                                                    horizontal: BorderSide(
-                                                        color: Colors.grey))),
-                                            child: const Center(
-                                              child: Text(
-                                                "Developers:\n\nSahil\nSaugat\nRushab\nKushagra\nSanskar",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontFamily: "Inter",
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ]),
+                child: GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Center(
+                            child: Text(
+                              'About',
+                              style: TextStyle(
+                                fontFamily: "Inter",
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          content: SizedBox(
+                            height: 300,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 10,
                                 ),
-                              );
-                            });
+                                Container(
+                                  height: 40,
+                                  width: double.infinity,
+                                  decoration: const BoxDecoration(
+                                    border: Border.symmetric(
+                                      horizontal:
+                                          BorderSide(color: Colors.grey),
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: FutureBuilder<String>(
+                                      future: getAppVersion(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<String> snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return CircularProgressIndicator();
+                                        } else if (snapshot.hasError) {
+                                          return Text(
+                                              'Error: ${snapshot.error}');
+                                        } else {
+                                          return Text(
+                                            'App Version: ${snapshot.data} (Alpha Testing)',
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    height: 40,
+                                    width: double.infinity,
+                                    decoration: const BoxDecoration(
+                                      border: Border.symmetric(
+                                        horizontal:
+                                            BorderSide(color: Colors.grey),
+                                      ),
+                                    ),
+                                    child: const Center(
+                                      child: Text(
+                                        "Terms and Conditions",
+                                        style: TextStyle(fontFamily: "Inter"),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    height: 40,
+                                    width: double.infinity,
+                                    decoration: const BoxDecoration(
+                                      border: Border.symmetric(
+                                        horizontal:
+                                            BorderSide(color: Colors.grey),
+                                      ),
+                                    ),
+                                    child: const Center(
+                                      child: Text(
+                                        "Privacy Policy",
+                                        style: TextStyle(fontFamily: "Inter"),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    height: 150,
+                                    width: double.infinity,
+                                    decoration: const BoxDecoration(
+                                      border: Border.symmetric(
+                                        horizontal:
+                                            BorderSide(color: Colors.grey),
+                                      ),
+                                    ),
+                                    child: const Center(
+                                      child: Text(
+                                        "Developers:\n\nSahil\nSaugat\nRushab\nKushagra\nSanskar",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(fontFamily: "Inter"),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
                       },
-                      icon: const Icon(Icons.arrow_forward_ios)),
+                    );
+                  },
+                  child: ListTile(
+                    tileColor: const Color(0xFFCAE3FF),
+                    leading: const ImageIcon(
+                      AssetImage(
+                        "assets/Icons/about.png",
+                      ),
+                      color: Color(0xFF024EA6),
+                    ),
+                    title: const Text(
+                      "About",
+                      style: TextStyle(
+                        fontFamily: "Inter",
+                      ),
+                    ),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                  ),
                 ),
               ),
             ),

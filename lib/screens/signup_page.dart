@@ -357,6 +357,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                                   child: TextFormField(
                                                     style: TextStyle(
                                                         color: Colors.white),
+                                                    
                                                     obscureText: true,
                                                     decoration: textInputDecoration
                                                         .copyWith(

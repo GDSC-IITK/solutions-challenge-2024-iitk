@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gdsc/ChatBot/chat_screen.dart';
 import 'package:gdsc/function/generateUserName.dart';
 import 'package:gdsc/palette.dart';
 import 'package:gdsc/screens/Maps/maps.dart';
@@ -39,7 +40,8 @@ class _HomePageState extends State<HomePage> {
     HomePagenew(),
     DonatePage(),
     volunteer(),
-    Profilemain()
+    Profilemain(),
+    Chat()
   ];
   bool _isLoading = false; // Add a boolean variable to track loading state
   bool _isExpanded = true;
@@ -53,25 +55,24 @@ class _HomePageState extends State<HomePage> {
   List<Widget> getDialogContent() {
     print(_isExpanded);
     print("getDialogContent");
-  if (_isExpanded) {
-    return [
-      Text(
-        'Before proceeding, we need to inform you about our app\'s usage of location data. FeedHarmony collects location data to enable features such as food donation pickups, volunteer opportunities, and real-time notifications, even when the app is closed or not in use. This data is essential for providing you with the best experience and ensuring efficient delivery of surplus food to those in need.',
-      ),
-      SizedBox(height: 10),
-      Text(
-        'By continuing to use our app, you consent to the collection and use of your location data for these purposes. Rest assured that we prioritize the security and privacy of your data, and it will not be shared with any third parties. If you have any concerns or questions about how we handle your location data, please refer to our privacy policy or contact our support team for assistance.',
-      ),
-      SizedBox(height: 10),
-      Text(
-        'Thank you for your understanding and support in our mission to fight food waste and hunger.',
-      ),
-    ];
-  } else {
-    return [];
+    if (_isExpanded) {
+      return [
+        Text(
+          'Before proceeding, we need to inform you about our app\'s usage of location data. FeedHarmony collects location data to enable features such as food donation pickups, volunteer opportunities, and real-time notifications, even when the app is closed or not in use. This data is essential for providing you with the best experience and ensuring efficient delivery of surplus food to those in need.',
+        ),
+        SizedBox(height: 10),
+        Text(
+          'By continuing to use our app, you consent to the collection and use of your location data for these purposes. Rest assured that we prioritize the security and privacy of your data, and it will not be shared with any third parties. If you have any concerns or questions about how we handle your location data, please refer to our privacy policy or contact our support team for assistance.',
+        ),
+        SizedBox(height: 10),
+        Text(
+          'Thank you for your understanding and support in our mission to fight food waste and hunger.',
+        ),
+      ];
+    } else {
+      return [];
+    }
   }
-}
-
 
   String _userMail = "";
   String _UserName = "";
@@ -109,22 +110,22 @@ class _HomePageState extends State<HomePage> {
               SizedBox(height: 10),
               Text('Do you wish to proceed and grant location access?'),
               SizedBox(height: 10),
-          //     GestureDetector(
-          //   onTap: () {
-          //     setState(() {
-          //       _isExpanded = !_isExpanded;
-          //       print(_isExpanded);
-          //     });
-          //   },
-          //   child: Text(
-          //     _isExpanded ? 'Collapse' : 'Expand More',
-          //     style: TextStyle(
-          //       color: Colors.blue,
-          //       decoration: TextDecoration.underline,
-          //     ),
-          //   ),
-          // ),
-          // ...getDialogContent(),
+              //     GestureDetector(
+              //   onTap: () {
+              //     setState(() {
+              //       _isExpanded = !_isExpanded;
+              //       print(_isExpanded);
+              //     });
+              //   },
+              //   child: Text(
+              //     _isExpanded ? 'Collapse' : 'Expand More',
+              //     style: TextStyle(
+              //       color: Colors.blue,
+              //       decoration: TextDecoration.underline,
+              //     ),
+              //   ),
+              // ),
+              // ...getDialogContent(),
             ],
           ),
           actions: <Widget>[
@@ -464,6 +465,9 @@ class _HomePageState extends State<HomePage> {
                   label: "Volunteer"),
               BottomNavigationBarItem(
                   icon: Icon(Icons.person), label: "Profile"),
+              BottomNavigationBarItem(
+                  icon: ImageIcon(AssetImage('assets/Icons/chat_icon.png')),
+                  label: "Chat"),
             ]),
       ),
     );

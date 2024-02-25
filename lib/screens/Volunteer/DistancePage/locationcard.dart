@@ -45,7 +45,7 @@ class _locationcardState extends State<locationcard> {
             style: TextStyle(fontSize: 13),
           ),
           subtitle: Text(
-            widget.address ?? "",
+            "${widget.address} km away from you" ?? "",
             style: TextStyle(fontSize: 10, color: Color(0xFF048228)),
           ),
           leading: const ImageIcon(

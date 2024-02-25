@@ -136,6 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                           TextFormField(
                             controller: _passwordController,
                             style: TextStyle(color: Colors.white),
+                            obscureText: true,
                             decoration: InputDecoration(
                               labelText: 'Password',
                               floatingLabelBehavior:

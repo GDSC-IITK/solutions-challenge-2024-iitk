@@ -10,7 +10,11 @@ import 'package:gdsc/services/providers.dart';
 import 'package:provider/provider.dart';
 
 class Location extends StatefulWidget {
-  const Location({super.key, required this.all, required this.donationId, required this.pickupId});
+  const Location(
+      {super.key,
+      required this.all,
+      required this.donationId,
+      required this.pickupId});
   final Map<String, dynamic> all;
   final String donationId;
   final String pickupId;
@@ -99,7 +103,7 @@ class _LocationState extends State<Location>
                     data['location'].longitude,
                     context.read<Providers>().current_loc_data!.latitude,
                     context.read<Providers>().current_loc_data!.longitude,
-                  ).toString() + ' km away from you',
+                  ).toStringAsFixed(2),
                   coordinates: data['location'],
                   donationId: widget.donationId ?? '',
                   pickupId: widget.pickupId ?? '',
@@ -226,7 +230,7 @@ class _LocationState extends State<Location>
                     data['location'].longitude,
                     context.read<Providers>().current_loc_data!.latitude,
                     context.read<Providers>().current_loc_data!.longitude,
-                  ).toString() + ' km away from you',
+                  ).toStringAsFixed(2),
                   coordinates: data['location'],
                   donationId: widget.donationId,
                   pickupId: widget.pickupId,

@@ -113,7 +113,7 @@ class _volunteerState extends State<volunteer>
   }
 
   Widget _tab(int index) {
-    double Width = MediaQuery.of(context).size.width; // Gives the width
+    // double Width = MediaQuery.of(context).size.width; // Gives the width
     setState(() {
       _isLoading = true;
       // GeoPoint? curr = await getCurrentLocation();
@@ -131,7 +131,10 @@ class _volunteerState extends State<volunteer>
       // print(loc?.latitude);
       // print(loc?.longitude);
       double distance = calculateDistanceNew(
-           context.read<Providers>().current_loc_data?.latitude, context.read<Providers>().current_loc_data?.longitude, loc?.latitude, loc?.longitude);
+          context.read<Providers>().current_loc_data?.latitude,
+          context.read<Providers>().current_loc_data?.longitude,
+          loc?.latitude,
+          loc?.longitude);
       // print(distance);
 
       item.distance = distance;
@@ -241,7 +244,7 @@ class _volunteerState extends State<volunteer>
               borderRadius: BorderRadius.circular(10),
               // color: Color.fromRGBO(78, 134, 199, 0.83),
             ),
-            height: 50,
+            height: 55,
             child: const Center(
               child: Align(
                 alignment: Alignment.centerLeft,

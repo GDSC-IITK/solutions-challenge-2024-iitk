@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
+import 'package:gdsc/apiKey.dart';
 import 'package:gdsc/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gdsc/screens/vision_page.dart';
@@ -19,9 +21,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // Access your API key as an environment variable (see "Set up your API key" above)
-
+final apiKey = ApiKey.api_key_gemini;
   await FirebaseAPI().initNotifications();
-
+  Gemini.init(
+    apiKey: apiKey,
+  );
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 

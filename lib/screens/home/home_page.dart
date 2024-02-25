@@ -24,7 +24,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:gdsc/function/getuser.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:gdsc/screens/loader.dart';
 import 'package:gdsc/data_models/user.dart' as User_1;
+import 'package:lottie/lottie.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -342,7 +344,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: _isLoading ? null : AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: const Color.fromRGBO(2, 78, 166, 1),
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -435,12 +437,10 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: _isLoading
-          ? Center(
-              child:
-                  CircularProgressIndicator()) // Show loader if data is loading
+        body: _isLoading
+          ? LoaderScreen()
           : pages.elementAt(current_index),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: _isLoading ? null : Container(
         color: Color.fromRGBO(2, 78, 166, 1),
         child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,

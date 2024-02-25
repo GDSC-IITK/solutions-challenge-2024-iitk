@@ -31,7 +31,7 @@ class _SignUpPageState extends State<SignUpPage> {
             child: Center(
                 child: Column(children: [
               const SizedBox(
-                height: 250,
+                height: 205,
               ),
               Expanded(
                   child: Container(
@@ -44,7 +44,6 @@ class _SignUpPageState extends State<SignUpPage> {
                           topRight: Radius.circular(60.0),
                         )),
                     child: Center(
-                        child: SingleChildScrollView(
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -218,8 +217,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                                                 width: 2.0,
                                                               ),
                                                             ),
-                                                            labelText:
-                                                                "Age",
+                                                            labelText: "Age",
                                                             labelStyle:
                                                                 GoogleFonts
                                                                     .inter(
@@ -487,7 +485,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                               )),
                                             ])))),
                           ]),
-                    ))),
+                    )),
               )),
             ]))));
   }

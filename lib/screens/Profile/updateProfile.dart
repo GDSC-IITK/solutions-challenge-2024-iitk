@@ -222,31 +222,6 @@ class _updateProfileState extends State<updateProfile> {
             elevation: 4,
             shadowColor: const Color(0xFF000000),
             child: TextFormField(
-              initialValue:
-                  _userMail ?? "", // Set initial value if userEmail is present
-              enabled: _userMail ==
-                  "", // Make it non-editable if userEmail is present
-              // controller: c6,
-              decoration: InputDecoration(
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFCAE3FF)),
-                ),
-                labelText: "Email",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(2.0),
-                  borderSide: const BorderSide(),
-                ),
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Material(
-            color: const Color(0xFFCAE3FF),
-            elevation: 4,
-            shadowColor: const Color(0xFF000000),
-            child: TextFormField(
               controller: c1,
               decoration: InputDecoration(
                 enabledBorder: const OutlineInputBorder(
@@ -276,6 +251,31 @@ class _updateProfileState extends State<updateProfile> {
                 enabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Color(0xFFCAE3FF))),
                 labelText: "Phone Number",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(2.0),
+                  borderSide: const BorderSide(),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Material(
+            color: const Color(0xFFCAE3FF),
+            elevation: 4,
+            shadowColor: const Color(0xFF000000),
+            child: TextFormField(
+              initialValue:
+                  _userMail ?? "", // Set initial value if userEmail is present
+              enabled: _userMail ==
+                  "", // Make it non-editable if userEmail is present
+              // controller: c6,
+              decoration: InputDecoration(
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFFCAE3FF)),
+                ),
+                labelText: "Email",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(2.0),
                   borderSide: const BorderSide(),

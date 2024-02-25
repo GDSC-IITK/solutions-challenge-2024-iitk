@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gdsc/function/getuser.dart';
 import 'package:gdsc/screens/Volunteer/map_animation_page.dart';
+import 'package:gdsc/services/helper/getLocationfromGeopoint.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -40,6 +41,8 @@ class _MapsState extends State<volunteerMaps> {
   ];
   String _userName = '';
   GeoPoint _coord = GeoPoint(0, 0);
+  GeoPoint _current = GeoPoint(0, 0);
+
   String _address = '';
   String _quantity = '';
   String _phoneNo = '';
@@ -91,9 +94,9 @@ class _MapsState extends State<volunteerMaps> {
           _phoneNo = jsonData['phoneNumber'] ?? '';
           _marker.add(
             Marker(
-                markerId: MarkerId("1"),
+                markerId: const MarkerId("1"),
                 position: LatLng(_coord.latitude, _coord.longitude),
-                infoWindow: InfoWindow(title: "Destination")),
+                infoWindow: const InfoWindow(title: "Destination")),
           );
         });
         CameraPosition cameraPosition = CameraPosition(
@@ -127,11 +130,12 @@ class _MapsState extends State<volunteerMaps> {
       Uint8List? markerIcon = await createCurrentLocationMarker();
 
       setState(() {
+        _current = GeoPoint(value.latitude, value.longitude);
         _marker.add(Marker(
-            markerId: MarkerId("2"),
+            markerId: const MarkerId("2"),
             position: LatLng(value.latitude, value.longitude),
             icon: BitmapDescriptor.fromBytes(markerIcon!),
-            infoWindow: InfoWindow(title: "My Current location")));
+            infoWindow: const InfoWindow(title: "My Current location")));
       });
     });
     setState(() {});
@@ -173,26 +177,26 @@ class _MapsState extends State<volunteerMaps> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Location",
           style: TextStyle(fontWeight: FontWeight.w800, fontFamily: "Inter"),
         ),
         centerTitle: true,
       ),
       body: Container(
-        color: Color(0xFF024EA6),
+        color: const Color(0xFF024EA6),
         child: Column(
           children: [
             SafeArea(
               child: SizedBox(
-                height: 580,
+                height: 570,
                 child: GoogleMap(
                   onTap: (LatLng latlng) {
                     _marker.add(
                       Marker(
-                          markerId: MarkerId("3"),
+                          markerId: const MarkerId("3"),
                           position: LatLng(_coord.latitude, _coord.longitude),
-                          infoWindow: InfoWindow(title: "Destination")),
+                          infoWindow: const InfoWindow(title: "Destination")),
                     );
                     setState(() {});
                   },
@@ -218,42 +222,45 @@ class _MapsState extends State<volunteerMaps> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               '${_userName}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w700,
                                   color: Colors.white),
                             ),
-                            Text(
-                              '${_address}',
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white),
+                            Container(
+                              width: 150,
+                              child: Text(
+                                '${_address}',
+                                style: const TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white),
+                              ),
                             )
                           ],
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               "Details",
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w700,
                                   color: Colors.white),
                             ),
-                            Text(
+                            const Text(
                               "Items",
                               style: TextStyle(
                                   fontSize: 13,
@@ -262,7 +269,7 @@ class _MapsState extends State<volunteerMaps> {
                             ),
                             Text(
                               'Quantity: ${_quantity.toString()} kg',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w400,
                                   color: Colors.white),
@@ -270,7 +277,7 @@ class _MapsState extends State<volunteerMaps> {
                           ],
                         ),
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -297,7 +304,7 @@ class _MapsState extends State<volunteerMaps> {
                   ),
                   Container(
                     height: 2,
-                    color: Color.fromARGB(255, 78, 134, 197),
+                    color: const Color.fromARGB(255, 78, 134, 197),
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -309,18 +316,18 @@ class _MapsState extends State<volunteerMaps> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 12.0),
+                        padding: const EdgeInsets.only(left: 12.0),
                         child: Column(
                           children: [
                             Text(
                               '${_userName ?? ''}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 18,
                                   fontFamily: "Inter",
                                   color: Colors.white,
                                   fontWeight: FontWeight.w800),
                             ),
-                            Text(
+                            const Text(
                               "Donor",
                               style: TextStyle(
                                   fontSize: 13,
@@ -332,7 +339,7 @@ class _MapsState extends State<volunteerMaps> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 100.0),
+                        padding: const EdgeInsets.only(left: 80.0),
                         child: IconButton(
                             onPressed: () async {
                               await call(_phoneNo);
@@ -346,12 +353,26 @@ class _MapsState extends State<volunteerMaps> {
                         padding: const EdgeInsets.only(left: 5.0),
                         child: IconButton(
                             onPressed: () async {
+                              if (calculateDistanceNew(
+                                      _current.latitude,
+                                      _current.longitude,
+                                      _coord.latitude,
+                                      _coord.longitude) >
+                                  0.1) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                        'You are far from the pickup point. Please get close.'),
+                                  ),
+                                );
+                                return;
+                              }
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    title: Text("Confirm Pickup"),
-                                    content: Text(
+                                    title: const Text("Confirm Pickup"),
+                                    content: const Text(
                                         "Are you sure that you want to pickup the food from here?"),
                                     actions: [
                                       TextButton(
@@ -359,7 +380,7 @@ class _MapsState extends State<volunteerMaps> {
                                           Navigator.pop(
                                               context); // Close the dialog
                                         },
-                                        child: Text("Cancel"),
+                                        child: const Text("Cancel"),
                                       ),
                                       TextButton(
                                         onPressed: () async {
@@ -369,8 +390,9 @@ class _MapsState extends State<volunteerMaps> {
                                             context: context,
                                             builder: (BuildContext context) {
                                               return AlertDialog(
-                                                title: Text("Congratulations!"),
-                                                content: Column(
+                                                title: const Text(
+                                                    "Congratulations!"),
+                                                content: const Column(
                                                   mainAxisSize:
                                                       MainAxisSize.min,
                                                   crossAxisAlignment:
@@ -379,8 +401,7 @@ class _MapsState extends State<volunteerMaps> {
                                                     Text(
                                                         "You picked up the order, Great job. Let's deliver the order"),
                                                     SizedBox(height: 10),
-                                                    Text(
-                                                        ""),
+                                                    Text(""),
                                                   ],
                                                 ),
                                                 actions: [
@@ -389,7 +410,15 @@ class _MapsState extends State<volunteerMaps> {
                                                       Navigator.pop(
                                                           context); // Close the dialog
                                                       // Add navigation logic here
-                                                      nextScreen(context, MapAnimationPage(donationId:widget.donationId??'',pickupId:widget.pickupId??''));
+                                                      nextScreen(
+                                                          context,
+                                                          MapAnimationPage(
+                                                              donationId: widget
+                                                                      .donationId ??
+                                                                  '',
+                                                              pickupId: widget
+                                                                      .pickupId ??
+                                                                  ''));
                                                     },
                                                     child: Text("Continue"),
                                                   ),
@@ -398,7 +427,7 @@ class _MapsState extends State<volunteerMaps> {
                                             },
                                           );
                                         },
-                                        child: Text("Confirm"),
+                                        child: const Text("Confirm"),
                                       ),
                                     ],
                                   );
@@ -451,9 +480,9 @@ class _MapsState extends State<volunteerMaps> {
             print("Destination Location");
             _marker.add(
               Marker(
-                  markerId: MarkerId("2"),
+                  markerId: const MarkerId("2"),
                   position: LatLng(_coord.latitude, _coord.longitude),
-                  infoWindow: InfoWindow(title: "Destination location")),
+                  infoWindow: const InfoWindow(title: "Destination location")),
             );
             CameraPosition cameraPosition = CameraPosition(
                 zoom: 16, target: LatLng(_coord.latitude, _coord.longitude));
@@ -467,7 +496,7 @@ class _MapsState extends State<volunteerMaps> {
             // });
             setState(() {});
           },
-          child: Icon(Icons.location_disabled_outlined),
+          child: const Icon(Icons.location_disabled_outlined),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,

@@ -17,7 +17,12 @@ class DatabaseService {
 
     // Check if the provided username is unique
     userName = await ensureUniqueUsername(userName);
-
+    final CollectionReference userNamesCollection =
+        FirebaseFirestore.instance.collection("Userames");
+    await userNamesCollection.add({
+      "username": '',
+      "userId": uid,
+    });
     // Save user data to the 'Users' collection
     await userCollection.doc(uid).set({
       "fullName": fullName,
@@ -25,7 +30,7 @@ class DatabaseService {
       "userName": userName,
       "createdAt": Timestamp.now(),
       "updatedAt": Timestamp.now(),
-      "currentLocation": GeoPoint(0,0),
+      "currentLocation": GeoPoint(0, 0),
       "donationsDone": 0,
       "pickupsDone": 0,
       "dropsDone": 0,
@@ -45,7 +50,12 @@ class DatabaseService {
 
     // Check if the provided username is unique
     userName = await ensureUniqueUsername(userName);
-
+    final CollectionReference userNamesCollection =
+        FirebaseFirestore.instance.collection("Userames");
+    await userNamesCollection.add({
+      "username": '',
+      "userId": uid,
+    });
     // Save user data to the 'Users' collection
     await userCollection.doc(uid).set({
       "fullName": fullName,
@@ -54,7 +64,7 @@ class DatabaseService {
       "createdAt": Timestamp.now(),
       "updatedAt": Timestamp.now(),
       "age": age,
-      "currentLocation": GeoPoint(0,0),
+      "currentLocation": GeoPoint(0, 0),
       "donationsDone": 0,
       "pickupsDone": 0,
       "donationIds": [],

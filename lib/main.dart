@@ -7,6 +7,7 @@ import 'package:gdsc/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gdsc/screens/vision_page.dart';
 import 'package:gdsc/screens/welcome_page.dart';
+import 'package:gdsc/services/helper/firebase_api.dart';
 import 'package:gdsc/services/providers.dart';
 import 'package:provider/provider.dart'; // Import Provider
 import 'package:gdsc/screens/login_page.dart';
@@ -18,6 +19,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // Access your API key as an environment variable (see "Set up your API key" above)
+
+  await FirebaseAPI().initNotifications();
 
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);

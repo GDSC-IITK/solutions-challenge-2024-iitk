@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gdsc/function/getuser.dart';
 import 'package:gdsc/screens/Volunteer/map_animation_page.dart';
+import 'package:gdsc/services/helper/getLocationfromGeopoint.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -40,6 +41,8 @@ class _MapsState extends State<volunteerMaps> {
   ];
   String _userName = '';
   GeoPoint _coord = GeoPoint(0, 0);
+  GeoPoint _current = GeoPoint(0, 0);
+
   String _address = '';
   String _quantity = '';
   String _phoneNo = '';
@@ -127,6 +130,7 @@ class _MapsState extends State<volunteerMaps> {
       Uint8List? markerIcon = await createCurrentLocationMarker();
 
       setState(() {
+        _current = GeoPoint(value.latitude, value.longitude);
         _marker.add(Marker(
             markerId: MarkerId("2"),
             position: LatLng(value.latitude, value.longitude),
@@ -346,6 +350,20 @@ class _MapsState extends State<volunteerMaps> {
                         padding: const EdgeInsets.only(left: 5.0),
                         child: IconButton(
                             onPressed: () async {
+                              if (calculateDistanceNew(
+                                      _current.latitude,
+                                      _current.longitude,
+                                      _coord.latitude,
+                                      _coord.longitude) >
+                                  0.1) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                        'You are far from the pickup point. Please get close.'),
+                                  ),
+                                );
+                                return;
+                              }
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
@@ -379,8 +397,7 @@ class _MapsState extends State<volunteerMaps> {
                                                     Text(
                                                         "You picked up the order, Great job. Let's deliver the order"),
                                                     SizedBox(height: 10),
-                                                    Text(
-                                                        ""),
+                                                    Text(""),
                                                   ],
                                                 ),
                                                 actions: [
@@ -389,7 +406,15 @@ class _MapsState extends State<volunteerMaps> {
                                                       Navigator.pop(
                                                           context); // Close the dialog
                                                       // Add navigation logic here
-                                                      nextScreen(context, MapAnimationPage(donationId:widget.donationId??'',pickupId:widget.pickupId??''));
+                                                      nextScreen(
+                                                          context,
+                                                          MapAnimationPage(
+                                                              donationId: widget
+                                                                      .donationId ??
+                                                                  '',
+                                                              pickupId: widget
+                                                                      .pickupId ??
+                                                                  ''));
                                                     },
                                                     child: Text("Continue"),
                                                   ),

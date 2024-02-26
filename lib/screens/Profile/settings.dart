@@ -51,20 +51,20 @@ class _settingsState extends State<settings> {
   }
 
   Future<void> changePassword(String newPassword) async {
-  try {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      await user.updatePassword(newPassword);
-      print('Password changed successfully');
-    } else {
-      print('No user signed in.');
-      // Handle the scenario when no user is signed in
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await user.updatePassword(newPassword);
+        print('Password changed successfully');
+      } else {
+        print('No user signed in.');
+        // Handle the scenario when no user is signed in
+      }
+    } catch (error) {
+      print('Error changing password: $error');
+      // Handle any errors that occur during password change
     }
-  } catch (error) {
-    print('Error changing password: $error');
-    // Handle any errors that occur during password change
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -85,8 +85,11 @@ class _settingsState extends State<settings> {
                       padding: EdgeInsets.all(8.0),
                       child: CircleAvatar(
                         radius: 44,
-                        backgroundImage:
-                          NetworkImage(context.read<Providers>().user_data.toJson()['profileImageLink'].toString()),
+                        backgroundImage: NetworkImage(context
+                            .read<Providers>()
+                            .user_data
+                            .toJson()['profileImageLink']
+                            .toString()),
                       ),
                     ),
                     Padding(
@@ -133,19 +136,20 @@ class _settingsState extends State<settings> {
             child: Material(
               elevation: 4,
               shadowColor: const Color(0xFF000000),
-              child: ListTile(
-                tileColor: const Color(0xFFCAE3FF),
-                title: const Text(
-                  "Edit Profile",
-                  style: TextStyle(
-                    fontFamily: "Inter",
+              child: GestureDetector(
+                onTap: () {
+                  nextScreen(context, updateProfile());
+                },
+                child: ListTile(
+                  tileColor: const Color(0xFFCAE3FF),
+                  title: const Text(
+                    "Edit Profile",
+                    style: TextStyle(
+                      fontFamily: "Inter",
+                    ),
                   ),
+                  trailing: Icon(Icons.arrow_forward_ios),
                 ),
-                trailing: IconButton(
-                    onPressed: () {
-                      nextScreen(context, updateProfile());
-                    },
-                    icon: const Icon(Icons.arrow_forward_ios)),
               ),
             ),
           ),
@@ -154,63 +158,65 @@ class _settingsState extends State<settings> {
             child: Material(
               elevation: 4,
               shadowColor: const Color(0xFF000000),
-              child: ListTile(
-                tileColor: const Color(0xFFCAE3FF),
-                title: const Text(
-                  "Notification Preferences",
-                  style: TextStyle(
-                    fontFamily: "Inter",
+              child: GestureDetector(
+                onTap: () {
+                  AppSettings.openAppSettings(
+                      type: AppSettingsType.notification);
+                },
+                child: ListTile(
+                  tileColor: const Color(0xFFCAE3FF),
+                  title: const Text(
+                    "Notification Preferences",
+                    style: TextStyle(
+                      fontFamily: "Inter",
+                    ),
                   ),
+                  trailing: Icon(Icons.arrow_forward_ios),
                 ),
-                trailing: IconButton(
-                    onPressed: () {
-                      AppSettings.openAppSettings(
-                          type: AppSettingsType.notification);
-                    },
-                    icon: const Icon(Icons.arrow_forward_ios)),
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Material(
               elevation: 4,
-              shadowColor: Color(0xFF000000),
-              child: ListTile(
-                tileColor: Color(0xFFCAE3FF),
-                title: Text(
-                  "Update Password",
-                  style: TextStyle(
-                    fontFamily: "Inter",
+              shadowColor: const Color(0xFF000000),
+              child: GestureDetector(
+                onTap: () {
+                  nextScreen(context, UpdatePasswordScreen());
+                },
+                child: ListTile(
+                  tileColor: const Color(0xFFCAE3FF),
+                  title: const Text(
+                    "Update Password",
+                    style: TextStyle(
+                      fontFamily: "Inter",
+                    ),
                   ),
+                  trailing: Icon(Icons.arrow_forward_ios),
                 ),
-                trailing: IconButton(
-                    onPressed: () {
-                      nextScreen(context, UpdatePasswordScreen());
-                    },
-                    icon: const Icon(Icons.arrow_forward_ios)),
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Material(
               elevation: 4,
-              shadowColor: Color(0xFF000000),
-              child: ListTile(
-                tileColor: Color(0xFFCAE3FF),
-                title: Text(
-                  "Location Permissions",
-                  style: TextStyle(
-                    fontFamily: "Inter",
+              shadowColor: const Color(0xFF000000),
+              child: GestureDetector(
+                onTap: () {
+                  AppSettings.openAppSettings(type: AppSettingsType.location);
+                },
+                child: ListTile(
+                  tileColor: const Color(0xFFCAE3FF),
+                  title: const Text(
+                    "Location Permissions",
+                    style: TextStyle(
+                      fontFamily: "Inter",
+                    ),
                   ),
+                  trailing: Icon(Icons.arrow_forward_ios),
                 ),
-                trailing: IconButton(
-                    onPressed: () {
-                      AppSettings.openAppSettings(
-                          type: AppSettingsType.location);
-                    },
-                    icon: const Icon(Icons.arrow_forward_ios)),
               ),
             ),
           ),

@@ -329,7 +329,6 @@ class _LoginPageState extends State<LoginPage> {
             googleUser?.email ?? "",
             generateUsername(
                 googleUser?.email ?? "", googleUser?.displayName ?? ""));
-          
       }
 
       return await FirebaseAuth.instance.signInWithCredential(credential);

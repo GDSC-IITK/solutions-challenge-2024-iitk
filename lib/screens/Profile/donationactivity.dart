@@ -102,19 +102,20 @@ class _donationactivityState extends State<donationactivity> {
             child: Material(
               elevation: 4,
               shadowColor: const Color(0xFF000000),
-              child: ListTile(
-                tileColor: const Color(0xFFCAE3FF),
-                title: const Text(
-                  "Donation History",
-                  style: TextStyle(
-                    fontFamily: "Inter",
+              child: GestureDetector(
+                onTap: () {
+                  nextScreen(context, const donatehistory());
+                },
+                child: ListTile(
+                  tileColor: const Color(0xFFCAE3FF),
+                  title: const Text(
+                    "Donation History",
+                    style: TextStyle(
+                      fontFamily: "Inter",
+                    ),
                   ),
+                  trailing: Icon(Icons.arrow_forward_ios),
                 ),
-                trailing: IconButton(
-                    onPressed: () {
-                      nextScreen(context, const donatehistory());
-                    },
-                    icon: const Icon(Icons.arrow_forward_ios)),
               ),
             ),
           ),

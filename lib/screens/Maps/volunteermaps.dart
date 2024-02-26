@@ -407,10 +407,11 @@ class _MapsState extends State<volunteerMaps> {
                                       ),
                                       TextButton(
                                         onPressed: () async {
-                                          Navigator.pop(
-                                              context); // Close the dialog
                                           await updateDonationStatus(
                                               widget.donationId);
+                                          Navigator.pop(
+                                              context); // Close the dialog
+                                          
                                           showDialog(
                                             context: context,
                                             builder: (BuildContext context) {

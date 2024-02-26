@@ -58,7 +58,7 @@ class _VisionPageState extends State<VisionPage> {
       'assets/images/vision_2.png',
     ),
     ImageWithText(
-      'Deliver the excess food its destination. Volunteers act as vectors for delivering food.',
+      'Deliver the excess food to its destination. Volunteers act as vectors for delivering food.',
       'VOLUNTEER',
       'assets/images/vision_3.png',
     ),

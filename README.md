@@ -1,16 +1,37 @@
-# gdsc
+# Solution-Challenge-2024-Submission
+GDSC IITK submission of Solution Challenge
 
-A new Flutter project.
+Our project consists of two major components: a mobile application (written in Flutter) and a predictive machine-learning algorithm. This repo is created to compile the two parts: app and ml model.
 
-## Getting Started
+# Application
 
-This project is a starting point for a Flutter application.
+	To build the application on your local device follow the steps given below:
+	1. Install Flutter https://docs.flutter.dev/get-started/install
+	2. Run 'flutter pub get' to install the packages of the repository
+	3. Run 'flutter run' after connecting to any emulator, physical device or web browser.
+	4. App is ready to use
 
-A few resources to get you started if this is your first Flutter project:
+Please note: We are using couple of api keys which are not present on Github. First one includes: google-services.json file (we are using Firebase as a BaaS) and the API KEY for Gemini.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Original Application Repo: https://github.com/GDSC-IITK/solutions-challenge-2024-iitk
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# ML Model
+
+Instructions on how to run the ML Model:
+
+	Install the libraries using the following commands inside the ML folder:
+	                   pip install requirements.txt
+
+	For Windows Users:
+	Type the following commands inside your folder to start the local server:
+		$env:FLASK_APP = "model.py"
+		flask run
+
+	For Linux and Mac Users:
+	Type the following commands inside your folder to start the local server:
+		export FLASK_APP=model.py
+		flask run
+  
+  To test the server's functionality, just add a query like the following example: http://localhost:8000/kiosks?lat=22.5080547&lon=88.3533289
+
+Original ML Model repo: https://github.com/GDSC-IITK/solutions-challenge-ml

@@ -14,6 +14,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gdsc/function/getuser.dart';
 import 'package:provider/provider.dart';
 import 'package:gdsc/data_models/user.dart' as user_data;
+import 'package:url_launcher/url_launcher.dart';
 
 class Profilemain extends StatefulWidget {
   const Profilemain({Key? key}) : super(key: key);
@@ -449,27 +450,31 @@ class _ProfilemainState extends State<Profilemain> {
                                     ),
                                   ),
                                 ),
+                                // InkWell(
+                                //   onTap: () {},
+                                //   child: Container(
+                                //     height: 40,
+                                //     width: double.infinity,
+                                //     decoration: const BoxDecoration(
+                                //       border: Border.symmetric(
+                                //         horizontal:
+                                //             BorderSide(color: Colors.grey),
+                                //       ),
+                                //     ),
+                                //     child: const Center(
+                                //       child: Text(
+                                //         "Terms and Conditions",
+                                //         style: TextStyle(fontFamily: "Inter"),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
                                 InkWell(
-                                  onTap: () {},
-                                  child: Container(
-                                    height: 40,
-                                    width: double.infinity,
-                                    decoration: const BoxDecoration(
-                                      border: Border.symmetric(
-                                        horizontal:
-                                            BorderSide(color: Colors.grey),
-                                      ),
-                                    ),
-                                    child: const Center(
-                                      child: Text(
-                                        "Terms and Conditions",
-                                        style: TextStyle(fontFamily: "Inter"),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    const url =
+                                        'https://docs.google.com/document/d/e/2PACX-1vROyfYk9XEuSCiwb1p3feo1nzea9T--SRYCf5sEZFTsr1aayyj4xZEurFMLCsY6N4cFBWrRooEDtZz8/pub'; // Replace with your URL
+                                    launch(url);
+                                  },
                                   child: Container(
                                     height: 40,
                                     width: double.infinity,

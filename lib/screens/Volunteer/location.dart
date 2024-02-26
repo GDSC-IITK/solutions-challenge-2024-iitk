@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +27,7 @@ class Location extends StatefulWidget {
 class _LocationState extends State<Location>
     with SingleTickerProviderStateMixin {
   GeoPoint _currentLoc = GeoPoint(0, 0);
+  int _select = 0;
   void initState() {
     super.initState();
 
@@ -44,6 +47,10 @@ class _LocationState extends State<Location>
             _currentLoc = value!;
           })
         });
+    setState(() {
+      Random random = new Random();
+      _select = random.nextInt(3) + 1;
+    });
   }
 
   @override
@@ -94,7 +101,7 @@ class _LocationState extends State<Location>
           width: double.infinity,
           child: SingleChildScrollView(
             child: Column(
-              children: widget.all.keys.map((key) {
+              children: widget.all.keys.take(_select).map((key) {
                 var data = widget.all[key];
                 return locationcard(
                   heading: data['address'],
@@ -221,7 +228,7 @@ class _LocationState extends State<Location>
           width: double.infinity,
           child: SingleChildScrollView(
             child: Column(
-              children: widget.all.keys.map((key) {
+              children: widget.all.keys.take(widget.all.length - _select).map((key) {
                 var data = widget.all[key];
                 return locationcard(
                   heading: data['address'],
@@ -232,8 +239,8 @@ class _LocationState extends State<Location>
                     context.read<Providers>().current_loc_data!.longitude,
                   ).toStringAsFixed(2),
                   coordinates: data['location'],
-                  donationId: widget.donationId,
-                  pickupId: widget.pickupId,
+                  donationId: widget.donationId ?? '',
+                  pickupId: widget.pickupId ?? '',
                 );
               }).toList(),
             ),

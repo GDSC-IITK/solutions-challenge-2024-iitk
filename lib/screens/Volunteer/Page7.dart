@@ -34,6 +34,8 @@ class _Page7State extends State<Page7> {
   TextEditingController receiverNameController = TextEditingController();
 
   bool _isLoading = false;
+  bool _isLoadingAll = false;
+
   final ImagePicker _picker = ImagePicker();
   XFile? _imageFile;
   String _UserName = "";
@@ -210,6 +212,9 @@ class _Page7State extends State<Page7> {
   }
 
   Future<void> submitData() async {
+    setState(() {
+      _isLoadingAll = true;
+    });
     if (_downloadLink == '') {
       ScaffoldMessenger.of(context as BuildContext).showSnackBar(
         SnackBar(
@@ -259,7 +264,8 @@ class _Page7State extends State<Page7> {
             'dropLocationReal': currentLocation,
             'dropLocationActualAddress':
                 await getLocationFromGeoPoint(widget.dropLocation),
-            'dropLocationRealAddress': await getLocationFromGeoPoint(currentLocation!),
+            'dropLocationRealAddress':
+                await getLocationFromGeoPoint(currentLocation!),
             'feedback': feedbackController.text,
             'noOfPeopleServed': noOfPeopleServedController.text,
             'receiverFeedback': receiverFeedbackController.text,
@@ -267,9 +273,9 @@ class _Page7State extends State<Page7> {
             'receiverName': receiverNameController.text,
             'imageLink': _downloadLink,
             'userId': user.uid,
-            'likes':0,
-            'createdAt':Timestamp.now(),
-            'updatedAt':Timestamp.now()
+            'likes': 0,
+            'createdAt': Timestamp.now(),
+            'updatedAt': Timestamp.now()
           };
           print(payload);
           var drop = await firestore.collection('HomePage').add(payload);
@@ -302,6 +308,9 @@ class _Page7State extends State<Page7> {
               behavior: SnackBarBehavior.floating,
             ),
           );
+          setState(() {
+            _isLoadingAll = false;
+          });
           nextScreenReplace(context, HomePage());
         }
       }
@@ -558,8 +567,20 @@ class _Page7State extends State<Page7> {
                 onPressed: () {
                   submitData();
                 },
-                child: Text("Submit",
-                    style: TextStyle(color: Colors.white, fontSize: 20)),
+                child: Stack(
+                  children: [
+                    Text(
+                      "Submit",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                    if (_isLoadingAll)
+                      Positioned.fill(
+                        child: Center(
+                          child: CircularProgressIndicator(), // Loader widget
+                        ),
+                      ),
+                  ],
+                ),
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(7.0),

@@ -69,7 +69,7 @@ class _donationactivityState extends State<donationactivity> {
                     ),
                   ),
                   SizedBox(
-                    width: 150,
+                    width: 10,
                   ),
                 ],
               ),

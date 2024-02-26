@@ -117,7 +117,7 @@ class _settingsState extends State<settings> {
                       ),
                     ),
                     SizedBox(
-                      width: 150,
+                      width: 10,
                     ),
                   ],
                 ),

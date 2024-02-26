@@ -218,7 +218,7 @@ class _ProfilemainState extends State<Profilemain> {
                     ),
                   ),
                   SizedBox(
-                    width: 150,
+                    width: 10,
                   ),
                 ],
               ),

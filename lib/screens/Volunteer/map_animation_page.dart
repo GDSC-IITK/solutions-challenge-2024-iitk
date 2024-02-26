@@ -40,11 +40,7 @@ class _MapAnimationPageState extends State<MapAnimationPage> {
     String baseUrl = await fetchUrlAndGetData();
     print(baseUrl);
     GeoPoint? currentLocation = await getCurrentLocation(context);
-    // getCurrentLocation(context).then((value) async {
-    //   print("My Current Location");
-    // });
-
-    // setState(() {});
+    
     // Check if the location was successfully retrieved
     if (currentLocation != null) {
       // Append the coordinates to the URL
@@ -78,6 +74,11 @@ class _MapAnimationPageState extends State<MapAnimationPage> {
       _allData = data;
       print(data);
     });
+    getCurrentLocation(context).then((value) async {
+      print("My Current Location");
+    });
+
+    setState(() {});
   }
 
   Future<Map<String, dynamic>> fetchAllDocumentsFromCollection() async {

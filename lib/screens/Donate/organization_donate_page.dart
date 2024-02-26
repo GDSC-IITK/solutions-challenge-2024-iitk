@@ -23,7 +23,8 @@ class OrganisationDonateContainer extends StatefulWidget {
       _OrganisationDonateContainerState();
 }
 
-class _OrganisationDonateContainerState extends State<OrganisationDonateContainer> {
+class _OrganisationDonateContainerState
+    extends State<OrganisationDonateContainer> {
   String _selectedValue = 'Option 1';
   TextEditingController itemname = TextEditingController();
   TextEditingController itemndesc = TextEditingController();
@@ -31,6 +32,7 @@ class _OrganisationDonateContainerState extends State<OrganisationDonateContaine
   TextEditingController location = TextEditingController();
   TextEditingController remarks = TextEditingController();
   TextEditingController organisation = TextEditingController();
+  TextEditingController phoneNumber = TextEditingController();
 
   List<String> _options = [
     'in Kilograms(kg)',
@@ -112,8 +114,7 @@ class _OrganisationDonateContainerState extends State<OrganisationDonateContaine
         setState(() {
           _isLoading = false;
           _downloadLink = downloadURL;
-          if(downloadURL!="")
-          _images.add(downloadURL);
+          if (downloadURL != "") _images.add(downloadURL);
         });
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Image uploaded')),
@@ -195,6 +196,37 @@ class _OrganisationDonateContainerState extends State<OrganisationDonateContaine
             ),
             TextFormField(
                 controller: organisation,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.black,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.black,
+                    ),
+                  ),
+                )),
+            const SizedBox(
+              height: 10,
+            )
+          ])),
+      Container(
+          alignment: Alignment.centerLeft,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text("Phone Number",
+                style: GoogleFonts.inter(
+                  color: Color.fromRGBO(0, 0, 0, 1),
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15.0,
+                )),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+                controller: phoneNumber,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -439,7 +471,7 @@ class _OrganisationDonateContainerState extends State<OrganisationDonateContaine
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: Text('Change Profile Image'),
+                  title: Text('Add Image'),
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -504,7 +536,7 @@ class _OrganisationDonateContainerState extends State<OrganisationDonateContaine
                       ),
                       // SizedBox(width: 10),
                       Text(
-                        '${_downloadLink==''?'Upload Image':'Upload Other Image (${_images.length})'}',
+                        '${_downloadLink == '' ? 'Upload Image' : 'Upload Other Image (${_images.length})'}',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -526,12 +558,14 @@ class _OrganisationDonateContainerState extends State<OrganisationDonateContaine
               location.text != '' &&
               remarks.text != '' &&
               organisation.text != '' &&
+              phoneNumber.text != '' &&
               itemndesc.text != '') {
             // Check if organization is not required or is not null when donating as an organization
             nextScreen(
               context,
               Donate_3(
                   imageUrl: _images,
+                  phone: phoneNumber.text,
                   type: 'organisation',
                   weightMetric: _selectedValue,
                   itemname: itemname.text!,
@@ -562,15 +596,17 @@ class _OrganisationDonateContainerState extends State<OrganisationDonateContaine
               height: 50,
               child: Padding(
                 padding: EdgeInsets.all(8.0),
-                child: !_isLoading?Text(
-                  "Continue",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: "Inter"),
-                ):Center(child: CircularProgressIndicator()),
+                child: !_isLoading
+                    ? Text(
+                        "Continue",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "Inter"),
+                      )
+                    : Center(child: CircularProgressIndicator()),
               ),
             ),
           ),

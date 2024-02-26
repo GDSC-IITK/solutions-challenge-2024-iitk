@@ -31,6 +31,7 @@ class _IndividualDonateContainerState extends State<IndividualDonateContainer> {
   TextEditingController location = TextEditingController();
   TextEditingController remarks = TextEditingController();
   TextEditingController organization = TextEditingController();
+  TextEditingController phoneNumber = TextEditingController();
 
   List<String> _options = [
     'in Kilograms(kg)',
@@ -194,6 +195,37 @@ class _IndividualDonateContainerState extends State<IndividualDonateContainer> {
             ),
             TextFormField(
                 controller: organization,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.black,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.black,
+                    ),
+                  ),
+                )),
+            const SizedBox(
+              height: 10,
+            )
+          ])),
+      Container(
+          alignment: Alignment.centerLeft,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text("Phone Number",
+                style: GoogleFonts.inter(
+                  color: Color.fromRGBO(0, 0, 0, 1),
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15.0,
+                )),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+                controller: phoneNumber,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -438,7 +470,7 @@ class _IndividualDonateContainerState extends State<IndividualDonateContainer> {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: Text('Change Profile Image'),
+                  title: Text('Add Image'),
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -525,12 +557,14 @@ class _IndividualDonateContainerState extends State<IndividualDonateContainer> {
               location.text != '' &&
               remarks.text != '' &&
               organization.text != '' &&
+              phoneNumber.text != '' &&
               itemndesc.text != '') {
             // Check if organization is not required or is not null when donating as an organization
             nextScreen(
               context,
               Donate_3(
                   imageUrl: _images,
+                  phone: phoneNumber.text,
                   type: 'individual',
                   weightMetric: _selectedValue,
                   itemname: itemname.text!,

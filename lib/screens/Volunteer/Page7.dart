@@ -187,6 +187,28 @@ class _Page7State extends State<Page7> {
     }
   }
 
+  Future<void> updateDonationStatus(String donationId) async {
+    try {
+      // Reference to the document in the "Donations" collection
+      DocumentReference donationRef =
+          FirebaseFirestore.instance.collection('Donations').doc(donationId);
+
+      // Fetch the document snapshot
+      DocumentSnapshot donationSnapshot = await donationRef.get();
+
+      // Check if the document exists
+      if (donationSnapshot.exists) {
+        // Update the status field to 'pickedUp'
+        await donationRef.update({'status': 'donated'});
+        print('Donation status updated successfully.');
+      } else {
+        print('Document does not exist.');
+      }
+    } catch (error) {
+      print('Error updating donation status: $error');
+    }
+  }
+
   Future<void> submitData() async {
     if (_downloadLink == '') {
       ScaffoldMessenger.of(context as BuildContext).showSnackBar(
@@ -198,6 +220,7 @@ class _Page7State extends State<Page7> {
     }
     if (areTextFieldsNotEmpty()) {
       // Perform your work here
+      await updateDonationStatus(widget.donationId);
       FirebaseFirestore firestore = FirebaseFirestore.instance;
       User? user = FirebaseAuth.instance.currentUser;
       if (user != null) {
@@ -330,7 +353,7 @@ class _Page7State extends State<Page7> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Change Profile Image'),
+                        title: Text('Add Image'),
                         content: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [

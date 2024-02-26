@@ -122,8 +122,17 @@ class _volunteerState extends State<volunteer>
     List<Vcard> VCard1 = [];
     List<Vcard> VCard2 = [];
     List<Vcard> VCard3 = [];
+
+    DateTime currentTime = DateTime.now();
+    DateTime threeHoursAgo = currentTime.subtract(Duration(hours: 3));
+    Timestamp currentTimeStamp = Timestamp.now();
+
     for (int i = 0; i < items.length; i++) {
       var item = items[i];
+      Timestamp createdAtTimestamp = item.extraData['createdAt'];
+        DateTime createdAt = createdAtTimestamp.toDate();
+
+
       GeoPoint? loc = item.extraData['location'] ?? current;
       // print("loc");
       // print(context.read<Providers>().current_loc_data?.latitude);
@@ -136,14 +145,18 @@ class _volunteerState extends State<volunteer>
           loc?.latitude,
           loc?.longitude);
       // print(distance);
-
-      item.distance = distance;
-      if (distance < 2) {
-        VCard1.add(item);
-      } else if (distance >= 2 && distance < 5) {
-        VCard2.add(item);
-      } else if (distance >= 5) {
-        VCard3.add(item);
+      Duration timeDifference = currentTime.difference(createdAt);
+      print(timeDifference.inHours);
+      print("time diff");
+      if (timeDifference.inHours < 3 && item.extraData['status'] == 'posted') {
+        item.distance = distance;
+        if (distance < 2) {
+          VCard1.add(item);
+        } else if (distance >= 2 && distance < 5) {
+          VCard2.add(item);
+        } else if (distance >= 5) {
+          VCard3.add(item);
+        }
       }
     }
 

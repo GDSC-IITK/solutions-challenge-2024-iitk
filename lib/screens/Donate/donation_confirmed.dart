@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gdsc/screens/Donate/donation_confirmed.dart';
+import 'package:gdsc/screens/Volunteer/volunteer.dart';
 import 'package:gdsc/widgets/nextscreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -47,7 +48,7 @@ class DonationConfirmPage extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              //nextScreenReplace(context, DonationConfirmPage());
+              nextScreenReplace(context, volunteer());
             },
             child: Padding(
               padding: const EdgeInsets.all(16.0),

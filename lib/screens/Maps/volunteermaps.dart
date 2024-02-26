@@ -92,6 +92,7 @@ class _MapsState extends State<volunteerMaps> {
           _quantity = jsonData['quantity'].toString();
           _userId = jsonData['userId'] ?? '';
           _phoneNo = jsonData['phoneNumber'] ?? '';
+          print(jsonData);
           _marker.add(
             Marker(
                 markerId: const MarkerId("1"),
@@ -163,6 +164,28 @@ class _MapsState extends State<volunteerMaps> {
     final imgByteData = await img.toByteData(format: ui.ImageByteFormat.png);
 
     return imgByteData?.buffer.asUint8List();
+  }
+
+  Future<void> updateDonationStatus(String donationId) async {
+    try {
+      // Reference to the document in the "Donations" collection
+      DocumentReference donationRef =
+          FirebaseFirestore.instance.collection('Donations').doc(donationId);
+
+      // Fetch the document snapshot
+      DocumentSnapshot donationSnapshot = await donationRef.get();
+
+      // Check if the document exists
+      if (donationSnapshot.exists) {
+        // Update the status field to 'pickedUp'
+        await donationRef.update({'status': 'pickedUp'});
+        print('Donation status updated successfully.');
+      } else {
+        print('Document does not exist.');
+      }
+    } catch (error) {
+      print('Error updating donation status: $error');
+    }
   }
 
   @override
@@ -386,6 +409,8 @@ class _MapsState extends State<volunteerMaps> {
                                         onPressed: () async {
                                           Navigator.pop(
                                               context); // Close the dialog
+                                          await updateDonationStatus(
+                                              widget.donationId);
                                           showDialog(
                                             context: context,
                                             builder: (BuildContext context) {

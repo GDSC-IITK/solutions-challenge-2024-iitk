@@ -46,4 +46,4 @@ app.*.map.json
 lib/apiKey.dart
 .env
 
-android/app/google-services.json
+/android/app/google-services.json

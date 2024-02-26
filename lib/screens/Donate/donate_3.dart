@@ -9,6 +9,7 @@ import 'package:gdsc/widgets/nextscreen.dart';
 class Donate_3 extends StatefulWidget {
   const Donate_3(
       {super.key,
+      required this.phone,
       required this.imageUrl,
       required this.type,
       required this.weightMetric,
@@ -27,6 +28,7 @@ class Donate_3 extends StatefulWidget {
   final String remarks;
   final String organization;
   final String itemdesc;
+  final String phone;
   final String type;
 
   @override
@@ -95,7 +97,7 @@ class _Donate_3State extends State<Donate_3> {
         'weightMetric': weightMetric,
         'type': type,
         'imageUrl': imageUrl,
-        'phoneNumber': user?.phoneNumber != null ? user?.phoneNumber : phone,
+        'phoneNumber': widget.phone,
       });
       // await firestore.collection('HomePage').add({
       //   'itemname': itemname,

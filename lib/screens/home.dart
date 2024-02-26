@@ -117,7 +117,7 @@ Here's how to interpret the JSON for your title generation:
 - *Quantity donated*: Combines ${prompt['donationData']['quantity']} and ${prompt['donationData']['weightMetric']} for the amount of food donated.
 - *Number of people served*: Taken from ${prompt['noOfPeopleServed']}, shows the impact of the donation.
 - *Receiver Name*: Located in ${prompt['receiverName']}, names the beneficiary.
-
+Do not give multiple titiles. Give a single best title.
 Each title should uniquely highlight the generosity of the community and the app's role in facilitating these acts of kindness. Remember, your titles will not only be featured on our homepage but also serve to inspire and encourage others to join in our mission to ensure no one goes hungry.
 ''';
 

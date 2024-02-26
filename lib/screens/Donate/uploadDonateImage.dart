@@ -124,7 +124,7 @@ class _DonateUploadImageWidgetState extends State<DonateUploadImageWidget> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: Text('Change Profile Image'),
+                title: Text('Add Image'),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [

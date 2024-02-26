@@ -330,7 +330,7 @@ class _Page7State extends State<Page7> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Change Profile Image'),
+                        title: Text('Add Image'),
                         content: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [

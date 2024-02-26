@@ -202,18 +202,32 @@ class _NotificationScreenState extends State<NotificationScreen> {
         child: AppBar(
           backgroundColor: Color.fromARGB(102, 2, 79, 166),
           automaticallyImplyLeading: false,
-          title: Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: Center(
-              child: Text(
-                'Notifications',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 1.0,
-                  fontSize: 30,
+          title: Center(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: (){
+                    Navigator.pop(context);
+                  },
+                    child:
+                        Icon(Icons.arrow_back, color: Colors.black, size: 25)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: Center(
+                    child: Text(
+                      'Notifications',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1.0,
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
         ),
@@ -273,11 +287,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 const EdgeInsets.symmetric(horizontal: 16.0),
                             child: ElevatedButton(
                               onPressed: () {
-                                setState(() {
-                                  notificationItemsFiltered =
-                                      filteredNotifications();
-                                });
-                                _selectDate(context);
+                                // setState(() {
+                                //   notificationItemsFiltered =
+                                //       filteredNotifications();
+                                // });
+                                // _selectDate(context);
                               },
                               style: ElevatedButton.styleFrom(
                                 elevation: 6.0,
